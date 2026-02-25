@@ -201,6 +201,21 @@ font-size:14px;
   background:#6c5ce7;
   transition:width 3s linear;
 }
+/* KAR EFEKTİ */
+.snowflake {
+  position: fixed;
+  top: -10px;
+  color: white;
+  pointer-events: none;
+  animation: fall linear forwards;
+  z-index: 9999;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+  }
+}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <body>
@@ -507,6 +522,26 @@ const swiper = new Swiper(".mySwiper", {
 setTimeout(()=>{
   progressBar.style.width = "100%";
 },100);
+</script>
+<script>
+function createSnow() {
+  const snow = document.createElement("div");
+  snow.classList.add("snowflake");
+  snow.innerHTML = "❄";
+
+  snow.style.left = Math.random() * 100 + "vw";
+  snow.style.animationDuration = (Math.random() * 3 + 2) + "s";
+  snow.style.opacity = Math.random();
+  snow.style.fontSize = (Math.random() * 10 + 10) + "px";
+
+  document.body.appendChild(snow);
+
+  setTimeout(() => {
+    snow.remove();
+  }, 5000);
+}
+
+setInterval(createSnow, 100);
 </script>
 </body>
 </html>
