@@ -36,10 +36,6 @@ body.main-loaded{
 body::before{content:"";position:fixed;width:500px;height:500px;background:radial-gradient(circle,#00c6ff55,transparent 70%);top:-100px;left:-100px;filter:blur(120px);z-index:-1;}
 body::after{content:"";position:fixed;width:500px;height:500px;background:radial-gradient(circle,#ff00cc55,transparent 70%);bottom:-150px;right:-100px;filter:blur(120px);z-index:-1;}
 
-/* RGB text */
-.rgb-text{background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,magenta,red);background-size:400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rgbMove 6s linear infinite;}
-@keyframes rgbMove{0%{background-position:0%;}100%{background-position:400%;}}
-
 /* Boxlar */
 .box{max-width:800px;margin:30px auto;padding:30px;border-radius:25px;background:rgba(255,255,255,0.95);backdrop-filter:blur(15px);box-shadow:0 30px 80px rgba(0,0,0,0.6);color:#000;}
 .logo{display:block;margin:0 auto 20px auto;max-width:220px;filter:drop-shadow(0 0 15px rgba(0,120,255,0.8));}
@@ -53,7 +49,6 @@ button:hover,.slide-btn:hover{box-shadow:0 0 25px #a29bfe,0 0 50px #a29bfe;}
 
 /* Popup */
 #popupOverlay, #installOverlay{position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(12px); display:flex; justify-content:center; align-items:center; z-index:9999;}
-.popupBox{padding:3px; border-radius:25px; background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,magenta,red); background-size:400%; animation:rgbMove 6s linear infinite; box-shadow:0 10px 40px rgba(0,0,0,0.5);}
 .popupContent{background:#fff; border-radius:22px; padding:25px 30px; text-align:center; max-width:600px; width:90%; animation:popupEnter 0.4s ease forwards; position:relative;}
 .popupContent.closing{animation:popupExit 0.3s ease forwards;}
 .popupDivider{height:2px;background:#ddd;margin:15px 0;}
@@ -232,20 +227,19 @@ font-size:14px;
   <div class="popupBox">
     <div class="popupContent" id="popupContent">
       <span class="closeBtn" onclick="kapatPopup()">×</span>
-      <h2>📢 ÖNEMLİ !!!</h2>
+      <h2>📢 MUTLAKA OKU !</h2>
       <div class="popupDivider"></div>
-      <strong>✨ Yenilikler</strong>
+      <strong>✨ Sitemizin linki yakında yine değişecektir çünkü thesap ismini değiştiriyoruz ✨</strong>
       <div class="popupDivider"></div>
       <ul class="popupList">
-        <li>🔧 Giriş Sorunu Düzeltildi</li>
-        <li>📚 Ders Kaynakları Eklendi</li>
-        <li>📱 Mobile Uygun Hale Getirildi</li>
+        <li>📹 BİR SONRAKİ GELEN VİDEOYU MUTLAKA İZLE!!!</li>
+        <li>🔧 Giriş Sorunu ½100 Düzeltildi</li>
+        <li>⏫ Site Hızlandırıldı</li>
         <li>🌐 Offline Çalışır Hale Getirildi</li>
         <li>📲 Ana Ekrana Ekleme Özelliği Geldi</li>
-        <li>👨‍💻 Ders Programı Eklendi</li>
         <li>🤖 Thesap Bot Eklendi</li>
         <li>🎉 Etkinlikler Eklendi (Yeni)</li>
-        <li>❗SON SÜRÜM v0.4❗</li>
+        <li>❗T H E S A P❗</li>
       </ul>
     </div>
   </div>
