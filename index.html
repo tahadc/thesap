@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thesap</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#6c5ce7">
+
+<style>
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Segoe UI',sans-serif;overflow-x:hidden;}
+
+/* --- Splash Ekran --- */
+#splash{
+  position:fixed; inset:0; background:#ffffff;
+  display:flex; justify-content:center; align-items:center; z-index:99999; 
+  flex-direction:column; opacity:1; transition:opacity 1s ease;
+}
+#splash img{
+  width:200px; max-width:50%; 
+  filter:drop-shadow(0 0 20px rgba(0,0,0,0.2));
+  animation:logoPulse 1.5s ease-in-out infinite alternate;
+}
+@keyframes logoPulse{
+  0%{transform:scale(0.9);}
+  100%{transform:scale(1.05);}
+}
+
+/* --- Ana Site --- */
+#mainSite{display:none;}
+body.main-loaded{
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  min-height:100vh; padding:20px; position:relative;
+}
+body::before{content:"";position:fixed;width:500px;height:500px;background:radial-gradient(circle,#00c6ff55,transparent 70%);top:-100px;left:-100px;filter:blur(120px);z-index:-1;}
+body::after{content:"";position:fixed;width:500px;height:500px;background:radial-gradient(circle,#ff00cc55,transparent 70%);bottom:-150px;right:-100px;filter:blur(120px);z-index:-1;}
+
+/* RGB text */
+.rgb-text{background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,magenta,red);background-size:400%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:rgbMove 6s linear infinite;}
+@keyframes rgbMove{0%{background-position:0%;}100%{background-position:400%;}}
+
+/* Boxlar */
+.box{max-width:800px;margin:30px auto;padding:30px;border-radius:25px;background:rgba(255,255,255,0.95);backdrop-filter:blur(15px);box-shadow:0 30px 80px rgba(0,0,0,0.6);color:#000;}
+.logo{display:block;margin:0 auto 20px auto;max-width:220px;filter:drop-shadow(0 0 15px rgba(0,120,255,0.8));}
+.subtitle{text-align:center;font-size:20px;font-weight:700;margin-bottom:20px;color:#000;}
+table{width:100%;border-collapse:collapse;margin-bottom:20px;background:#fff;border-radius:15px;overflow:hidden;}
+th,td{padding:14px;border:1px solid #ddd;text-align:center;}
+input{width:90%;padding:8px;border-radius:8px;border:1px solid #ccc;}
+button,.slide-btn{position:relative;overflow:hidden;width:100%;padding:16px;border:none;border-radius:14px;font-size:17px;cursor:pointer;background:#6c5ce7;color:white;margin-top:10px;transition:0.3s;box-shadow:0 0 10px #6c5ce7,0 0 20px #6c5ce7;text-align:center;display:block;text-decoration:none;}
+button:hover,.slide-btn:hover{box-shadow:0 0 25px #a29bfe,0 0 50px #a29bfe;}
+.result{margin-top:20px;padding:18px;background:#f5f5f5;border-radius:12px;}
+
+/* Popup */
+#popupOverlay, #installOverlay{position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(12px); display:flex; justify-content:center; align-items:center; z-index:9999;}
+.popupBox{padding:3px; border-radius:25px; background:linear-gradient(90deg,red,orange,yellow,lime,cyan,blue,magenta,red); background-size:400%; animation:rgbMove 6s linear infinite; box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+.popupContent{background:#fff; border-radius:22px; padding:25px 30px; text-align:center; max-width:600px; width:90%; animation:popupEnter 0.4s ease forwards; position:relative;}
+.popupContent.closing{animation:popupExit 0.3s ease forwards;}
+.popupDivider{height:2px;background:#ddd;margin:15px 0;}
+.popupList{list-style:none;padding:0;margin:0;}
+.popupList li{padding:10px 0;border-bottom:1px solid #ddd;}
+.closeBtn{position:absolute;top:10px;right:18px;font-size:22px;cursor:pointer;}
+#installContent video{width:100%;aspect-ratio:16/9;border-radius:12px; margin-top:15px;}
+
+@keyframes popupEnter{0%{opacity:0;transform:scale(0.8);}100%{opacity:1;transform:scale(1);}}
+@keyframes popupExit{0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(0.8);}}
+</style>
+<style>
+#thesapButton{
+position:fixed;
+bottom:20px;
+right:20px;
+width:65px;
+height:65px;
+background:linear-gradient(135deg,#6c5ce7,#a29bfe);
+color:white;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+cursor:pointer;
+box-shadow:0 10px 25px rgba(0,0,0,0.4);
+z-index:9999;
+transition:0.3s;
+}
+#thesapButton:hover{transform:scale(1.1);}
+
+#thesapChat{
+position:fixed;
+bottom:100px;
+right:20px;
+width:340px;
+height:480px;
+background:white;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,0.4);
+display:none;
+flex-direction:column;
+overflow:hidden;
+z-index:9999;
+animation:chatOpen 0.3s ease;
+}
+
+@keyframes chatOpen{
+0%{transform:scale(0.8);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+#thesapHeader{
+background:linear-gradient(90deg,#6c5ce7,#a29bfe);
+color:white;
+padding:15px;
+font-weight:bold;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+#thesapStatus{
+font-size:12px;
+opacity:0.9;
+}
+
+#thesapClose{
+cursor:pointer;
+font-size:18px;
+}
+
+#thesapMessages{
+flex:1;
+padding:15px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+gap:10px;
+background:#f5f5f5;
+}
+
+.msg-user{
+align-self:flex-end;
+background:#6c5ce7;
+color:white;
+padding:10px 14px;
+border-radius:18px 18px 0 18px;
+max-width:75%;
+font-size:14px;
+}
+
+.msg-bot{
+align-self:flex-start;
+background:white;
+padding:10px 14px;
+border-radius:18px 18px 18px 0;
+max-width:75%;
+font-size:14px;
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+#thesapInput{
+border:none;
+border-top:1px solid #ddd;
+padding:14px;
+outline:none;
+font-size:14px;
+}
+/* Slider küçük progress bar */
+.progress-bar{
+  height:4px;
+  background:#ddd;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:10px;
+  position:relative;
+}
+
+.progress-bar::after{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:0%;
+  background:#6c5ce7;
+}
+.autoplay-progress{
+  position:relative;
+  height:5px;
+  background:#ddd;
+  border-radius:10px;
+  overflow:hidden;
+  margin-bottom:10px;
+}
+
+.autoplay-progress-bar{
+  position:absolute;
+  left:0;
+  top:0;
+  height:100%;
+  width:0%;
+  background:#6c5ce7;
+  transition:width 3s linear;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+<body>
+
+<!-- Splash Ekran -->
+<div id="splash">
+  <img src="logo.png" alt="THESAP Logo">
+</div>
+
+<!-- Ana Site -->
+<div id="mainSite">
+<!-- 1. Bilgilendirme Popup -->
+<div id="popupOverlay">
+  <div class="popupBox">
+    <div class="popupContent" id="popupContent">
+      <span class="closeBtn" onclick="kapatPopup()">×</span>
+      <h2>📢 ÖNEMLİ !!!</h2>
+      <div class="popupDivider"></div>
+      <strong>✨ Yenilikler</strong>
+      <div class="popupDivider"></div>
+      <ul class="popupList">
+        <li>🔧 Giriş Sorunu Düzeltildi</li>
+        <li>📚 Ders Kaynakları Eklendi</li>
+        <li>📱 Mobile Uygun Hale Getirildi</li>
+        <li>🌐 Offline Çalışır Hale Getirildi</li>
+        <li>📲 Ana Ekrana Ekleme Özelliği Geldi</li>
+        <li>👨‍💻 Ders Programı Eklendi</li>
+        <li>🤖 Thesap Bot Eklendi</li>
+        <li>🎉 Etkinlikler Eklendi (Yeni)</li>
+        <li>❗SON SÜRÜM v0.4❗</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Ana Ekrana Ekle Popup -->
+<div id="installOverlay" style="display:none;">
+  <div class="popupBox">
+    <div class="popupContent" id="installContent">
+      <span class="closeBtn" onclick="kapatInstall()">×</span>
+      <h2>📲 Nasıl Ana Ekrana Eklerim?</h2>
+      <div class="popupDivider"></div>
+      <video id="installVideo" controls preload="none">
+        <source src="video.mp4" type="video/mp4">
+        Tarayıcınız video etiketini desteklemiyor.
+      </video>
+    </div>
+  </div>
+</div>
+<!-- Hesaplama Box -->
+<div class="box">
+<img src="logo.png" class="logo">
+<div class="subtitle">Tıp Sınav Ortalama Hesaplayıcı 🧮 / Piyasanın En Kalitelisi ✨</div>
+<table>
+<tr><th>Kurul</th><th>Not</th><th>Katsayı</th></tr>
+<tr><td>1</td><td><input id="k1" type="number" step="0.01"></td><td><input id="c1" type="number" value="1"></td></tr>
+<tr><td>2</td><td><input id="k2" type="number" step="0.01"></td><td><input id="c2" type="number" value="1"></td></tr>
+<tr><td>3</td><td><input id="k3" type="number" step="0.01"></td><td><input id="c3" type="number" value="1"></td></tr>
+<tr><td>4</td><td><input id="k4" type="number" step="0.01"></td><td><input id="c4" type="number" value="1"></td></tr>
+<tr><td>5</td><td><input id="k5" type="number" step="0.01"></td><td><input id="c5" type="number" value="1"></td></tr>
+</table>
+<button onclick="hesapla()">Hesapla</button>
+<div class="result" id="sonuc"></div>
+</div>
+<div class="box" style="max-width:600px; padding:20px;">
+  <h2>🎉 <span class="rgb-text">Etkinlikler</span></h2>
+
+  <!-- ÜST PROGRESS -->
+  <div class="autoplay-progress">
+    <div class="autoplay-progress-bar"></div>
+  </div>
+
+  <div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+
+      <div class="swiper-slide">
+        <img src="etkinlik1.jpg" style="width:100%; border-radius:15px;">
+      </div>
+
+      <div class="swiper-slide">
+        <img src="etkinlik2.jpg" style="width:100%; border-radius:15px;">
+      </div>
+
+      <div class="swiper-slide">
+        <img src="etkinlik3.jpg" style="width:100%; border-radius:15px;">
+      </div>
+
+    </div>
+
+    <!-- Oklar -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+
+    <!-- Noktalar -->
+    <div class="swiper-pagination"></div>
+  </div>
+</div>
+<!-- 📅 Günün Ders Programı -->
+<div class="box">
+  <h2>📅 <span class="rgb-text">Günün Ders Programı</span></h2>
+  <img src="ders.jpg"
+       alt="Ders Programı"
+       style="width:100%; border-radius:15px; margin-top:15px;"
+       loading="lazy">
+</div>
+<!-- Ders Kaynakları -->
+<div class="box">
+<h2>📚 <span class="rgb-text">Ders Kaynakları</span></h2>
+<a href="https://drive.google.com/drive/folders/1Sr8-RnHtCj3tdHbOtfs0d6CAfph1y-i4" target="_blank" class="slide-btn">Ders Slaytları</a>
+<a href="https://drive.google.com/drive/folders/1swUEEMs95qw4ICrtsfY44FLXC20qoil4" target="_blank" class="slide-btn">Ders Slaytları (NOTLU)</a>
+</div>
+</div>
+
+<script>
+// Splash ekranı gizle ve siteyi göster
+document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{
+    const splash=document.getElementById('splash');
+    splash.style.opacity=0;
+    setTimeout(()=>{
+      splash.style.display='none';
+      document.getElementById('mainSite').style.display='block';
+      document.body.classList.add('main-loaded');
+    },1000);
+  },1500);
+});
+
+// Service Worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('service-worker.js')
+    .then(()=>console.log("SW kaydedildi"))
+    .catch(err=>console.log("SW hatası:",err));
+}
+
+// Popups ve hesaplama
+function kapatPopup(){
+  const popup=document.getElementById("popupContent");
+  popup.classList.add("closing");
+  setTimeout(()=>{
+    document.getElementById("popupOverlay").style.display="none";
+    popup.classList.remove("closing");
+    document.getElementById("installOverlay").style.display="flex";
+  },300);
+}
+
+function kapatInstall(){
+  const popup=document.getElementById("installContent");
+  const video=document.getElementById("installVideo");
+  if(video) video.pause();
+  popup.classList.add("closing");
+  setTimeout(()=>{
+    document.getElementById("installOverlay").style.display="none";
+    popup.classList.remove("closing");
+  },300);
+}
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  setTimeout(()=>{document.getElementById("popupOverlay").style.display="flex";},200);
+  const video = document.getElementById("installVideo");
+  if(video){
+    video.addEventListener("ended", ()=>{
+      kapatInstall();
+    });
+  }
+});
+
+function hesapla(){
+  const notlar=[k1.value,k2.value,k3.value,k4.value,k5.value].map(Number);
+  const katsayilar=[c1.value,c2.value,c3.value,c4.value,c5.value].map(Number);
+  const toplamKatsayi = katsayilar.reduce((a,b)=>a+b,0);
+  const agirlikliToplam = notlar.reduce((s,n,i)=>s+n*katsayilar[i],0);
+  const kurulOrt = agirlikliToplam / toplamKatsayi;
+
+  let mesaj = `Kurul ortalaman: <b>${kurulOrt.toFixed(2)}</b><br><br>`;
+  if(kurulOrt < 33){ mesaj += "<b>🔴 Kurul ortalaması 33 altı → Otomatik BÜT</b>"; sonuc.innerHTML = mesaj; return; }
+  if(kurulOrt >= 80){ mesaj += "<b>🟢 80 ve üzeri → Finalsiz geçtin 🎉</b>"; sonuc.innerHTML = mesaj; return; }
+
+  const bazOrtalama=66.5, bazSoru=80, soruArtis=16/6.5;
+  if(kurulOrt<bazOrtalama){ const fark=bazOrtalama-kurulOrt; const soruSayisi=Math.ceil(bazSoru+fark*soruArtis); mesaj+=`🟡 Finale giriyorsun<br>Finalde <b>${soruSayisi}</b> soru çözmen gerekiyor`; }
+  else{ mesaj+="🟡 Finale giriyorsun (80 soru)"; }
+
+  sonuc.innerHTML = mesaj;
+}
+
+</script>
+<script>
+window.addEventListener("load", function(){
+
+const btn = document.getElementById("thesapButton");
+const chat = document.getElementById("thesapChat");
+const input = document.getElementById("thesapInput");
+const messages = document.getElementById("thesapMessages");
+const closeBtn = document.getElementById("thesapClose");
+
+btn.onclick = () => chat.style.display = "flex";
+closeBtn.onclick = () => chat.style.display = "none";
+
+function miniAI(text){
+
+text = text.toLowerCase();
+
+// Selamlaşma
+if(text.includes("merhaba") || text.includes("selam"))
+  return "Merhaba 👨‍⚕️ Komutlara Ulaşmak İçin komutlar Yazman Yeterli !";
+
+// Kurul sistemi
+if(text.includes("kurul"))
+  return "Kurul başarısı için en kritik şey: Son 3 yıl çıkmış sorular + tekrar notları.";
+
+// Final
+if(text.includes("final"))
+  return "Finale kalırsan panik yapma. En çok çıkan konulara odaklan ve tekrar yap.";
+// Komutlar
+if(text.includes("komutlar"))
+  return "-final -kurul -merhaba -komutlar -(sınav ortalamanı yazabilirsin)";
+
+// Ortalama yorumu (sayı girilirse)
+if(!isNaN(text)){
+  let ort = parseFloat(text);
+
+  if(ort < 50) return "Bu ortalama riskli ⚠️ Finalde biraz fazla çözmen gerek kanka.";
+  if(ort < 66.5) return "Bu ortalama azıcık riskli 👌 Finalde çok az çözmen gerek kanka.";
+  if(ort === 66.5) return "Sınırdasın.";
+  if(ort < 80) return "Gayet iyi gidiyorsun. Finalde 80 çöz geç.";
+  return "Finalsiz geçme ihtimali yüksek 👏";
+}
+
+return "Böyle bir komutum olduğunu sanmıyorum lütfen ''komutlar'' yazarak komutlarımı dene!";
+}
+
+input.addEventListener("keypress", function(e){
+if(e.key === "Enter"){
+const userText = input.value.trim();
+if(userText === "") return;
+
+messages.innerHTML += `<div class="msg-user">${userText}</div>`;
+
+setTimeout(()=>{
+let cevap = miniAI(userText);
+messages.innerHTML += `<div class="msg-bot">${cevap}</div>`;
+messages.scrollTop = messages.scrollHeight;
+},400);
+
+input.value="";
+messages.scrollTop = messages.scrollHeight;
+}
+});
+
+});
+</script>
+<!-- THESAP BOT -->
+<div id="thesapButton">💬</div>
+
+<div id="thesapChat">
+  <div id="thesapHeader">
+    <div>
+      Thesap Bot <br>
+      <span id="thesapStatus">🟢 Çevrimiçi</span>
+    </div>
+    <div id="thesapClose">✖</div>
+  </div>
+
+  <div id="thesapMessages">
+    <div class="msg-bot">Merhaba 👋 Sana nasıl yardımcı olabilirim? Örneğin bana Merhaba diyebilirsin ! 😊</div>
+  </div>
+
+  <input type="text" id="thesapInput" placeholder="Mesaj yaz...">
+</div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<script>
+const progressBar = document.querySelector(".autoplay-progress-bar");
+
+const swiper = new Swiper(".mySwiper", {
+  loop: true,
+  autoplay: {
+    delay: 3000,
+    disableOnInteraction: false,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+    dynamicBullets: true,
+  },
+  on: {
+    slideChangeTransitionStart: function () {
+      progressBar.style.transition = "none";
+      progressBar.style.width = "0%";
+    },
+    slideChangeTransitionEnd: function () {
+      progressBar.style.transition = "width 3s linear";
+      progressBar.style.width = "100%";
+    }
+  }
+});
+
+// İlk başlatma
+setTimeout(()=>{
+  progressBar.style.width = "100%";
+},100);
+</script>
+</body>
+</html>
