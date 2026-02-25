@@ -1,4 +1,4 @@
-const CACHE_NAME = "thesap-cache-v16";
+const CACHE_NAME = "thesap-cache-v17";
 
 const urlsToCache = [
   "/",
@@ -57,4 +57,5 @@ self.addEventListener("activate", event => {
     )
   );
   self.clients.claim();
+
 });
