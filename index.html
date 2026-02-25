@@ -221,6 +221,16 @@ font-size:14px;
   width:100%;
   margin:0 auto;
 }
+#donemOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(12px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:100000;
+}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <body>
@@ -232,6 +242,32 @@ font-size:14px;
 
 <!-- Ana Site -->
 <div id="mainSite">
+<!-- DÖNEM SEÇ POPUP -->
+<div id="donemOverlay" style="display:none;">
+  <div class="popupBox">
+    <div class="popupContent">
+
+      <h2>📅 Lütfen Döneminizi Seçiniz</h2>
+
+      <p style="margin-top:10px; font-size:14px; color:#555;">
+        Seçtiğiniz dönemin katsayıları otomatik bir şekilde yazılacaktır.
+      </p>
+
+      <div class="popupDivider"></div>
+
+      <button onclick="donemSec('1')">💚 Dönem 1</button>
+      <button onclick="donemSec('2')">💙 Dönem 2</button>
+      <button onclick="donemSec('3')">❤️ Dönem 3</button>
+
+      <div class="popupDivider"></div>
+
+      <p style="font-size:12px; color:#888; margin-top:10px;">
+        <strong>Dip Not:</strong> Sadece Dönem 2 Katsayıları Sistemde Tanımlıdır.
+      </p>
+
+    </div>
+  </div>
+</div>
 <!-- 1. Bilgilendirme Popup -->
 <div id="popupOverlay">
   <div class="popupBox">
@@ -546,6 +582,43 @@ function createSnow() {
 }
 
 setInterval(createSnow, 100);
+</script>
+<script>
+// Sayfa açılınca dönem popupı
+document.addEventListener("DOMContentLoaded",()=>{
+  setTimeout(()=>{
+    document.getElementById("donemOverlay").style.display="flex";
+  },500);
+});
+
+function donemSec(donem){
+
+  if(donem==="1"){
+    c1.value=1;
+    c2.value=1;
+    c3.value=1;
+    c4.value=1;
+    c5.value=1;
+  }
+
+  if(donem==="2"){
+    c1.value=26;
+    c2.value=17;
+    c3.value=22;
+    c4.value=26;
+    c5.value=9;
+  }
+
+  if(donem==="3"){
+    c1.value=1;
+    c2.value=1;
+    c3.value=1;
+    c4.value=1;
+    c5.value=1;
+  }
+
+  document.getElementById("donemOverlay").style.display="none";
+}
 </script>
 </body>
 </html>
