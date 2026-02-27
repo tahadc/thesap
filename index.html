@@ -231,13 +231,67 @@ font-size:14px;
   align-items:center;
   z-index:100000;
 }
+#splash{
+  position:fixed;
+  inset:0;
+  background:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:99999;
+  overflow:hidden;
+}
+
+/* Karanlık overlay animasyonu */
+.cinema-bg{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at center, rgba(108,92,231,0.3), black 70%);
+  opacity:0;
+  animation:fadeBg 2s ease forwards;
+}
+
+@keyframes fadeBg{
+  to{opacity:1;}
+}
+
+/* İçerik */
+.cinema-content{
+  text-align:center;
+  opacity:0;
+  transform:scale(1.2);
+  animation:cinemaIntro 2.5s ease forwards;
+}
+
+@keyframes cinemaIntro{
+  0%{opacity:0; transform:scale(1.2); filter:blur(10px);}
+  60%{opacity:1; filter:blur(0);}
+  100%{opacity:1; transform:scale(1);}
+}
+
+.cinema-logo{
+  width:170px;
+  filter:drop-shadow(0 0 40px rgba(108,92,231,0.8));
+}
+
+.cinema-text{
+  margin-top:20px;
+  font-size:32px;
+  color:white;
+  letter-spacing:6px;
+  font-weight:bold;
+}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 <body>
 
-<!-- Splash Ekran -->
 <div id="splash">
-  <img src="logo.png" alt="THESAP Logo">
+  <div class="cinema-bg"></div>
+
+  <div class="cinema-content">
+    <img src="logo.png" class="cinema-logo">
+    <div class="cinema-text">THESAP</div>
+  </div>
 </div>
 
 <!-- Ana Site -->
@@ -619,6 +673,26 @@ function donemSec(donem){
 
   document.getElementById("donemOverlay").style.display="none";
 }
+</script>
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+
+  setTimeout(()=>{
+
+    const splash = document.getElementById("splash");
+
+    splash.style.transition = "opacity 1s ease";
+    splash.style.opacity = "0";
+
+    setTimeout(()=>{
+      splash.remove();
+      document.getElementById("mainSite").style.display="block";
+      document.body.classList.add("main-loaded");
+    },1000);
+
+  },3000);
+
+});
 </script>
 </body>
 </html>
