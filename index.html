@@ -37,8 +37,8 @@ input, select, textarea{
 /* --- Ana Site --- */
 #mainSite{display:none;}
 body.main-loaded{
-  background:#f5f7fb;
-  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #a8e6cf, #dcedc1, #ffd3b6);
+  min-height: 100vh;
 }
 body::before{content:"";position:fixed;width:500px;height:500px;background:radial-gradient(circle,#00c6ff55,transparent 70%);top:-100px;left:-100px;filter:blur(120px);z-index:-1;}
 body::after{content:"";position:fixed;width:500px;height:500px;background:radial-gradient(circle,#ff00cc55,transparent 70%);bottom:-150px;right:-100px;filter:blur(120px);z-index:-1;}
@@ -47,7 +47,20 @@ body{
   user-select: none;
   -webkit-touch-callout:none;
 }
+.petal {
+  position: fixed;
+  top: -10px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: fall linear forwards;
+}
 
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0.8;
+  }
+}
 #mainSite{
   min-height:100vh;
 }
@@ -444,8 +457,10 @@ body{
       <strong>✨GÜNCELLEME✨</strong>
       <div class="popupDivider"></div>
       <ul class="popupList">
-        <li>Otomatik/Anlık Hesaplama Sistemi Geldi!</li>
-        <li>❗T H E S A P❗</li>
+        <li>İLKBAHAR TEMASI GELDİ</li>
+        <li>OTOMATİK ANLIK HESAPLAMA GELDİ</li>
+        <li>SİTE UI/KULLANICI ARAYÜZÜ İYİLEŞTİRİLDİ</li>
+        <li>❗thesap.vercel.app❗</li>
       </ul>
     </div>
   </div>
@@ -549,6 +564,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     });
   }
 });
+
 
 function hesapla(){
 
@@ -738,24 +754,24 @@ setTimeout(()=>{
 },100);
 </script>
 <script>
-function createSnow() {
-  const snow = document.createElement("div");
-  snow.classList.add("snowflake");
-  snow.innerHTML = "❄";
+function createPetal() {
+  const petal = document.createElement("div");
+  petal.classList.add("petal");
+  petal.innerHTML = "🌸";
 
-  snow.style.left = Math.random() * 100 + "vw";
-  snow.style.animationDuration = (Math.random() * 3 + 2) + "s";
-  snow.style.opacity = Math.random();
-  snow.style.fontSize = (Math.random() * 10 + 10) + "px";
+  petal.style.left = Math.random() * 100 + "vw";
+  petal.style.animationDuration = (Math.random() * 3 + 3) + "s";
+  petal.style.opacity = Math.random();
+  petal.style.fontSize = (Math.random() * 10 + 12) + "px";
 
-  document.body.appendChild(snow);
+  document.body.appendChild(petal);
 
   setTimeout(() => {
-    snow.remove();
-  }, 5000);
+    petal.remove();
+  }, 6000);
 }
 
-setInterval(createSnow, 100);
+setInterval(createPetal, 200);
 </script>
 <script>
 // Sayfa açılınca dönem popupı
