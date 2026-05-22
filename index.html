@@ -1,419 +1,206 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta name="theme-color" content="#ff758c">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="THESAP">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Thesap</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff758c">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="THESAP">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Thesap</title>
+  <link rel="manifest" href="manifest.json">
 
-<style>
-*{box-sizing:border-box;}
-body{margin:0;font-family:'Segoe UI',sans-serif;overflow-x:hidden;}
-
-/* --- Splash Ekran --- */
-#splash{
-  position:fixed; inset:0; background:#ffffff;
-  display:flex; justify-content:center; align-items:center; z-index:99999; 
-  flex-direction:column; opacity:1; transition:opacity 1s ease;
-}
-#splash img{
-  width:200px; max-width:50%; 
-  filter:drop-shadow(0 0 20px rgba(0,0,0,0.2));
-  animation:logoPulse 1.5s ease-in-out infinite alternate;
-}
-@keyframes logoPulse{
-  0%{transform:scale(0.9);}
-  100%{transform:scale(1.05);}
-}
-input, select, textarea{
-  font-size:16px;
-}
-
-/* --- Ana Site --- */
-#mainSite{display:none;}
-body.main-loaded{
-  /* Yaz teması sıcak renk geçişi (Gün batımı / Kumsal) */
-  background: linear-gradient(135deg, #f6d365, #fda085, #ff9a9e);
-  min-height: 100vh;
-}
-body::before{content:"";position:fixed;width:500px;height:500px;background:radial-gradient(circle,#ffed4a55,transparent 70%);top:-100px;left:-100px;filter:blur(120px);z-index:-1;}
-body::after{content:"";position:fixed;width:500px;height:500px;background:radial-gradient(circle,#ff767555,transparent 70%);bottom:-150px;right:-100px;filter:blur(120px);z-index:-1;}
-body{
-  overscroll-behavior:none;
-  user-select: none;
-  -webkit-touch-callout:none;
-}
-.petal {
-  position: fixed;
-  top: -10px;
-  pointer-events: none;
-  z-index: 9999;
-  animation: fall linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(360deg);
-    opacity: 0.8;
+  <style>
+  /* --- Premium Apple Tasarım Dili --- */
+  *{ box-sizing: border-box; letter-spacing: -0.015em; }
+  body{ 
+    margin: 0; 
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    background: #0a0a0a; 
+    color: #f5f5f7;
+    overscroll-behavior: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
-}
-#mainSite{
-  min-height:100vh;
-}
-/* Boxlar */
-.box{
-  max-width:900px;
-  margin:25px auto;
-  padding:25px;
-  background:white;
-  border-radius:20px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.08);
-  border:1px solid #eee;
-  transition:0.25s;
-}
 
-.box:hover{
-  transform:translateY(-3px);
-  box-shadow:0 15px 50px rgba(0,0,0,0.12);
-}
-.logo{display:block;margin:0 auto 20px auto;max-width:220px;filter:drop-shadow(0 0 15px rgba(255,117,140,0.8));}
-.subtitle{
-  text-align:center;
-  font-size:20px;
-  font-weight:700;
-  color:#1f2937;
-  margin-bottom:20px;
-}
-table{width:100%;border-collapse:collapse;margin-bottom:20px;background:#fff;border-radius:15px;overflow:hidden;}
-th,td{padding:14px;border:1px solid #ddd;text-align:center;}
-input{width:90%;padding:8px;border-radius:8px;border:1px solid #ccc;}
-button,.slide-btn{position:relative;overflow:hidden;width:100%;padding:16px;border:none;border-radius:14px;font-size:17px;cursor:pointer;background:#ff758c;color:white;margin-top:10px;transition:0.3s;box-shadow:0 0 10px #ff758c,0 0 20px #ff758c;text-align:center;display:block;text-decoration:none;}
-button:hover,.slide-btn:hover{box-shadow:0 0 25px #ff7eb3,0 0 50px #ff7eb3;}
-.result{margin-top:20px;padding:18px;background:#f5f5f5;border-radius:12px;}
-
-/* Popup */
-#popupOverlay, #installOverlay{position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(12px); display:flex; justify-content:center; align-items:center; z-index:9999;}
-.popupContent{background:#fff; border-radius:22px; padding:25px 30px; text-align:center; max-width:600px; width:90%; animation:popupEnter 0.4s ease forwards; position:relative;}
-.popupContent.closing{animation:popupExit 0.3s ease forwards;}
-.popupDivider{height:2px;background:#ddd;margin:15px 0;}
-.popupList{list-style:none;padding:0;margin:0;}
-.popupList li{padding:10px 0;border-bottom:1px solid #ddd;}
-.closeBtn{position:absolute;top:10px;right:18px;font-size:22px;cursor:pointer;}
-#installContent video{width:100%;aspect-ratio:16/9;border-radius:12px; margin-top:15px;}
-
-@keyframes popupEnter{0%{opacity:0;transform:scale(0.8);}100%{opacity:1;transform:scale(1);}}
-@keyframes popupExit{0%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(0.8);}}
-</style>
-<style>
-#thesapButton{
-position:fixed;
-bottom:20px;
-right:20px;
-width:65px;
-height:65px;
-background:linear-gradient(135deg,#ff758c,#ff7eb3);
-color:white;
-border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:26px;
-cursor:pointer;
-box-shadow:0 10px 25px rgba(0,0,0,0.4);
-z-index:9999;
-transition:0.3s;
-}
-#thesapButton:hover{transform:scale(1.1);}
-
-#thesapChat{
-position:fixed;
-bottom:100px;
-right:20px;
-width:340px;
-height:480px;
-background:white;
-border-radius:20px;
-box-shadow:0 15px 40px rgba(0,0,0,0.4);
-display:none;
-flex-direction:column;
-overflow:hidden;
-z-index:9999;
-animation:chatOpen 0.3s ease;
-}
-
-@keyframes chatOpen{
-0%{transform:scale(0.8);opacity:0;}
-100%{transform:scale(1);opacity:1;}
-}
-
-#thesapHeader{
-background:linear-gradient(90deg,#ff758c,#ff7eb3);
-color:white;
-padding:15px;
-font-weight:bold;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-#thesapStatus{
-font-size:12px;
-opacity:0.9;
-}
-
-#thesapClose{
-cursor:pointer;
-font-size:18px;
-}
-
-#thesapMessages{
-flex:1;
-padding:15px;
-overflow-y:auto;
-display:flex;
-flex-direction:column;
-gap:10px;
-background:#f5f5f5;
-}
-
-.msg-user{
-align-self:flex-end;
-background:#ff758c;
-color:white;
-padding:10px 14px;
-border-radius:18px 18px 0 18px;
-max-width:75%;
-font-size:14px;
-}
-
-.msg-bot{
-align-self:flex-start;
-background:white;
-padding:10px 14px;
-border-radius:18px 18px 18px 0;
-max-width:75%;
-font-size:14px;
-box-shadow:0 3px 8px rgba(0,0,0,0.1);
-}
-
-#thesapInput{
-border:none;
-border-top:1px solid #ddd;
-padding:14px;
-outline:none;
-font-size:14px;
-}
-/* Slider küçük progress bar */
-.progress-bar{
-  height:4px;
-  background:#ddd;
-  border-radius:10px;
-  overflow:hidden;
-  margin-bottom:10px;
-  position:relative;
-}
-
-.progress-bar::after{
-  content:"";
-  position:absolute;
-  left:0;
-  top:0;
-  height:100%;
-  width:0%;
-  background:#ff758c;
-}
-.autoplay-progress{
-  position:relative;
-  height:5px;
-  background:#ddd;
-  border-radius:10px;
-  overflow:hidden;
-  margin-bottom:10px;
-}
-
-.autoplay-progress-bar{
-  position:absolute;
-  left:0;
-  top:0;
-  height:100%;
-  width:0%;
-  background:#ff758c;
-  transition:width 3s linear;
-}
-/* YAZ EFEKTİ SAKLAMA EFEKTİ (Önceden kar efekti olan kodun yapısı) */
-.snowflake {
-  position: fixed;
-  top: -10px;
-  color: white;
-  pointer-events: none;
-  animation: fall linear forwards;
-  z-index: 9999;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh);
+  /* Arka Plana Derinlik Veren Premium Işık Süzmeleri */
+  body::before {
+    content: ""; position: fixed; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.04), transparent 70%);
+    top: -150px; left: -150px; filter: blur(100px); z-index: -1;
   }
-}
-.popupBox{
-  border-radius:25px;
-  box-shadow:0 10px 40px rgba(0,0,0,0.5);
-  max-width:90%;
-}
+  body::after {
+    content: ""; position: fixed; width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(255,255,255,0.03), transparent 70%);
+    bottom: -200px; right: -150px; filter: blur(120px); z-index: -1;
+  }
 
-.popupContent{
-  width:100%;
-  margin:0 auto;
-}
-#donemOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(12px);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:100000;
-}
-#splash{
-  position:fixed;
-  inset:0;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  z-index:99999;
-  overflow:hidden;
-}
+  /* --- Saf Lüks Splash Ekran --- */
+  #splash {
+    position: fixed; inset: 0; background: #000000;
+    display: flex; justify-content: center; align-items: center; z-index: 99999; 
+    overflow: hidden;
+  }
+  .cinema-bg {
+    position: absolute; inset: 0; 
+    background: radial-gradient(circle at center, #111111, #000000 80%);
+  }
+  .cinema-content {
+    text-align: center; opacity: 0; transform: scale(0.96);
+    animation: cinemaIntro 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes cinemaIntro {
+    0% { opacity: 0; transform: scale(0.96); filter: blur(4px); }
+    100% { opacity: 1; transform: scale(1); filter: blur(0); }
+  }
+  .cinema-logo { width: 120px; filter: invert(1); opacity: 0.9; }
+  
+  .cinema-text {
+    margin-top: 24px; font-size: 32px; color: #ffffff;
+    letter-spacing: 0.25em; font-weight: 200; text-transform: uppercase;
+  }
 
-/* Karanlık overlay animasyonu */
-.cinema-bg{
-  position:absolute;
-  inset:0;
-  background:radial-gradient(circle at center, rgba(255,117,140,0.3), black 70%);
-  opacity:0;
-  animation:fadeBg 2s ease forwards;
-}
+  /* --- Ana Site Düzeni --- */
+  #mainSite { display: none; min-height: 100vh; padding: 40px 15px; }
+  body.main-loaded { background: #0a0a0a; }
 
-@keyframes fadeBg{
-  to{opacity:1;}
-}
+  /* Cam Efektli Premium Kart Yapısı (Glassmorphism) */
+  .box {
+    max-width: 600px; margin: 0 auto 30px auto; padding: 40px 35px;
+    background: rgba(255, 255, 255, 0.03); 
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .box:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  }
 
-/* İçerik */
-.cinema-content{
-  text-align:center;
-  opacity:0;
-  transform:scale(1.2);
-  animation:cinemaIntro 2.5s ease forwards;
-}
+  .logo { display: block; margin: 0 auto 20px auto; max-width: 130px; filter: invert(1); opacity: 0.95; }
+  
+  .subtitle {
+    text-align: center; font-size: 12px; font-weight: 500;
+    color: #8e8e93; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  h2 { font-size: 21px; font-weight: 500; color: #ffffff; margin-top: 0; margin-bottom: 24px; letter-spacing: -0.02em; }
 
-@keyframes cinemaIntro{
-  0%{opacity:0; transform:scale(1.2); filter:blur(10px);}
-  60%{opacity:1; filter:blur(0);}
-  100%{opacity:1; transform:scale(1);}
-}
+  /* --- Apple Watch Tarzı Geri Sayım Tasarımı --- */
+  .countdown-container {
+    display: flex; justify-content: space-around; align-items: center; margin-top: 15px;
+  }
+  .countdown-item { text-align: center; }
+  .countdown-number {
+    font-size: 34px; font-weight: 200; color: #ffffff;
+    font-variant-numeric: tabular-nums; line-height: 1;
+  }
+  .countdown-label {
+    font-size: 10px; font-weight: 500; color: #8e8e93;
+    text-transform: uppercase; letter-spacing: 0.05em; margin-top: 6px;
+  }
 
-.cinema-logo{
-  width:170px;
-  filter:drop-shadow(0 0 40px rgba(255,117,140,0.8));
-}
+  /* Modern Çizgili Tablo Tasarımı */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th { color: #8e8e93; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  td { padding: 16px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #e5e5ea; text-align: center; font-size: 15px; }
+  
+  /* Lüks Inputlar */
+  input {
+    width: 100%; max-width: 120px; padding: 10px 14px; border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.2);
+    color: #ffffff; font-size: 16px; font-weight: 500;
+    transition: all 0.2s ease; text-align: center;
+  }
+  input:focus {
+    border-color: #ffffff; background: rgba(0, 0, 0, 0.4); box-shadow: 0 0 0 1px #ffffff; outline: none;
+  }
 
-.cinema-text{
-  margin-top:20px;
-  font-size:32px;
-  color:white;
-  letter-spacing:6px;
-  font-weight:bold;
-}
-#hesaplaBtn{
-  display:none;
-}
-.result{
-  margin-top:20px;
-  padding:20px;
-  border-radius:15px;
-  font-size:18px;
-  font-weight:600;
-  background:linear-gradient(135deg,#f8f9ff,#eef1ff);
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-  transition:0.3s;
-}
-.low{background:#ffe5e5; color:#b30000;}
-.mid{background:#fff4cc; color:#8a6d00;}
-.high{background:#e6ffed; color:#006b2d;}
-table{
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0 10px;
-}
+  /* Hedef Not Simülatör Alanı */
+  .hedef-wrapper {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 14px 20px; background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; margin-top: 20px;
+  }
+  .hedef-title { font-size: 13px; font-weight: 500; color: #aeaeb2; }
 
-th{
-  color:#6b7280;
-  font-weight:600;
-  font-size:13px;
-}
+  /* Metalik Koyu Premium Link Butonları */
+  .slide-btn {
+    width: 100%; padding: 18px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    background: linear-gradient(180deg, #2c2c2e, #1c1c1e); color: #ffffff; margin-top: 15px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: center; display: block; text-decoration: none; 
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .slide-btn:hover { 
+    background: linear-gradient(180deg, #3a3a3c, #2c2c2e);
+    border-color: rgba(255,255,255,0.25);
+    transform: translateY(-2px); 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4); 
+  }
+  
+  /* Popup İçi Buton Özelleştirmesi */
+  .popupContent button {
+    width: 100%; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer;
+    background: rgba(255,255,255,0.05); color: #ffffff; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px;
+    text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s;
+  }
+  .popupContent button:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
 
-td{
-  background:#f9fafb;
-  padding:12px;
-  border-radius:10px;
-}
-input{
-  width:100%;
-  padding:10px;
-  border-radius:10px;
-  border:1px solid #e5e7eb;
-  background:white;
-  transition:0.2s;
-}
+  /* Premium Sonuç Paneli */
+  .result { 
+    margin-top: 15px; padding: 22px; border-radius: 14px; 
+    font-size: 15px; font-weight: 500; background: rgba(255,255,255,0.02); 
+    border: 1px solid rgba(255,255,255,0.06); color: #e5e5ea; line-height: 1.6; text-align: center;
+  }
+  .low { background: rgba(255, 69, 58, 0.1); color: #ff453a; border-color: rgba(255, 69, 58, 0.2); }
+  .mid { background: rgba(255, 214, 10, 0.08); color: #ffd60a; border-color: rgba(255, 214, 10, 0.2); }
+  .high { background: rgba(48, 209, 88, 0.1); color: #30d158; border-color: rgba(48, 209, 88, 0.3); }
 
-input:focus{
-  border-color:#ff758c;
-  box-shadow:0 0 0 3px rgba(255,117,140,0.15);
-  outline:none;
-}
-.result{
-  margin-top:20px;
-  padding:18px;
-  border-radius:14px;
-  background:#f9fafb;
-  border:1px solid #eee;
-  font-size:16px;
-}
-button,.slide-btn{
-  background:#ff758c;
-  color:white;
-  border:none;
-  padding:14px;
-  border-radius:12px;
-  font-size:15px;
-  cursor:pointer;
-  transition:0.2s;
-}
+  /* Overlays & Popups */
+  #popupOverlay, #installOverlay, #donemOverlay {
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    display: flex; justify-content: center; align-items: center; z-index: 9999;
+  }
+  .popupBox { max-width: 440px; width: 90%; }
+  .popupContent {
+    background: #1c1c1e; border-radius: 24px; padding: 40px;
+    text-align: center; animation: popupEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    position: relative; border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  }
+  .popupContent h2 { color: #ffffff; font-weight: 500; letter-spacing: -0.01em; }
+  .popupContent.closing { animation: popupExit 0.3s ease forwards; }
+  .popupDivider { height: 1px; background: rgba(255,255,255,0.1); margin: 24px 0; }
+  .popupList { list-style: none; padding: 0; margin: 0; text-align: left; }
+  .popupList li { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: #d1d1d6; }
+  .closeBtn { position: absolute; top: 20px; right: 22px; font-size: 22px; cursor: pointer; color: #8e8e93; transition: color 0.2s; }
+  .closeBtn:hover { color: #ffffff; }
+  #installContent video { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); }
 
-button:hover,.slide-btn:hover{
-  background:#ff5277;
-  transform:scale(1.02);
-}
-*{
-  box-sizing:border-box;
-}
+  @keyframes popupEnter { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+  @keyframes popupExit { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.95); } }
 
-body{
-  margin:0;
-}
-</style>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+  /* Swiper & Progress boş şablon uyumluluğu */
+  .progress-bar, .autoplay-progress { height: 2px; background: rgba(255,255,255,0.1); margin-bottom: 10px; position: relative; overflow: hidden;}
+  .autoplay-progress-bar { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #ffffff; transition: width 3s linear;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+</head>
+
 <body>
 
+<!-- Saf Siyah Splash Ekranı -->
 <div id="splash">
   <div class="cinema-bg"></div>
-
   <div class="cinema-content">
     <img src="logo.png" class="cinema-logo">
     <div class="cinema-text">THESAP</div>
@@ -422,109 +209,173 @@ body{
 
 <!-- Ana Site -->
 <div id="mainSite">
-<!-- DÖNEM SEÇ POPUP -->
-<div id="donemOverlay" style="display:none;">
-  <div class="popupBox">
-    <div class="popupContent">
 
-      <h2>📅 Lütfen Döneminizi Seçiniz</h2>
-
-      <p style="margin-top:10px; font-size:14px; color:#555;">
-        Seçtiğiniz dönemin katsayıları otomatik bir şekilde yazılacaktır.
-      </p>
-
-      <div class="popupDivider"></div>
-
-      <button onclick="donemSec('1')">💚 Dönem 1</button>
-      <button onclick="donemSec('2')">💙 Dönem 2</button>
-      <button onclick="donemSec('3')">❤️ Dönem 3</button>
-
-      <div class="popupDivider"></div>
-
-      <p style="font-size:12px; color:#888; margin-top:10px;">
-        <strong>Dip Not:</strong> Sadece Dönem 2 Ve Dönem 1 Katsayıları Sistemde Tanımlıdır.
-      </p>
-
+  <!-- DÖNEM SEÇ POPUP -->
+  <div id="donemOverlay" style="display:none;">
+    <div class="popupBox">
+      <div class="popupContent">
+        <h2>Dönem Seçimi</h2>
+        <p style="margin-top:10px; font-size:13px; color:#aeaeb2; line-height: 1.6;">
+          Seçtiğiniz dönemin katsayıları otomatik olarak sisteme entegre edilecektir.
+        </p>
+        <div class="popupDivider"></div>
+        <button type="button" onclick="donemSec('1')">Dönem 1</button>
+        <button type="button" onclick="donemSec('2')">Dönem 2</button>
+        <button type="button" onclick="donemSec('3')">Dönem 3</button>
+        <div class="popupDivider"></div>
+        <p style="font-size:11px; color:#8e8e93; margin-top:10px;">
+          *Şu anda yalnızca Dönem 1 ve Dönem 2 katsayıları aktiftir.
+        </p>
+      </div>
     </div>
   </div>
-</div>
-<!-- 1. Bilgilendirme Popup -->
-<div id="popupOverlay">
-  <div class="popupBox">
-    <div class="popupContent" id="popupContent">
-      <span class="closeBtn" onclick="kapatPopup()">×</span>
-          <h2>T H E S A P</h2>
-      <div class="popupDivider"></div>
-      <strong>✨GÜNCELLEME✨</strong>
-      <div class="popupDivider"></div>
-      <ul class="popupList">
-        <li>YAZ TEMASI GELDİ ☀️🏖️</li>
-        <li>OTOMATİK ANLIK HESAPLAMA GELDİ</li>
-        <li>SİTE UI/KULLANICI ARAYÜZÜ İYİLEŞTİRİLDİ</li>
-        <li>❗thesap.vercel.app❗</li>
-      </ul>
+
+  <!-- 1. Bilgilendirme Popup -->
+  <div id="popupOverlay" style="display:none;">
+    <div class="popupBox">
+      <div class="popupContent" id="popupContent">
+        <span class="closeBtn" onclick="kapatPopup()">×</span>
+        <h2 style="letter-spacing: 0.2em; font-weight: 300;">THESAP</h2>
+        <div class="popupDivider"></div>
+        <span style="font-size: 11px; font-weight: 500; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase;">Güncelleme Raporu</span>
+        <div class="popupDivider"></div>
+        <ul class="popupList">
+          <li>Luxury Dark Minimalist Tasarım Düzeni Aktif Edildi ○</li>
+          <li>🎯 Smart "Hedef Not" Dağılım Modülü Entegre Edildi</li>
+          <li>Otomatik Anlık Hesaplama Modülü Optimizasyonu</li>
+          <li>thesap.vercel.app</li>
+        </ul>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- 2. Ana Ekrana Ekle Popup -->
-<div id="installOverlay" style="display:none;">
-  <div class="popupBox">
-    <div class="popupContent" id="installContent">
-      <span class="closeBtn" onclick="kapatInstall()">×</span>
-      <h2>📲 Nasıl Ana Ekrana Eklerim? (Videonun Açılması İçin Play(Oynat) Butonuna Tıklayınız.)</h2>
-      <div class="popupDivider"></div>
-      <video id="installVideo" controls preload="none">
-        <source src="video.mp4" type="video/mp4">
-        Tarayıcınız video etiketini desteklemiyor.
-      </video>
+  <!-- 2. Ana Ekrana Ekle Popup -->
+  <div id="installOverlay" style="display:none;">
+    <div class="popupBox">
+      <div class="popupContent" id="installContent">
+        <span class="closeBtn" onclick="kapatInstall()">×</span>
+        <h2>Ana Ekrana Ekleme</h2>
+        <p style="font-size:13px; color:#aeaeb2;">Videonun açılması için lütfen oynat butonuna tıklayınız.</p>
+        <div class="popupDivider"></div>
+        <video id="installVideo" controls preload="none">
+          <source src="video.mp4" type="video/mp4">
+          Tarayıcınız video etiketini desteklemiyor.
+        </video>
+      </div>
     </div>
   </div>
-</div>
-<!-- Hesaplama Box -->
-<div class="box">
-<img src="logo.png" class="logo">
-<div class="subtitle">Tıp Sınav Ortalama Hesaplayıcı 🧮 / Piyasanın En Kalitelisi ✨</div>
-<table>
-<tr><th>Kurul</th><th>Not</th><th>Katsayı</th></tr>
-<tr><td>1</td><td><input id="k1" type="number" step="0.01"></td><td><input id="c1" type="number" value="1"></td></tr>
-<tr><td>2</td><td><input id="k2" type="number" step="0.01"></td><td><input id="c2" type="number" value="1"></td></tr>
-<tr><td>3</td><td><input id="k3" type="number" step="0.01"></td><td><input id="c3" type="number" value="1"></td></tr>
-<tr><td>4</td><td><input id="k4" type="number" step="0.01"></td><td><input id="c4" type="number" value="1"></td></tr>
-<tr><td>5</td><td><input id="k5" type="number" step="0.01"></td><td><input id="c5" type="number" value="1"></td></tr>
-<button id="hesaplaBtn" onclick="hesapla()">Hesapla</button>
-</table>
-<div class="result" id="sonuc"></div>
+
+  <!-- ⏱️ Premium Final Geri Sayım Kutusu -->
+  <div class="box" style="padding: 25px 35px 30px 35px;">
+    <h2 style="font-size: 14px; text-transform: uppercase; color: #8e8e93; letter-spacing: 0.1em; margin-bottom: 15px; text-align: center;">Büyük Final Sınavı</h2>
+    <div class="countdown-container" id="countdownContainer">
+      <div class="countdown-item">
+        <div class="countdown-number" id="days">00</div>
+        <div class="countdown-label">Gün</div>
+      </div>
+      <div class="countdown-item" style="font-size: 28px; font-weight: 100; color: rgba(255,255,255,0.2); line-height: 1; margin-top: -10px;">:</div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="hours">00</div>
+        <div class="countdown-label">Saat</div>
+      </div>
+      <div class="countdown-item" style="font-size: 28px; font-weight: 100; color: rgba(255,255,255,0.2); line-height: 1; margin-top: -10px;">:</div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="minutes">00</div>
+        <div class="countdown-label">Dk</div>
+      </div>
+      <div class="countdown-item" style="font-size: 28px; font-weight: 100; color: rgba(255,255,255,0.2); line-height: 1; margin-top: -10px;">:</div>
+      <div class="countdown-item">
+        <div class="countdown-number" id="seconds">00</div>
+        <div class="countdown-label">Sn</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hesaplama Box -->
+  <div class="box">
+    <img src="logo.png" class="logo">
+    <div class="subtitle">Tıp Sınav Ortalama Hesaplayıcı</div>
+    <table>
+      <thead>
+        <tr><th>Kurul</th><th>Not</th><th>Katsayı</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Kurul 1</td><td><input id="k1" type="number" step="0.01"></td><td><input id="c1" type="number" value="1"></td></tr>
+        <tr><td>Kurul 2</td><td><input id="k2" type="number" step="0.01"></td><td><input id="c2" type="number" value="1"></td></tr>
+        <tr><td>Kurul 3</td><td><input id="k3" type="number" step="0.01"></td><td><input id="c3" type="number" value="1"></td></tr>
+        <tr><td>Kurul 4</td><td><input id="k4" type="number" step="0.01"></td><td><input id="c4" type="number" value="1"></td></tr>
+        <tr><td>Kurul 5</td><td><input id="k5" type="number" step="0.01"></td><td><input id="c5" type="number" value="1"></td></tr>
+      </tbody>
+    </table>
+
+    <!-- 🎯 Hedef Not Simülatörü Girişi -->
+    <div class="hedef-wrapper">
+      <div class="hedef-title">🎯 İstediğin Yıl Sonu Ortalaması:</div>
+      <input id="hedefNot" type="number" placeholder="Örn: 72" step="1" max="100">
+    </div>
+
+    <div class="result" id="sonuc">✏️ Not girmeye başla, ortalaman burada görünecek...</div>
+  </div>
+
+  <!-- 📅 Günün Ders Programı -->
+  <div class="box">
+    <h2>Günün Ders Programı</h2>
+    <img src="ders.jpg" alt="Ders Programı" style="width:100%; border-radius:14px; margin-top:5px; border: 1px solid rgba(255,255,255,0.05);" loading="lazy">
+  </div>
+
+  <!-- Ders Kaynakları -->
+  <div class="box">
+    <h2>Ders Kaynakları</h2>
+    <a href="https://drive.google.com/drive/folders/1Sr8-RnHtCj3tdHbOtfs0d6CAfph1y-i4" target="_blank" class="slide-btn">Ders Slaytları</a>
+    <a href="https://drive.google.com/drive/folders/1swUEEMs95qw4ICrtsfY44FLXC20qoil4" target="_blank" class="slide-btn">Ders Slaytları (Notlu)</a>
+  </div>
+
 </div>
 
-<!-- 📅 Günün Ders Programı -->
-<div class="box">
-  <h2>📅 <span class="rgb-text">Günün Ders Programı</span></h2>
-  <img src="ders.jpg"
-       alt="Ders Programı"
-       style="width:100%; border-radius:15px; margin-top:15px;"
-       loading="lazy">
-</div>
-<!-- Ders Kaynakları -->
-<div class="box">
-<h2>📚 <span class="rgb-text">Ders Kaynakları</span></h2>
-<a href="https://drive.google.com/drive/folders/1Sr8-RnHtCj3tdHbOtfs0d6CAfph1y-i4" target="_blank" class="slide-btn">Ders Slaytları</a>
-<a href="https://drive.google.com/drive/folders/1swUEEMs95qw4ICrtsfY44FLXC20qoil4" target="_blank" class="slide-btn">Ders Slaytları (NOTLU)</a>
-</div>
-</div>
+<!-- --- SİTE SCRIPT MANTIĞI --- -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-// Splash ekranı gizle ve siteyi göster
+// Final Geri Sayım Sayacı Mantığı (11 Haziran 10:00)
+const finalTarihi = new Date("June 11, 2026 10:00:00").getTime();
+const karsilaSifir = (num) => num < 10 ? '0' + num : num;
+
+const sayacGuncelle = setInterval(() => {
+  const simdi = new Date().getTime();
+  const mesafe = finalTarihi - simdi;
+
+  if (mesafe < 0) {
+    clearInterval(sayacGuncelle);
+    document.getElementById("countdownContainer").innerHTML = "<div style='font-size:18px; font-weight:500; color:#30d158; width:100%; text-align:center; letter-spacing:0.05em;'>🚀 SINAV BAŞLADI, BAŞARILAR!</div>";
+    return;
+  }
+
+  const gun = Math.floor(mesafe / (1000 * 60 * 60 * 24));
+  const saat = Math.floor((mesafe % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const dakika = Math.floor((mesafe % (1000 * 60 * 60)) / (1000 * 60));
+  const saniye = Math.floor((mesafe % (1000 * 60)) / 1000);
+
+  document.getElementById("days").innerText = karsilaSifir(gun);
+  document.getElementById("hours").innerText = karsilaSifir(saat);
+  document.getElementById("minutes").innerText = karsilaSifir(dakika);
+  document.getElementById("seconds").innerText = karsilaSifir(saniye);
+}, 1000);
+
+// Splash kontrolü
 document.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>{
     const splash=document.getElementById('splash');
-    splash.style.opacity=0;
-    setTimeout(()=>{
-      splash.style.display='none';
-      document.getElementById('mainSite').style.display='block';
-      document.body.classList.add('main-loaded');
-    },1000);
-  },1500);
+    if(splash) {
+      splash.style.transition="opacity 1s ease";
+      splash.style.opacity=0;
+      setTimeout(()=>{
+        splash.remove();
+        document.getElementById('mainSite').style.display='block';
+        document.body.classList.add('main-loaded');
+        document.getElementById("donemOverlay").style.display="flex";
+      },1000);
+    }
+  },3000);
 });
 
 // Service Worker
@@ -534,7 +385,6 @@ if('serviceWorker' in navigator){
     .catch(err=>console.log("SW hatası:",err));
 }
 
-// Popups ve hesaplama
 function kapatPopup(){
   const popup=document.getElementById("popupContent");
   popup.classList.add("closing");
@@ -556,285 +406,206 @@ function kapatInstall(){
   },300);
 }
 
-document.addEventListener("DOMContentLoaded", ()=>{
-  setTimeout(()=>{document.getElementById("popupOverlay").style.display="flex";},200);
-  const video = document.getElementById("installVideo");
-  if(video){
-    video.addEventListener("ended", ()=>{
-      kapatInstall();
-    });
+function donemSec(donem){
+  if(donem==="1"){
+    document.getElementById("c1").value=19.5; document.getElementById("c2").value=20.07; document.getElementById("c3").value=19.88; document.getElementById("c4").value=22.7; document.getElementById("c5").value=17.82;
   }
-});
-
+  if(donem==="2"){
+    document.getElementById("c1").value=26; document.getElementById("c2").value=17; document.getElementById("c3").value=22; document.getElementById("c4").value=26; document.getElementById("c5").value=9;
+  }
+  if(donem==="3"){
+    document.getElementById("c1").value=1; document.getElementById("c2").value=1; document.getElementById("c3").value=1; document.getElementById("c4").value=1; document.getElementById("c5").value=1;
+  }
+  document.getElementById("donemOverlay").style.display="none";
+  document.getElementById("popupOverlay").style.display="flex";
+  hesapla();
+}
 
 function hesapla(){
-
-  const notInputlar = [k1,k2,k3,k4,k5];
-  const katsayiInputlar = [c1,c2,c3,c4,c5];
+  const notInputlar = [
+    document.getElementById("k1"),
+    document.getElementById("k2"),
+    document.getElementById("k3"),
+    document.getElementById("k4"),
+    document.getElementById("k5")
+  ];
+  const katsayiInputlar = [
+    document.getElementById("c1"),
+    document.getElementById("c2"),
+    document.getElementById("c3"),
+    document.getElementById("c4"),
+    document.getElementById("c5")
+  ];
+  const sonuc = document.getElementById("sonuc");
 
   let agirlikliToplam = 0;
   let toplamKatsayi = 0;
+  let girilenKurulSayisi = 0;
 
-  for(let i=0;i<notInputlar.length;i++){
+  for(let i=0; i<notInputlar.length; i++){
     let not = parseFloat(notInputlar[i].value);
     let katsayi = parseFloat(katsayiInputlar[i].value);
 
     if(!isNaN(not)){
       agirlikliToplam += not * katsayi;
       toplamKatsayi += katsayi;
+      girilenKurulSayisi++;
     }
   }
 
-  if(toplamKatsayi === 0){
+  // Eğer hiçbir not girilmediyse ve hedef girildiyse başlangıç uyarısı verelim
+  const hedef = parseFloat(document.getElementById("hedefNot").value);
+  
+  if(girilenKurulSayisi === 0){
     sonuc.className = "result";
-    sonuc.innerHTML = "✏️ Not girmeye başla, ortalaman burada görünecek...";
+    if(!isNaN(hedef) && hedef > 0) {
+      sonuc.innerHTML = `🎯 Ortalama hedefin: <b>${hedef}</b><br><span style='font-size:12px; color:#8e8e93;'>Hesaplama yapabilmek için lütfen en az bir kurul notu girin.</span>`;
+    } else {
+      sonuc.innerHTML = "✏️ Not girmeye başla, ortalaman burada görünecek...";
+    }
     return;
+  }
+
+  // Toplam katsayı emniyeti
+  let tumKatsayi = 0;
+  for(let i=0; i<katsayiInputlar.length; i++) {
+    tumKatsayi += parseFloat(katsayiInputlar[i].value) || 0;
   }
 
   const kurulOrt = agirlikliToplam / toplamKatsayi;
+  let mesaj = `📊 Güncel kurul ortalaman: <b>${kurulOrt.toFixed(2)}</b><br><br>`;
 
-  let mesaj = `📊 Güncel ortalaman: <b>${kurulOrt.toFixed(2)}</b><br><br>`;
-
-  // 🔴 33 altı
+  // Klasik Durum Analizleri (Barajlar)
   if(kurulOrt < 33){
     sonuc.className = "result low";
-    mesaj += "<b>🔴 Kurul ortalaması 33 altı → Otomatik BÜT</b>";
+    mesaj += "<b>Kurul ortalaması 33 altı → Otomatik BÜT</b>";
     sonuc.innerHTML = mesaj;
     return;
   }
 
-  // 🟢 80+
   if(kurulOrt >= 80){
     sonuc.className = "result high";
-    mesaj += "<b>🟢 80 ve üzeri → Finalsiz geçtin 🎉</b>";
+    mesaj += "<b>80 ve üzeri → Finalsiz geçtin 🎉</b>";
     sonuc.innerHTML = mesaj;
     return;
   }
 
-  // 🟡 diğer durumlar
   sonuc.className = "result mid";
-
-  const bazOrtalama=66.5, bazSoru=80, soruArtis=16/6.5;
+  const bazOrtalama = 66.5, bazSoru = 80, soruArtis = 16 / 6.5;
 
   if(kurulOrt < bazOrtalama){
     const fark = bazOrtalama - kurulOrt;
     const soruSayisi = Math.ceil(bazSoru + fark * soruArtis);
-    mesaj += `🟡 Finale giriyorsun<br>Finalde <b>${soruSayisi}</b> soru çözmen gerekiyor`;
+    mesaj += `Finale giriyorsun (Finalde en az <b>${soruSayisi}</b> soru çözmelisin)<br>`;
   } else {
-    mesaj += "🟡 Finale giriyorsun (80 soru)";
+    mesaj += "Finale giriyorsun (Barajsız 80 soru)<br>";
+  }
+
+  // --- 🎯 SMART HEDEF NOT SİMÜLASYONU MANTIĞI ---
+  if(!isNaN(hedef) && hedef > 0 && hedef <= 100) {
+    mesaj += "<div style='height:1px; background:rgba(255,255,255,0.1); margin:15px 0;'></div>";
+    
+    // Durum A: Henüz tüm kurullar tamamlanmadı (Gelecek kurullardan kaçar almalı?)
+    if(girilenKurulSayisi < 5) {
+      const gerekenToplamPuan = hedef * tumKatsayi;
+      const kalanGerekenPuan = gerekenToplamPuan - agirlikliToplam;
+      
+      let kalanKatsayi = 0;
+      let bosKurullar = [];
+      
+      for(let i=0; i<notInputlar.length; i++) {
+        if(isNaN(parseFloat(notInputlar[i].value))) {
+          let katsayi = parseFloat(katsayiInputlar[i].value) || 0;
+          kalanKatsayi += katsayi;
+          bosKurullar.push({ index: (i + 1), katsayi: katsayi });
+        }
+      }
+      
+      // Temel ham not ihtiyacı
+      const hamGereken = kalanGerekenPuan / kalanKatsayi;
+      
+      if(hamGereken > 100) {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için kalan sınavlarda 100 tam puan bile yetmiyor. <span style='color:#ff453a;'>(İmkansız)</span>`;
+      } else if(hamGereken <= 0) {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması kalan kurallere girmesen bile zaten garanti!`;
+      } else {
+        // Doğal ve mantıklı dağılım simülasyonu:
+        // Katsayısı büyük olan sınava minik bir pozitif ağırlık vererek gerçek hayattaki not dağılımını taklit eder
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalamasına ulaşmak için kalan kurullardan alabileceğin örnek dağılım:<br><br>`;
+        
+        bosKurullar.forEach((kurul, idx) => {
+          // Katsayı büyüklüğüne göre notları ufak esnetelim (büyük kuruldan bir tık fazla, küçükten az alınabilir gibi)
+          // Eğer tek kurul boşsa direkt hamGereken'i basar, çoklu kurulda mantıklı varyasyon üretir.
+          let esnekNot = hamGereken;
+          if(bosKurullar.length > 1) {
+             const sapma = (kurul.katsayi / (kalanKatsayi / bosKurullar.length)) - 1;
+             esnekNot = hamGereken + (sapma * 4); // Maksimum 4 puanlık gerçekçi dağılım esnekliği
+             if(esnekNot > 100) esnekNot = 100;
+             if(esnekNot < 0) esnekNot = 0;
+          }
+          
+          mesaj += `▫️ <b>Kurul ${kurul.index}:</b> en az <span style='color:#ffd60a;'><b>${esnekNot.toFixed(1)}</b></span><br>`;
+        });
+      }
+    } 
+    // Durum B: 5 kurulun tamamı da girilmiş (Sadece final sınavı kalmış)
+    else {
+      // Formül: (Kurul Ort * 0.6) + (Final * 0.4) = Yıl Sonu Notu
+      const gerekenFinal = (hedef - (kurulOrt * 0.6)) / 0.4;
+      
+      if(gerekenFinal > 100) {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden <b>${gerekenFinal.toFixed(1)}</b> alman lazım. <span style='color:#ff453a;'>(Matematiksel olarak imkansız)</span>`;
+      } else if(gerekenFinal <= 0) {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden 0 (sıfır) alsan bile yetiyor!`;
+      } else {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için <b>Final Sınavından</b> en az <span style='color:#30d158;'><b>${gerekenFinal.toFixed(1)}</b></span> almalısın.`;
+      }
+    }
   }
 
   sonuc.innerHTML = mesaj;
 }
 
-document.querySelectorAll("input").forEach(input=>{
-  input.addEventListener("input", hesapla);
+// Tüm girdileri dinamik dinleme grubu
+document.addEventListener("input", (e) => {
+  if (e.target && e.target.tagName === "INPUT") {
+    hesapla();
+  }
 });
 
-</script>
-<script>
-window.addEventListener("load", function(){
-
-const btn = document.getElementById("thesapButton");
-const chat = document.getElementById("thesapChat");
-const input = document.getElementById("thesapInput");
-const messages = document.getElementById("thesapMessages");
-const closeBtn = document.getElementById("thesapClose");
-
-btn.onclick = () => chat.style.display = "flex";
-closeBtn.onclick = () => chat.style.display = "none";
-
-function miniAI(text){
-
-text = text.toLowerCase();
-
-// Selamlaşma
-if(text.includes("merhaba") || text.includes("selam"))
-  return "Merhaba 👨‍⚕️ Komutlara Ulaşmak İçin komutlar Yazman Yeterli !";
-
-// Kurul sistemi
-if(text.includes("kurul"))
-  return "Kurul başarısı için en kritik şey: Son 3 yıl çıkmış sorular + tekrar notları.";
-
-// Final
-if(text.includes("final"))
-  return "Finale kalırsan panik yapma. En çok çıkan konulara odaklan ve tekrar yap.";
-// Komutlar
-if(text.includes("komutlar"))
-  return "-final -kurul -merhaba -komutlar -(sınav ortalamanı yazabilirsin)";
-
-// Ortalama yorumu (sayı girilirse)
-if(!isNaN(text)){
-  let ort = parseFloat(text);
-
-  if(ort < 50) return "Bu ortalama riskli ⚠️ Finalde biraz fazla çözmen gerek kanka.";
-  if(ort < 66.5) return "Bu ortalama azıcık riskli 👌 Finalde çok az çözmen gerek kanka.";
-  if(ort === 66.5) return "Sınırdasın.";
-  if(ort < 80) return "Gayet iyi gidiyorsun. Finalde 80 çöz geç.";
-  return "Finalsiz geçme ihtimali yüksek 👏";
-}
-
-return "Böyle bir komutum olduğunu sanmıyorum lütfen ''komutlar'' yazarak komutlarımı dene!";
-}
-
-input.addEventListener("keypress", function(e){
-if(e.key === "Enter"){
-const userText = input.value.trim();
-if(userText === "") return;
-
-messages.innerHTML += `<div class="msg-user">${userText}</div>`;
-
-setTimeout(()=>{
-let cevap = miniAI(userText);
-messages.innerHTML += `<div class="msg-bot">${cevap}</div>`;
-messages.scrollTop = messages.scrollHeight;
-},400);
-
-input.value="";
-messages.scrollTop = messages.scrollHeight;
-}
-});
-
+// Video sonu dinleyicisi
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.getElementById("installVideo");
+  if(video){
+    video.addEventListener("ended", () => {
+      kapatInstall();
+    });
+  }
 });
 </script>
-<!-- THESAP BOT -->
-<div id="thesapButton">💬</div>
-
-<div id="thesapChat">
-  <div id="thesapHeader">
-    <div>
-      Thesap Bot <br>
-      <span id="thesapStatus">🟢 Çevrimiçi</span>
-    </div>
-    <div id="thesapClose">✖</div>
-  </div>
-
-  <div id="thesapMessages">
-    <div class="msg-bot">Merhaba 👋 Sana nasıl yardımcı olabilirim? Örneğin bana Merhaba diyebilirsin ! 😊</div>
-  </div>
-
-  <input type="text" id="thesapInput" placeholder="Mesaj yaz...">
-</div>
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
+// Swiper Progress kontrolü (Boş şablon hatasızlığı için korundu)
 const progressBar = document.querySelector(".autoplay-progress-bar");
-
-const swiper = new Swiper(".mySwiper", {
-  loop: true,
-  autoplay: {
-    delay: 3000,
-    disableOnInteraction: false,
-  },
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-  pagination: {
-    el: ".swiper-pagination",
-    clickable: true,
-    dynamicBullets: true,
-  },
-  on: {
-    slideChangeTransitionStart: function () {
-      progressBar.style.transition = "none";
-      progressBar.style.width = "0%";
-    },
-    slideChangeTransitionEnd: function () {
-      progressBar.style.transition = "width 3s linear";
-      progressBar.style.width = "100%";
+if(progressBar) {
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    autoplay: { delay: 3000, disableOnInteraction: false },
+    on: {
+      slideChangeTransitionStart: function () {
+        progressBar.style.transition = "none";
+        progressBar.style.width = "0%";
+      },
+      slideChangeTransitionEnd: function () {
+        progressBar.style.transition = "width 3s linear";
+        progressBar.style.width = "100%";
+      }
     }
-  }
-});
-
-// İlk başlatma
-setTimeout(()=>{
-  progressBar.style.width = "100%";
-},100);
-</script>
-<script>
-function createPetal() {
-  const petal = document.createElement("div");
-  petal.classList.add("petal");
-  
-  // Yaz emojileri eklendi
-  const summerEmojis = ["☀️", "🏖️", "🍉", "🍦"];
-  petal.innerHTML = summerEmojis[Math.floor(Math.random() * summerEmojis.length)];
-
-  petal.style.left = Math.random() * 100 + "vw";
-  petal.style.animationDuration = (Math.random() * 3 + 3) + "s";
-  petal.style.opacity = Math.random();
-  petal.style.fontSize = (Math.random() * 10 + 12) + "px";
-
-  document.body.appendChild(petal);
-
-  setTimeout(() => {
-    petal.remove();
-  }, 6000);
+  });
+  setTimeout(()=>{ progressBar.style.width = "100%"; },100);
 }
 
-setInterval(createPetal, 200);
-</script>
-<script>
-// Sayfa açılınca dönem popupı
-document.addEventListener("DOMContentLoaded",()=>{
-  setTimeout(()=>{
-    document.getElementById("donemOverlay").style.display="flex";
-  },500);
-});
-
-function donemSec(donem){
-
-  if(donem==="1"){
-    c1.value=19.5;
-    c2.value=20.07;
-    c3.value=19.88;
-    c4.value=22.7;
-    c5.value=17.82;
-  }
-
-  if(donem==="2"){
-    c1.value=26;
-    c2.value=17;
-    c3.value=22;
-    c4.value=26;
-    c5.value=9;
-  }
-
-  if(donem==="3"){
-    c1.value=1;
-    c2.value=1;
-    c3.value=1;
-    c4.value=1;
-    c5.value=1;
-  }
-
-  document.getElementById("donemOverlay").style.display="none";
-}
-</script>
-<script>
-document.addEventListener("DOMContentLoaded",()=>{
-
-  setTimeout(()=>{
-
-    const splash = document.getElementById("splash");
-
-    splash.style.transition = "opacity 1s ease";
-    splash.style.opacity = "0";
-
-    setTimeout(()=>{
-      splash.remove();
-      document.getElementById("mainSite").style.display="block";
-      document.body.classList.add("main-loaded");
-    },1000);
-
-  },3000);
-
-});
-</script>
-<script>
 let deferredPrompt;
-
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
