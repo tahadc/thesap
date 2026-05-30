@@ -122,57 +122,6 @@
     border-color: #ffffff; background: rgba(0, 0, 0, 0.4); box-shadow: 0 0 0 1px #ffffff; outline: none;
   }
 
-  /* --- Premium Glow Motion Kart --- */
-.premium-link-card {
-  position: relative;
-  padding: 28px;
-  border-radius: 24px;
-  background: #121212; /* Biraz daha derin siyah */
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: hidden;
-  text-align: center;
-  cursor: pointer;
-  margin: 0 auto 30px auto;
-  max-width: 600px;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Arka planda yumuşak hareket eden ışık */
-.premium-link-card::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
-  animation: glow-motion 8s ease-in-out infinite;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* İçeriklerin üstte kalmasını sağlar */
-.card-content {
-  position: relative;
-  z-index: 1;
-}
-
-/* Hareket Senaryosu */
-@keyframes glow-motion {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(10%, 10%); }
-  100% { transform: translate(0, 0); }
-}
-
-.premium-link-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.premium-link-card:active {
-  transform: scale(0.98);
-}
-
   /* Hedef Not Simülatör Alanı */
   .hedef-wrapper {
     display: flex; justify-content: space-between; align-items: center;
@@ -180,35 +129,6 @@
     border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; margin-top: 20px;
   }
   .hedef-title { font-size: 13px; font-weight: 500; color: #aeaeb2; }
-
-  /* --- Açılır Kapanır Klasör Listesi Elemanları --- */
-  .tree-branch { margin-bottom: 10px; border-radius: 14px; background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04); overflow: hidden; }
-  
-  .tree-header {
-    width: 100%; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;
-    background: rgba(255,255,255,0.02); border: none; color: #ffffff; font-size: 14px; font-weight: 500;
-    cursor: pointer; text-align: left; transition: all 0.2s ease;
-  }
-  .tree-header:hover { background: rgba(255,255,255,0.06); }
-  .tree-header .icon { color: #8e8e93; font-size: 11px; transition: transform 0.3s ease; }
-  .tree-branch.active .tree-header .icon { transform: rotate(90deg); color: #ffffff; }
-  
-  .tree-content {
-    max-height: 0; overflow: hidden; transition: max-height 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    background: rgba(0,0,0,0.15); display: flex; flex-direction: column; padding: 0 12px;
-  }
-  .tree-branch.active .tree-content { padding: 12px; }
-
-  /* Dosya / Sınav Link Hücresi */
-  .file-item {
-    display: flex; justify-content: space-between; align-items: center; padding: 14px 16px;
-    border-radius: 10px; color: #e5e5ea; cursor: pointer; font-size: 13px;
-    transition: all 0.2s ease; border-bottom: 1px solid rgba(255,255,255,0.03);
-  }
-  .file-item:last-child { border-bottom: none; }
-  .file-item:hover { background: rgba(255,255,255,0.04); color: #ffffff; transform: translateX(3px); }
-  .file-item .badge { font-size: 10px; background: rgba(255,255,255,0.08); padding: 4px 8px; border-radius: 6px; color: #aeaeb2; font-weight: 500; }
-  .file-item .badge.active { background: rgba(48, 209, 88, 0.15); color: #30d158; border: 1px solid rgba(48, 209, 88, 0.2); }
 
   /* Metalik Koyu Premium Link Butonları */
   .slide-btn {
@@ -226,17 +146,13 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.4); 
   }
   
-  /* Arşiv Butonu Altın Sarısı Premium Stil */
-  .archive-trigger-btn {
-    background: linear-gradient(180deg, #ffd60a, #ccaa00);
-    color: #000000;
-    font-weight: 600;
-    border: none;
+  /* Popup İçi Buton Özelleştirmesi */
+  .popupContent button {
+    width: 100%; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer;
+    background: rgba(255,255,255,0.05); color: #ffffff; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px;
+    text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s;
   }
-  .archive-trigger-btn:hover {
-    background: linear-gradient(180deg, #ffe045, #ffd60a);
-    border-color: transparent;
-  }
+  .popupContent button:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
 
   /* Premium Sonuç Paneli */
   .result { 
@@ -249,22 +165,11 @@
   .high { background: rgba(48, 209, 88, 0.1); color: #30d158; border-color: rgba(48, 209, 88, 0.3); }
 
   /* Overlays & Popups */
-  #popupOverlay, #installOverlay, #donemOverlay, #archiveOverlay, #pdfOverlay {
+  #popupOverlay, #installOverlay, #donemOverlay {
     position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
     display: flex; justify-content: center; align-items: center; z-index: 9999;
   }
-  
-  /* Arşiv Popupu Düzenlemeleri */
-  #archiveOverlay .popupBox { max-width: 650px; width: 95%; }
-  #archiveOverlay .popupContent { text-align: left; padding: 40px 30px 30px 30px; max-height: 85vh; overflow-y: auto; position: relative; }
-  
-  /* 📑 Sınav PDF Görüntüleyici Penceresi Tasarımı */
-  #pdfOverlay .popupBox { max-width: 900px; width: 95%; height: 85vh; }
-  #pdfOverlay .popupContent { padding: 45px 15px 15px 15px; height: 100%; display: flex; flex-direction: column; background: #111111; }
-  .pdf-container { width: 100%; height: 100%; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); background: #1c1c1e; }
-  .pdf-container iframe { width: 100%; height: 100%; border: none; }
-
   .popupBox { max-width: 440px; width: 90%; }
   .popupContent {
     background: #1c1c1e; border-radius: 24px; padding: 40px;
@@ -277,26 +182,14 @@
   .popupDivider { height: 1px; background: rgba(255,255,255,0.1); margin: 24px 0; }
   .popupList { list-style: none; padding: 0; margin: 0; text-align: left; }
   .popupList li { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: #d1d1d6; }
-  
-  /* Ortak Kapatma Çarpı (X) Butonları */
-  .closeBtn { 
-    position: absolute; top: 18px; right: 22px; font-size: 28px; line-height: 1;
-    cursor: pointer; color: #8e8e93; transition: color 0.2s, transform 0.2s; z-index: 10000; 
-  }
-  .closeBtn:hover { color: #ffffff; transform: scale(1.1); }
+  .closeBtn { position: absolute; top: 20px; right: 22px; font-size: 22px; cursor: pointer; color: #8e8e93; transition: color 0.2s; }
+  .closeBtn:hover { color: #ffffff; }
   #installContent video { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); }
-
-  .popupContent button[type="button"] {
-    width: 100%; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer;
-    background: rgba(255,255,255,0.05); color: #ffffff; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px;
-    text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s;
-  }
-  .popupContent button[type="button"]:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
 
   @keyframes popupEnter { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
   @keyframes popupExit { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.95); } }
 
-  /* Boş şablon uyumluluğu */
+  /* Swiper & Progress boş şablon uyumluluğu */
   .progress-bar, .autoplay-progress { height: 2px; background: rgba(255,255,255,0.1); margin-bottom: 10px; position: relative; overflow: hidden;}
   .autoplay-progress-bar { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #ffffff; transition: width 3s linear;}
   </style>
@@ -305,6 +198,7 @@
 
 <body>
 
+<!-- Saf Siyah Splash Ekranı -->
 <div id="splash">
   <div class="cinema-bg"></div>
   <div class="cinema-content">
@@ -313,8 +207,10 @@
   </div>
 </div>
 
+<!-- Ana Site -->
 <div id="mainSite">
 
+  <!-- DÖNEM SEÇ POPUP -->
   <div id="donemOverlay" style="display:none;">
     <div class="popupBox">
       <div class="popupContent">
@@ -327,13 +223,14 @@
         <button type="button" onclick="donemSec('2')">Dönem 2</button>
         <button type="button" onclick="donemSec('3')">Dönem 3</button>
         <div class="popupDivider"></div>
-        <p style="font-size:11px; color:#8e8e93; margin-top:10px; text-align:center;">
+        <p style="font-size:11px; color:#8e8e93; margin-top:10px;">
           *Şu anda yalnızca Dönem 1 ve Dönem 2 katsayıları aktiftir.
         </p>
       </div>
     </div>
   </div>
 
+  <!-- 1. Bilgilendirme Popup -->
   <div id="popupOverlay" style="display:none;">
     <div class="popupBox">
       <div class="popupContent" id="popupContent">
@@ -343,13 +240,16 @@
         <span style="font-size: 11px; font-weight: 500; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase;">Güncelleme Raporu</span>
         <div class="popupDivider"></div>
         <ul class="popupList">
-          <li>📝 Final Çalışmanıza Yardımcı Bir Yenilik Yaptık</li>
+          <li>Luxury Dark Minimalist Tasarım Düzeni Aktif Edildi ○</li>
+          <li>🎯 Smart "Hedef Not" Dağılım Modülü Entegre Edildi</li>
+          <li>Otomatik Anlık Hesaplama Modülü Optimizasyonu</li>
           <li>thesap.vercel.app</li>
         </ul>
       </div>
     </div>
   </div>
 
+  <!-- 2. Ana Ekrana Ekle Popup -->
   <div id="installOverlay" style="display:none;">
     <div class="popupBox">
       <div class="popupContent" id="installContent">
@@ -365,112 +265,7 @@
     </div>
   </div>
 
-  <div id="archiveOverlay" style="display:none;">
-    <div class="popupBox">
-      <div class="popupContent" id="archiveContent">
-        <span class="closeBtn" onclick="toggleArchivePopup(false)">×</span>
-        
-        <h2 style="margin-bottom: 5px;">Dönem 2 Sınav Arşivi</h2>
-        <p style="font-size:12px; color:#8e8e93; margin-top:0; margin-bottom:20px;">Kurullar (2021-2026) & Finaller (2020-2025)</p>
-        
-        <div class="tree-branch">
-          <button class="tree-header" onclick="toggleTree(this)">
-            <span>📦 Kurul 1 Soruları</span>
-            <span class="icon">▶</span>
-          </button>
-          <div class="tree-content">
-            <div onclick="openPDF('./arsiv/D2K1_2025-2026.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 1 (2025-2026)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K1_2024-2025.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 1 (2024-2025)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K1_2023-2024.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 1 (2023-2024)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K1_2022-2023.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 1 (2022-2023)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K1_2021-2022.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 1 (2021-2022)</span><span class="badge active">Aç</span></div>
-          </div>
-        </div>
-
-        <div class="tree-branch">
-          <button class="tree-header" onclick="toggleTree(this)">
-            <span>📦 Kurul 2 Soruları</span>
-            <span class="icon">▶</span>
-          </button>
-          <div class="tree-content">
-            <div onclick="openPDF('./arsiv/D2K2_2025-2026.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 2 (2025-2026)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K2_2024-2025.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 2 (2024-2025)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K2_2023-2024.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 2 (2023-2024)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K2_2022-2023.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 2 (2022-2023)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K2_2021-2022.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 2 (2021-2022)</span><span class="badge active">Aç</span></div>
-          </div>
-        </div>
-
-        <div class="tree-branch">
-          <button class="tree-header" onclick="toggleTree(this)">
-            <span>📦 Kurul 3 Soruları</span>
-            <span class="icon">▶</span>
-          </button>
-          <div class="tree-content">
-            <div onclick="openPDF('./arsiv/D2K3_2025-2026.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 3 (2025-2026)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K3_2024-2025.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 3 (2024-2025)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K3_2023-2024.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 3 (2023-2024)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K3_2022-2023.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 3 (2022-2023)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K3_2021-2022.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 3 (2021-2022)</span><span class="badge active">Aç</span></div>
-          </div>
-        </div>
-
-        <div class="tree-branch">
-          <button class="tree-header" onclick="toggleTree(this)">
-            <span>📦 Kurul 4 Soruları</span>
-            <span class="icon">▶</span>
-          </button>
-          <div class="tree-content">
-            <div onclick="openPDF('./arsiv/D2K4_2025-2026.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 4 (2025-2026)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K4_2024-2025.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 4 (2024-2025)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K4_2023-2024.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 4 (2023-2024)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K4_2022-2023.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 4 (2022-2023)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K4_2021-2022.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 4 (2021-2022)</span><span class="badge active">Aç</span></div>
-          </div>
-        </div>
-
-        <div class="tree-branch">
-          <button class="tree-header" onclick="toggleTree(this)">
-            <span>📦 Kurul 5 Soruları</span>
-            <span class="icon">▶</span>
-          </button>
-          <div class="tree-content">
-            <div onclick="openPDF('./arsiv/D2K5_2025-2026.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 5 (2025-2026)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K5_2024-2025.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 5 (2024-2025)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K5_2023-2024.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 5 (2023-2024)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K5_2022-2023.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 5 (2022-2023)</span><span class="badge active">Aç</span></div>
-            <div onclick="openPDF('./arsiv/D2K5_2021-2022.pdf')" class="file-item"><span>📄 Dönem 2 Kurul 5 (2021-2022)</span><span class="badge active">Aç</span></div>
-          </div>
-        </div>
-
-        <div class="tree-branch">
-          <button class="tree-header" onclick="toggleTree(this)" style="background: rgba(255,214,10,0.03); color:#ffd60a;">
-            <span>🎓 Yıl Sonu Final Sınavları</span>
-            <span class="icon" style="color:#ffd60a;">▶</span>
-          </button>
-          <div class="tree-content">
-            <div onclick="openPDF('./arsiv/D2_FINAL_2024-2025.pdf')" class="file-item"><span>✨ Dönem 2 Büyük Final (2024-2025)</span><span class="badge active" style="background: rgba(255,214,10,0.15); color:#ffd60a; border: 1px solid rgba(255,214,10,0.2);">İncele</span></div>
-            <div onclick="openPDF('./arsiv/D2_FINAL_2023-2024.pdf')" class="file-item"><span>✨ Dönem 2 Büyük Final (2023-2024)</span><span class="badge active" style="background: rgba(255,214,10,0.15); color:#ffd60a; border: 1px solid rgba(255,214,10,0.2);">İncele</span></div>
-            <div onclick="openPDF('./arsiv/D2_FINAL_2022-2023.pdf')" class="file-item"><span>✨ Dönem 2 Büyük Final (2022-2023)</span><span class="badge active" style="background: rgba(255,214,10,0.15); color:#ffd60a; border: 1px solid rgba(255,214,10,0.2);">İncele</span></div>
-            <div onclick="openPDF('./arsiv/D2_FINAL_2021-2022.pdf')" class="file-item"><span>✨ Dönem 2 Büyük Final (2021-2022)</span><span class="badge active" style="background: rgba(255,214,10,0.15); color:#ffd60a; border: 1px solid rgba(255,214,10,0.2);">İncele</span></div>
-            <div onclick="openPDF('./arsiv/D2_FINAL_2020-2021.pdf')" class="file-item"><span>✨ Dönem 2 Büyük Final (2020-2021)</span><span class="badge active" style="background: rgba(255,214,10,0.15); color:#ffd60a; border: 1px solid rgba(255,214,10,0.2);">İncele</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div id="pdfOverlay" style="display:none;">
-    <div class="popupBox">
-      <div class="popupContent" id="pdfContent">
-        <span class="closeBtn" onclick="closePDF()">×</span>
-        <div class="pdf-container">
-          <iframe id="pdfFrame" src=""></iframe>
-        </div>
-      </div>
-    </div>
-  </div>
-
+  <!-- ⏱️ Premium Final Geri Sayım Kutusu -->
   <div class="box" style="padding: 25px 35px 30px 35px;">
     <h2 style="font-size: 14px; text-transform: uppercase; color: #8e8e93; letter-spacing: 0.1em; margin-bottom: 15px; text-align: center;">Büyük Final Sınavı</h2>
     <div class="countdown-container" id="countdownContainer">
@@ -496,6 +291,7 @@
     </div>
   </div>
 
+  <!-- Hesaplama Box -->
   <div class="box">
     <img src="logo.png" class="logo">
     <div class="subtitle">Tıp Sınav Ortalama Hesaplayıcı</div>
@@ -512,6 +308,7 @@
       </tbody>
     </table>
 
+    <!-- 🎯 Hedef Not Simülatörü Girişi -->
     <div class="hedef-wrapper">
       <div class="hedef-title">🎯 İstediğin Yıl Sonu Ortalaması:</div>
       <input id="hedefNot" type="number" placeholder="Örn: 72" step="1" max="100">
@@ -520,84 +317,25 @@
     <div class="result" id="sonuc">✏️ Not girmeye başla, ortalaman burada görünecek...</div>
   </div>
 
-<a href="https://thesap.vercel.app" target="_blank" style="text-decoration: none; display: block;">
-  <div class="premium-link-card">
-    <div class="card-content">
-      <div style="font-size: 10px; font-weight: 600; color: #8e8e93; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px;">Güncel Linkimiz:</div>
-      <div style="color: #ffffff; font-size: 20px; font-weight: 500; letter-spacing: -0.02em;">
-        thesap.vercel.app 
-        <span style="font-size: 14px; opacity: 0.4;">↗</span>
-      </div>
-    </div>
-  </div>
-</a>
-
+  <!-- 📅 Günün Ders Programı -->
   <div class="box">
-    <h2>Ders Kaynakları & Arşiv</h2>
-    <button type="button" class="slide-btn archive-trigger-btn" onclick="toggleArchivePopup(true)">📁 ÇIKMIŞ SINAV ARŞİVİNİ AÇ</button>
+    <h2>Günün Ders Programı</h2>
+    <img src="ders.jpg" alt="Ders Programı" style="width:100%; border-radius:14px; margin-top:5px; border: 1px solid rgba(255,255,255,0.05);" loading="lazy">
+  </div>
+
+  <!-- Ders Kaynakları -->
+  <div class="box">
+    <h2>Ders Kaynakları</h2>
     <a href="https://drive.google.com/drive/folders/1Sr8-RnHtCj3tdHbOtfs0d6CAfph1y-i4" target="_blank" class="slide-btn">Ders Slaytları</a>
     <a href="https://drive.google.com/drive/folders/1swUEEMs95qw4ICrtsfY44FLXC20qoil4" target="_blank" class="slide-btn">Ders Slaytları (Notlu)</a>
   </div>
 
 </div>
 
+<!-- --- SİTE SCRIPT MANTIĞI --- -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 <script>
-// Klasör Yapısını Açıp Kapatan Premium Animasyon Fonksiyonu
-function toggleTree(header) {
-  const branch = header.parentElement;
-  const content = header.nextElementSibling;
-  
-  branch.classList.toggle('active');
-  
-  if (branch.classList.contains('active')) {
-    content.style.maxHeight = content.scrollHeight + "px";
-  } else {
-    content.style.maxHeight = "0px";
-  }
-}
-
-// Sınav Arşivi Listesini Açan/Kapatan Fonksiyon
-function toggleArchivePopup(open) {
-  const overlay = document.getElementById("archiveOverlay");
-  const content = document.getElementById("archiveContent");
-  
-  if (open) {
-    overlay.style.display = "flex";
-  } else {
-    content.classList.add("closing");
-    setTimeout(() => {
-      overlay.style.display = "none";
-      content.classList.remove("closing");
-    }, 300);
-  }
-}
-
-// 📑 PDF Dosyasını Pencere (Modal) İçinde Açan Yeni Fonksiyonlar
-function openPDF(pdfUrl) {
-  const overlay = document.getElementById("pdfOverlay");
-  const iframe = document.getElementById("pdfFrame");
-  
-  // Mobil cihazlarda kusursuz entegrasyon ve akış için url atanıyor
-  iframe.src = pdfUrl;
-  overlay.style.display = "flex";
-}
-
-// 📑 PDF Penceresini Çarpı (X) ile Kapatan Fonksiyon
-function closePDF() {
-  const overlay = document.getElementById("pdfOverlay");
-  const content = document.getElementById("pdfContent");
-  const iframe = document.getElementById("pdfFrame");
-  
-  content.classList.add("closing");
-  setTimeout(() => {
-    overlay.style.display = "none";
-    iframe.src = ""; // Bellek temizliği ve sesi kesmek için boşaltıyoruz
-    content.classList.remove("closing");
-  }, 300);
-}
-
 // Final Geri Sayım Sayacı Mantığı (11 Haziran 10:00)
 const finalTarihi = new Date("June 11, 2026 10:00:00").getTime();
 const karsilaSifir = (num) => num < 10 ? '0' + num : num;
@@ -623,7 +361,7 @@ const sayacGuncelle = setInterval(() => {
   document.getElementById("seconds").innerText = karsilaSifir(saniye);
 }, 1000);
 
-// Splash Kontrolü
+// Splash kontrolü
 document.addEventListener('DOMContentLoaded',()=>{
   setTimeout(()=>{
     const splash=document.getElementById('splash');
@@ -640,7 +378,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   },3000);
 });
 
-// Service Worker Girişi
+// Service Worker
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('service-worker.js')
     .then(()=>console.log("SW kaydedildi"))
@@ -685,13 +423,17 @@ function donemSec(donem){
 
 function hesapla(){
   const notInputlar = [
-    document.getElementById("k1"), document.getElementById("k2"),
-    document.getElementById("k3"), document.getElementById("k4"),
+    document.getElementById("k1"),
+    document.getElementById("k2"),
+    document.getElementById("k3"),
+    document.getElementById("k4"),
     document.getElementById("k5")
   ];
   const katsayiInputlar = [
-    document.getElementById("c1"), document.getElementById("c2"),
-    document.getElementById("c3"), document.getElementById("c4"),
+    document.getElementById("c1"),
+    document.getElementById("c2"),
+    document.getElementById("c3"),
+    document.getElementById("c4"),
     document.getElementById("c5")
   ];
   const sonuc = document.getElementById("sonuc");
@@ -711,18 +453,20 @@ function hesapla(){
     }
   }
 
-  const hedon = parseFloat(document.getElementById("hedefNot").value);
+  // Eğer hiçbir not girilmediyse ve hedef girildiyse başlangıç uyarısı verelim
+  const hedef = parseFloat(document.getElementById("hedefNot").value);
   
   if(girilenKurulSayisi === 0){
     sonuc.className = "result";
-    if(!isNaN(hedon) && hedon > 0) {
-      sonuc.innerHTML = `🎯 Ortalama hedefin: <b>${hedon}</b><br><span style='font-size:12px; color:#8e8e93;'>Hesaplama yapabilmek için lütfen en az bir kurul notu girin.</span>`;
+    if(!isNaN(hedef) && hedef > 0) {
+      sonuc.innerHTML = `🎯 Ortalama hedefin: <b>${hedef}</b><br><span style='font-size:12px; color:#8e8e93;'>Hesaplama yapabilmek için lütfen en az bir kurul notu girin.</span>`;
     } else {
       sonuc.innerHTML = "✏️ Not girmeye başla, ortalaman burada görünecek...";
     }
     return;
   }
 
+  // Toplam katsayı emniyeti
   let tumKatsayi = 0;
   for(let i=0; i<katsayiInputlar.length; i++) {
     tumKatsayi += parseFloat(katsayiInputlar[i].value) || 0;
@@ -731,6 +475,7 @@ function hesapla(){
   const kurulOrt = agirlikliToplam / toplamKatsayi;
   let mesaj = `📊 Güncel kurul ortalaman: <b>${kurulOrt.toFixed(2)}</b><br><br>`;
 
+  // Klasik Durum Analizleri (Barajlar)
   if(kurulOrt < 33){
     sonuc.className = "result low";
     mesaj += "<b>Kurul ortalaması 33 altı → Otomatik BÜT</b>";
@@ -753,14 +498,16 @@ function hesapla(){
     const soruSayisi = Math.ceil(bazSoru + fark * soruArtis);
     mesaj += `Finale giriyorsun (Finalde en az <b>${soruSayisi}</b> soru çözmelisin)<br>`;
   } else {
-    mesaj += "Finale giriyorsun (Barajsız 80 soru)";
+    mesaj += "Finale giriyorsun (Barajsız 80 soru)<br>";
   }
 
-  if(!isNaN(hedon) && hedon > 0 && hedon <= 100) {
+  // --- 🎯 SMART HEDEF NOT SİMÜLASYONU MANTIĞI ---
+  if(!isNaN(hedef) && hedef > 0 && hedef <= 100) {
     mesaj += "<div style='height:1px; background:rgba(255,255,255,0.1); margin:15px 0;'></div>";
     
+    // Durum A: Henüz tüm kurullar tamamlanmadı (Gelecek kurullardan kaçar almalı?)
     if(girilenKurulSayisi < 5) {
-      const gerekenToplamPuan = hedon * tumKatsayi;
+      const gerekenToplamPuan = hedef * tumKatsayi;
       const kalanGerekenPuan = gerekenToplamPuan - agirlikliToplam;
       
       let kalanKatsayi = 0;
@@ -774,34 +521,44 @@ function hesapla(){
         }
       }
       
+      // Temel ham not ihtiyacı
       const hamGereken = kalanGerekenPuan / kalanKatsayi;
       
       if(hamGereken > 100) {
-        mesaj += `🎯 Yıl sonu <b>${hedon}</b> ortalaması için kalan sınavlarda 100 tam puan bile yetmiyor. <span style='color:#ff453a;'>(İmkansız)</span>`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için kalan sınavlarda 100 tam puan bile yetmiyor. <span style='color:#ff453a;'>(İmkansız)</span>`;
       } else if(hamGereken <= 0) {
-        mesaj += `🎯 Yıl sonu <b>${hedon}</b> ortalaması kalan kurallere girmesen bile zaten garanti!`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması kalan kurallere girmesen bile zaten garanti!`;
       } else {
-        mesaj += `🎯 Yıl sonu <b>${hedon}</b> ortalamasına ulaşmak için kalan kurullardan alabileceğin örnek dağılım:<br><br>`;
+        // Doğal ve mantıklı dağılım simülasyonu:
+        // Katsayısı büyük olan sınava minik bir pozitif ağırlık vererek gerçek hayattaki not dağılımını taklit eder
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalamasına ulaşmak için kalan kurullardan alabileceğin örnek dağılım:<br><br>`;
         
         bosKurullar.forEach((kurul, idx) => {
+          // Katsayı büyüklüğüne göre notları ufak esnetelim (büyük kuruldan bir tık fazla, küçükten az alınabilir gibi)
+          // Eğer tek kurul boşsa direkt hamGereken'i basar, çoklu kurulda mantıklı varyasyon üretir.
           let esnekNot = hamGereken;
           if(bosKurullar.length > 1) {
              const sapma = (kurul.katsayi / (kalanKatsayi / bosKurullar.length)) - 1;
-             esnekNot = hamGereken + (sapma * 4);
+             esnekNot = hamGereken + (sapma * 4); // Maksimum 4 puanlık gerçekçi dağılım esnekliği
              if(esnekNot > 100) esnekNot = 100;
              if(esnekNot < 0) esnekNot = 0;
           }
+          
           mesaj += `▫️ <b>Kurul ${kurul.index}:</b> en az <span style='color:#ffd60a;'><b>${esnekNot.toFixed(1)}</b></span><br>`;
         });
       }
-    } else {
-      const gerekenFinal = (hedon - (kurulOrt * 0.6)) / 0.4;
+    } 
+    // Durum B: 5 kurulun tamamı da girilmiş (Sadece final sınavı kalmış)
+    else {
+      // Formül: (Kurul Ort * 0.6) + (Final * 0.4) = Yıl Sonu Notu
+      const gerekenFinal = (hedef - (kurulOrt * 0.6)) / 0.4;
+      
       if(gerekenFinal > 100) {
-        mesaj += `🎯 Yıl sonu <b>${hedon}</b> ortalaması için Finalden <b>${gerekenFinal.toFixed(1)}</b> alman lazım. <span style='color:#ff453a;'>(İmkansız)</span>`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden <b>${gerekenFinal.toFixed(1)}</b> alman lazım. <span style='color:#ff453a;'>(Matematiksel olarak imkansız)</span>`;
       } else if(gerekenFinal <= 0) {
-        mesaj += `🎯 Yıl sonu <b>${hedon}</b> ortalaması için Finalden 0 alsan bile yetiyor!`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden 0 (sıfır) alsan bile yetiyor!`;
       } else {
-        mesaj += `🎯 Yıl sonu <b>${hedon}</b> ortalaması için <b>Final Sınavından</b> en az <span style='color:#30d158;'><b>${gerekenFinal.toFixed(1)}</b></span> almalısın.`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için <b>Final Sınavından</b> en az <span style='color:#30d158;'><b>${gerekenFinal.toFixed(1)}</b></span> almalısın.`;
       }
     }
   }
@@ -809,17 +566,49 @@ function hesapla(){
   sonuc.innerHTML = mesaj;
 }
 
+// Tüm girdileri dinamik dinleme grubu
 document.addEventListener("input", (e) => {
   if (e.target && e.target.tagName === "INPUT") {
     hesapla();
   }
 });
 
+// Video sonu dinleyicisi
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("installVideo");
   if(video){
-    video.addEventListener("ended", () => { kapatInstall(); });
+    video.addEventListener("ended", () => {
+      kapatInstall();
+    });
   }
+});
+</script>
+
+<script>
+// Swiper Progress kontrolü (Boş şablon hatasızlığı için korundu)
+const progressBar = document.querySelector(".autoplay-progress-bar");
+if(progressBar) {
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,
+    autoplay: { delay: 3000, disableOnInteraction: false },
+    on: {
+      slideChangeTransitionStart: function () {
+        progressBar.style.transition = "none";
+        progressBar.style.width = "0%";
+      },
+      slideChangeTransitionEnd: function () {
+        progressBar.style.transition = "width 3s linear";
+        progressBar.style.width = "100%";
+      }
+    }
+  });
+  setTimeout(()=>{ progressBar.style.width = "100%"; },100);
+}
+
+let deferredPrompt;
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
 });
 </script>
 </body>
