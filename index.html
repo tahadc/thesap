@@ -11,41 +11,115 @@
   <link rel="manifest" href="manifest.json">
 
   <style>
+  /* --- DİNAMİK TEMA DEĞİŞKENLERİ --- */
+  :root {
+    /* 1. Premium Apple Dark (Varsayılan) */
+    --bg-main: #0a0a0a;
+    --bg-splash: #000000;
+    --bg-splash-radial: #111111;
+    --text-main: #f5f5f7;
+    --text-muted: #8e8e93;
+    --text-heading: #ffffff;
+    --glow-1: rgba(255, 255, 255, 0.04);
+    --glow-2: rgba(255, 255, 255, 0.03);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-hover-bg: rgba(255, 255, 255, 0.05);
+    --card-hover-border: rgba(255, 255, 255, 0.15);
+    --input-bg: rgba(0, 0, 0, 0.2);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --btn-grad-start: #2c2c2e;
+    --btn-grad-end: #1c1c1e;
+    --btn-text: #ffffff;
+    --popup-bg: #1c1c1e;
+    --img-filter: invert(1);
+    --accent: #30d158;
+  }
+
+  [data-theme="light"] {
+    /* 2. Nordic Light Mode */
+    --bg-main: #f5f5f7;
+    --bg-splash: #ffffff;
+    --bg-splash-radial: #e5e5ea;
+    --text-main: #1d1d1f;
+    --text-muted: #86868b;
+    --text-heading: #000000;
+    --glow-1: rgba(0, 0, 0, 0.02);
+    --glow-2: rgba(0, 0, 0, 0.01);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --card-hover-bg: rgba(255, 255, 255, 0.9);
+    --card-hover-border: rgba(0, 0, 0, 0.15);
+    --input-bg: rgba(255, 255, 255, 1);
+    --input-border: rgba(0, 0, 0, 0.15);
+    --btn-grad-start: #e5e5ea;
+    --btn-grad-end: #d1d1d6;
+    --btn-text: #1d1d1f;
+    --popup-bg: #ffffff;
+    --img-filter: invert(0);
+    --accent: #34c759;
+  }
+
+  [data-theme="cyberpunk"] {
+    /* 3. Cyberpunk Zen Mode */
+    --bg-main: #0b0813;
+    --bg-splash: #05030a;
+    --bg-splash-radial: #1a0f30;
+    --text-main: #00ff66;
+    --text-muted: #8a7ebb;
+    --text-heading: #9d4edd;
+    --glow-1: rgba(157, 78, 221, 0.1);
+    --glow-2: rgba(0, 255, 102, 0.05);
+    --card-bg: rgba(20, 15, 38, 0.6);
+    --card-border: rgba(157, 78, 221, 0.2);
+    --card-hover-bg: rgba(30, 22, 56, 0.8);
+    --card-hover-border: rgba(0, 255, 102, 0.4);
+    --input-bg: #05030a;
+    --input-border: rgba(157, 78, 221, 0.4);
+    --btn-grad-start: #7b2cbf;
+    --btn-grad-end: #3c096c;
+    --btn-text: #00ff66;
+    --popup-bg: #140f26;
+    --img-filter: hue-rotate(260deg) brightness(1.2);
+    --accent: #00ff66;
+  }
+
   /* --- Premium Apple Tasarım Dili --- */
   *{ box-sizing: border-box; letter-spacing: -0.015em; }
   body{ 
     margin: 0; 
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif; 
-    background: #0a0a0a; 
-    color: #f5f5f7;
+    background: var(--bg-main); 
+    color: var(--text-main);
     overscroll-behavior: none;
     user-select: none;
     -webkit-touch-callout: none;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    transition: background 0.5s ease, color 0.5s ease;
   }
 
   /* Arka Plana Derinlik Veren Premium Işık Süzmeleri */
   body::before {
     content: ""; position: fixed; width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(255,255,255,0.04), transparent 70%);
+    background: radial-gradient(circle, var(--glow-1), transparent 70%);
     top: -150px; left: -150px; filter: blur(100px); z-index: -1;
   }
   body::after {
     content: ""; position: fixed; width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(255,255,255,0.03), transparent 70%);
+    background: radial-gradient(circle, var(--glow-2), transparent 70%);
     bottom: -200px; right: -150px; filter: blur(120px); z-index: -1;
   }
 
   /* --- Saf Lüks Splash Ekran --- */
   #splash {
-    position: fixed; inset: 0; background: #000000;
+    position: fixed; inset: 0; background: var(--bg-splash);
     display: flex; justify-content: center; align-items: center; z-index: 99999; 
     overflow: hidden;
   }
   .cinema-bg {
     position: absolute; inset: 0; 
-    background: radial-gradient(circle at center, #111111, #000000 80%);
+    background: radial-gradient(circle at center, var(--bg-splash-radial), var(--bg-splash) 80%);
   }
   .cinema-content {
     text-align: center; opacity: 0; transform: scale(0.96);
@@ -55,150 +129,191 @@
     0% { opacity: 0; transform: scale(0.96); filter: blur(4px); }
     100% { opacity: 1; transform: scale(1); filter: blur(0); }
   }
-  .cinema-logo { width: 120px; filter: invert(1); opacity: 0.9; }
+  .cinema-logo { width: 120px; filter: var(--img-filter); opacity: 0.9; }
   
   .cinema-text {
-    margin-top: 24px; font-size: 32px; color: #ffffff;
+    margin-top: 24px; font-size: 32px; color: var(--text-heading);
     letter-spacing: 0.25em; font-weight: 200; text-transform: uppercase;
   }
 
   /* --- Ana Site Düzeni --- */
   #mainSite { display: none; min-height: 100vh; padding: 40px 15px; }
-  body.main-loaded { background: #0a0a0a; }
+  body.main-loaded { background: var(--bg-main); }
 
   /* Cam Efektli Premium Kart Yapısı (Glassmorphism) */
   .box {
     max-width: 600px; margin: 0 auto 30px auto; padding: 40px 35px;
-    background: rgba(255, 255, 255, 0.03); 
+    background: var(--card-bg); 
     border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--card-border);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .box:hover {
     transform: translateY(-4px);
-    border-color: rgba(255, 255, 255, 0.15);
-    background: rgba(255, 255, 255, 0.05);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    border-color: var(--card-hover-border);
+    background: var(--card-hover-bg);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25);
   }
 
-  .logo { display: block; margin: 0 auto 20px auto; max-width: 130px; filter: invert(1); opacity: 0.95; }
+  .logo { display: block; margin: 0 auto 20px auto; max-width: 130px; filter: var(--img-filter); opacity: 0.95; }
   
   .subtitle {
     text-align: center; font-size: 12px; font-weight: 500;
-    color: #8e8e93; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--text-muted); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 0.12em;
   }
-  h2 { font-size: 21px; font-weight: 500; color: #ffffff; margin-top: 0; margin-bottom: 24px; letter-spacing: -0.02em; }
-
-  /* --- Apple Watch Tarzı Geri Sayım Tasarımı --- */
-  .countdown-container {
-    display: flex; justify-content: space-around; align-items: center; margin-top: 15px;
-  }
-  .countdown-item { text-align: center; }
-  .countdown-number {
-    font-size: 34px; font-weight: 200; color: #ffffff;
-    font-variant-numeric: tabular-nums; line-height: 1;
-  }
-  .countdown-label {
-    font-size: 10px; font-weight: 500; color: #8e8e93;
-    text-transform: uppercase; letter-spacing: 0.05em; margin-top: 6px;
-  }
+  h2 { font-size: 21px; font-weight: 500; color: var(--text-heading); margin-top: 0; margin-bottom: 24px; letter-spacing: -0.02em; }
 
   /* Modern Çizgili Tablo Tasarımı */
   table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
-  th { color: #8e8e93; font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-  td { padding: 16px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #e5e5ea; text-align: center; font-size: 15px; }
+  th { color: var(--text-muted); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 12px; border-bottom: 1px solid var(--card-border); }
+  td { padding: 16px 12px; border-bottom: 1px solid var(--card-border); color: var(--text-main); text-align: center; font-size: 15px; }
   
   /* Lüks Inputlar */
   input {
     width: 100%; max-width: 120px; padding: 10px 14px; border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(0, 0, 0, 0.2);
-    color: #ffffff; font-size: 16px; font-weight: 500;
+    border: 1px solid var(--input-border); background: var(--input-bg);
+    color: var(--text-heading); font-size: 16px; font-weight: 500;
     transition: all 0.2s ease; text-align: center;
   }
   input:focus {
-    border-color: #ffffff; background: rgba(0, 0, 0, 0.4); box-shadow: 0 0 0 1px #ffffff; outline: none;
+    border-color: var(--text-heading); background: var(--input-bg); box-shadow: 0 0 0 1px var(--text-heading); outline: none;
   }
 
   /* Hedef Not Simülatör Alanı */
   .hedef-wrapper {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 14px 20px; background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; margin-top: 20px;
+    padding: 14px 20px; background: var(--card-bg);
+    border: 1px solid var(--card-border); border-radius: 14px; margin-top: 20px;
   }
-  .hedef-title { font-size: 13px; font-weight: 500; color: #aeaeb2; }
+  .hedef-title { font-size: 13px; font-weight: 500; color: var(--text-muted); }
 
   /* Metalik Koyu Premium Link Butonları */
   .slide-btn {
-    width: 100%; padding: 18px; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;
+    width: 100%; padding: 18px; border: 1px solid var(--card-border); border-radius: 12px;
     font-size: 14px; font-weight: 500; cursor: pointer;
-    background: linear-gradient(180deg, #2c2c2e, #1c1c1e); color: #ffffff; margin-top: 15px;
+    background: linear-gradient(180deg, var(--btn-grad-start), var(--btn-grad-end)); color: var(--btn-text); margin-top: 15px;
     transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     text-align: center; display: block; text-decoration: none; 
     text-transform: uppercase; letter-spacing: 0.05em;
-  }
-  .slide-btn:hover { 
-    background: linear-gradient(180deg, #3a3a3c, #2c2c2e);
-    border-color: rgba(255,255,255,0.25);
-    transform: translateY(-2px); 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4); 
   }
   
   /* Popup İçi Buton Özelleştirmesi */
   .popupContent button {
     width: 100%; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer;
-    background: rgba(255,255,255,0.05); color: #ffffff; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 10px;
+    background: var(--card-bg); color: var(--text-heading); border: 1px solid var(--card-border); margin-bottom: 10px;
     text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s;
   }
-  .popupContent button:hover { background: #ffffff; color: #000000; border-color: #ffffff; }
+  .popupContent button:hover { background: var(--text-heading); color: var(--bg-main); border-color: var(--text-heading); }
 
   /* Premium Sonuç Paneli */
   .result { 
     margin-top: 15px; padding: 22px; border-radius: 14px; 
-    font-size: 15px; font-weight: 500; background: rgba(255,255,255,0.02); 
-    border: 1px solid rgba(255,255,255,0.06); color: #e5e5ea; line-height: 1.6; text-align: center;
+    font-size: 15px; font-weight: 500; background: var(--card-bg); 
+    border: 1px solid var(--card-border); color: var(--text-main); line-height: 1.6; text-align: center;
   }
-  .low { background: rgba(255, 69, 58, 0.1); color: #ff453a; border-color: rgba(255, 69, 58, 0.2); }
-  .mid { background: rgba(255, 214, 10, 0.08); color: #ffd60a; border-color: rgba(255, 214, 10, 0.2); }
-  .high { background: rgba(48, 209, 88, 0.1); color: #30d158; border-color: rgba(48, 209, 88, 0.3); }
+  .low { background: rgba(255, 69, 58, 0.15); color: #ff453a; border-color: rgba(255, 69, 58, 0.3); }
+  .mid { background: rgba(255, 214, 10, 0.12); color: #ffd60a; border-color: rgba(255, 214, 10, 0.3); }
+  .high { background: rgba(48, 209, 88, 0.15); color: #30d158; border-color: rgba(48, 209, 88, 0.4); }
 
   /* Overlays & Popups */
   #popupOverlay, #installOverlay, #donemOverlay {
-    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6);
+    position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
     display: flex; justify-content: center; align-items: center; z-index: 9999;
   }
   .popupBox { max-width: 440px; width: 90%; }
   .popupContent {
-    background: #1c1c1e; border-radius: 24px; padding: 40px;
+    background: var(--popup-bg); border-radius: 24px; padding: 40px;
     text-align: center; animation: popupEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    position: relative; border: 1px solid rgba(255,255,255,0.1);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    position: relative; border: 1px solid var(--card-border);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
   }
-  .popupContent h2 { color: #ffffff; font-weight: 500; letter-spacing: -0.01em; }
+  .popupContent h2 { color: var(--text-heading); font-weight: 500; letter-spacing: -0.01em; }
   .popupContent.closing { animation: popupExit 0.3s ease forwards; }
-  .popupDivider { height: 1px; background: rgba(255,255,255,0.1); margin: 24px 0; }
+  .popupDivider { height: 1px; background: var(--card-border); margin: 24px 0; }
   .popupList { list-style: none; padding: 0; margin: 0; text-align: left; }
-  .popupList li { padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; color: #d1d1d6; }
-  .closeBtn { position: absolute; top: 20px; right: 22px; font-size: 22px; cursor: pointer; color: #8e8e93; transition: color 0.2s; }
-  .closeBtn:hover { color: #ffffff; }
-  #installContent video { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid rgba(255,255,255,0.1); }
+  .popupList li { padding: 14px 0; border-bottom: 1px solid var(--card-border); font-size: 14px; color: var(--text-main); }
+  .closeBtn { position: absolute; top: 20px; right: 22px; font-size: 22px; cursor: pointer; color: var(--text-muted); transition: color 0.2s; }
+  .closeBtn:hover { color: var(--text-heading); }
+  #installContent video { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid var(--card-border); }
 
   @keyframes popupEnter { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
   @keyframes popupExit { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.95); } }
 
-  /* Swiper & Progress boş şablon uyumluluğu */
-  .progress-bar, .autoplay-progress { height: 2px; background: rgba(255,255,255,0.1); margin-bottom: 10px; position: relative; overflow: hidden;}
-  .autoplay-progress-bar { content: ""; position: absolute; left: 0; top: 0; height: 100%; width: 0%; background: #ffffff; transition: width 3s linear;}
+  /* Premium Tema Seçici Dropdown Stili */
+  .theme-selector {
+    background: var(--input-bg);
+    border: 1px solid var(--input-border);
+    color: var(--text-main);
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  /* ⚡️ TWORK PREMIUM FULLSCREEN MODAL STYLES */
+  #tworkOverlay {
+    position: fixed; inset: 0; background: var(--bg-main);
+    backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
+    z-index: 999999; display: flex; flex-direction: column;
+    overflow-y: auto; padding: 40px 20px;
+    opacity: 0; pointer-events: none; transform: scale(1.03);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #tworkOverlay.active {
+    opacity: 1; pointer-events: auto; transform: scale(1);
+  }
+  .twork-container {
+    max-width: 600px; width: 100%; margin: auto; position: relative;
+  }
+  .twork-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px; padding: 25px; margin-bottom: 20px;
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  }
+  .twork-input {
+    width: 100%; max-width: 100%; background: var(--input-bg);
+    border: 1px solid var(--input-border); border-radius: 12px;
+    padding: 12px 16px; color: var(--text-heading); text-align: left; font-size: 14px;
+  }
+  .twork-input:focus {
+    border-color: var(--text-heading); box-shadow: none; outline: none;
+  }
+  .twork-btn-toggle {
+    flex: 1; padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s;
+    background: var(--text-heading); color: var(--bg-main); border: none;
+  }
+  .twork-btn-toggle.running {
+    background: rgba(255, 69, 58, 0.2); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.4);
+  }
+  .twork-todo-item {
+    display: flex; align-items: center; justify-content: space-between;
+    background: var(--input-bg); padding: 12px 16px; border-radius: 12px;
+    border: 1px solid var(--card-border); margin-top: 8px;
+  }
+  .twork-avatar {
+    width: 38px; height: 38px; border-radius: 100%; background: var(--card-bg);
+    border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease;
+  }
+  .twork-avatar.pulse {
+    box-shadow: 0 0 15px var(--accent); border-color: var(--accent);
+    animation: twPulse 2s infinite ease-in-out;
+  }
+  @keyframes twPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
   </style>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 
 <body>
 
-<!-- Saf Siyah Splash Ekranı -->
 <div id="splash">
   <div class="cinema-bg"></div>
   <div class="cinema-content">
@@ -207,15 +322,21 @@
   </div>
 </div>
 
-<!-- Ana Site -->
 <div id="mainSite">
 
-  <!-- DÖNEM SEÇ POPUP -->
+  <div style="max-width:600px; margin: 0 auto 15px auto; display:flex; justify-content:flex-end; padding:0 5px;">
+    <select class="theme-selector" onchange="changeTheme(this.value)" id="mainThemeSelect">
+      <option value="dark">🌙 Premium Dark</option>
+      <option value="light">☀️ Nordic Light</option>
+      <option value="cyberpunk">⚡️ Cyberpunk Zen</option>
+    </select>
+  </div>
+
   <div id="donemOverlay" style="display:none;">
     <div class="popupBox">
       <div class="popupContent">
         <h2>Dönem Seçimi</h2>
-        <p style="margin-top:10px; font-size:13px; color:#aeaeb2; line-height: 1.6;">
+        <p style="margin-top:10px; font-size:13px; color:var(--text-muted); line-height: 1.6;">
           Seçtiğiniz dönemin katsayıları otomatik olarak sisteme entegre edilecektir.
         </p>
         <div class="popupDivider"></div>
@@ -223,21 +344,20 @@
         <button type="button" onclick="donemSec('2')">Dönem 2</button>
         <button type="button" onclick="donemSec('3')">Dönem 3</button>
         <div class="popupDivider"></div>
-        <p style="font-size:11px; color:#8e8e93; margin-top:10px;">
+        <p style="font-size:11px; color:var(--text-muted); margin-top:10px;">
           *Şu anda yalnızca Dönem 1 ve Dönem 2 katsayıları aktiftir.
         </p>
       </div>
     </div>
   </div>
 
-  <!-- 1. Bilgilendirme Popup -->
   <div id="popupOverlay" style="display:none;">
     <div class="popupBox">
       <div class="popupContent" id="popupContent">
         <span class="closeBtn" onclick="kapatPopup()">×</span>
         <h2 style="letter-spacing: 0.2em; font-weight: 300;">THESAP</h2>
         <div class="popupDivider"></div>
-        <span style="font-size: 11px; font-weight: 500; color: #8e8e93; letter-spacing: 0.08em; text-transform: uppercase;">Güncelleme Raporu</span>
+        <span style="font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Güncelleme Raporu</span>
         <div class="popupDivider"></div>
         <ul class="popupList">
           <li>Luxury Dark Minimalist Tasarım Düzeni Aktif Edildi ○</li>
@@ -249,13 +369,12 @@
     </div>
   </div>
 
-  <!-- 2. Ana Ekrana Ekle Popup -->
   <div id="installOverlay" style="display:none;">
     <div class="popupBox">
       <div class="popupContent" id="installContent">
         <span class="closeBtn" onclick="kapatInstall()">×</span>
         <h2>Ana Ekrana Ekleme</h2>
-        <p style="font-size:13px; color:#aeaeb2;">Videonun açılması için lütfen oynat butonuna tıklayınız.</p>
+        <p style="font-size:13px; color:var(--text-muted);">Videonun açılması için lütfen oynat butonuna tıklayınız.</p>
         <div class="popupDivider"></div>
         <video id="installVideo" controls preload="none">
           <source src="video.mp4" type="video/mp4">
@@ -265,33 +384,7 @@
     </div>
   </div>
 
-  <!-- ⏱️ Premium Final Geri Sayım Kutusu -->
-  <div class="box" style="padding: 25px 35px 30px 35px;">
-    <h2 style="font-size: 14px; text-transform: uppercase; color: #8e8e93; letter-spacing: 0.1em; margin-bottom: 15px; text-align: center;">Büyük Final Sınavı</h2>
-    <div class="countdown-container" id="countdownContainer">
-      <div class="countdown-item">
-        <div class="countdown-number" id="days">00</div>
-        <div class="countdown-label">Gün</div>
-      </div>
-      <div class="countdown-item" style="font-size: 28px; font-weight: 100; color: rgba(255,255,255,0.2); line-height: 1; margin-top: -10px;">:</div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="hours">00</div>
-        <div class="countdown-label">Saat</div>
-      </div>
-      <div class="countdown-item" style="font-size: 28px; font-weight: 100; color: rgba(255,255,255,0.2); line-height: 1; margin-top: -10px;">:</div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="minutes">00</div>
-        <div class="countdown-label">Dk</div>
-      </div>
-      <div class="countdown-item" style="font-size: 28px; font-weight: 100; color: rgba(255,255,255,0.2); line-height: 1; margin-top: -10px;">:</div>
-      <div class="countdown-item">
-        <div class="countdown-number" id="seconds">00</div>
-        <div class="countdown-label">Sn</div>
-      </div>
-    </div>
-  </div>
 
-  <!-- Hesaplama Box -->
   <div class="box">
     <img src="logo.png" class="logo">
     <div class="subtitle">Tıp Sınav Ortalama Hesaplayıcı</div>
@@ -308,7 +401,6 @@
       </tbody>
     </table>
 
-    <!-- 🎯 Hedef Not Simülatörü Girişi -->
     <div class="hedef-wrapper">
       <div class="hedef-title">🎯 İstediğin Yıl Sonu Ortalaması:</div>
       <input id="hedefNot" type="number" placeholder="Örn: 72" step="1" max="100">
@@ -317,49 +409,107 @@
     <div class="result" id="sonuc">✏️ Not girmeye başla, ortalaman burada görünecek...</div>
   </div>
 
-  <!-- 📅 Günün Ders Programı -->
-  <div class="box">
-    <h2>Günün Ders Programı</h2>
-    <img src="ders.jpg" alt="Ders Programı" style="width:100%; border-radius:14px; margin-top:5px; border: 1px solid rgba(255,255,255,0.05);" loading="lazy">
-  </div>
-
-  <!-- Ders Kaynakları -->
-  <div class="box">
-    <h2>Ders Kaynakları</h2>
-    <a href="https://drive.google.com/drive/folders/1Sr8-RnHtCj3tdHbOtfs0d6CAfph1y-i4" target="_blank" class="slide-btn">Ders Slaytları</a>
-    <a href="https://drive.google.com/drive/folders/1swUEEMs95qw4ICrtsfY44FLXC20qoil4" target="_blank" class="slide-btn">Ders Slaytları (Notlu)</a>
+  <div class="box" style="text-align: center; padding: 30px 35px;">
+    <h2 style="font-size: 14px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 12px; margin-top:0;">Twork Odaklanma Alanı</h2>
+    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.4;">Çalışma sürelerini kaydetmek, bugünün hedeflerini belirlemek và odağını artırmak için kontrol panelini başlat.</p>
+    <button type="button" onclick="openTwork()" class="slide-btn" style="background: linear-gradient(180deg, var(--text-heading), var(--e5e5ea, #e5e5ea)); color: var(--bg-main); font-weight: 600; margin-top: 0; border: none;">
+      ⏱️ TWORK ZEN PANELİNİ AÇ
+    </button>
   </div>
 
 </div>
 
-<!-- --- SİTE SCRIPT MANTIĞI --- -->
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<div id="tworkOverlay">
+  <div class="twork-container">
+    
+    <span class="closeBtn" onclick="closeTwork()" style="top: -10px; right: 5px; font-size: 28px;">×</span>
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 0 5px;">
+      <div>
+        <h1 style="font-size: 24px; font-weight: 300; letter-spacing: 0.15em; margin: 0; color: var(--text-heading);">TWORK</h1>
+        <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">Selam, <span id="tw-user-name" style="color: var(--text-heading); border-bottom: 1px dashed var(--text-muted); cursor:pointer;">...</span></p>
+      </div>
+      
+      <div style="display:flex; align-items:center; gap:10px;">
+        <select class="theme-selector" onchange="changeTheme(this.value)" id="tworkThemeSelect">
+          <option value="dark">🌙 Premium Dark</option>
+          <option value="light">☀️ Nordic Light</option>
+          <option value="cyberpunk">⚡️ Cyberpunk Zen</option>
+        </select>
+        <div id="tw-avatar" class="twork-avatar" style="color:var(--text-heading)">👤</div>
+      </div>
+    </div>
+
+    <div id="tw-name-box" style="display:none;" class="twork-card">
+      <h3 style="font-size: 15px; font-weight: 500; margin-top: 0; margin-bottom: 12px;">Zen Panel Girişi</h3>
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Kişiselleştirilmiş deneyiminiz için adınızı yazın.</p>
+      <div style="display:flex; gap: 10px;">
+        <input type="text" id="tw-name-input" placeholder="İsminiz..." class="twork-input" style="text-align: left; max-width: 100%;">
+        <button type="button" onclick="saveTworkName()" style="padding: 0 20px; border-radius: 12px; background: var(--text-heading); color: var(--bg-main); font-weight: 600; font-size: 13px; cursor: pointer; border:none;">Kaydet</button>
+      </div>
+    </div>
+
+    <div class="twork-card" style="text-align: center; padding: 35px 20px;">
+      <span style="font-size: 10px; letter-spacing: 0.08em; color: var(--text-muted); display: block; margin-bottom: 10px; text-transform: uppercase;">Bugünkü Toplam Çalışma Süren</span>
+      <div id="tw-timer-display" style="font-size: 42px; font-weight: 200; font-variant-numeric: tabular-nums; color: var(--text-heading); letter-spacing: 0.02em; margin-bottom: 25px;">00:00:00</div>
+      
+      <div style="display: flex; gap: 10px; max-width: 320px; margin: 0 auto;">
+        <button id="tw-btn-toggle" type="button" onclick="toggleTworkTimer()" class="twork-btn-toggle">Çalışmaya Başla</button>
+        <button type="button" onclick="resetTworkTimer()" style="padding: 12px 18px; border-radius: 12px; font-size: 12px; background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--card-border); cursor: pointer; text-transform: uppercase;">Sıfırla</button>
+      </div>
+    </div>
+
+    <div class="twork-card" style="padding: 20px;">
+      <span style="font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display:block; margin-bottom: 8px;">Günün Ana Odağı</span>
+      <input type="text" id="tw-focus-input" placeholder="Neye odaklanacaksınız?" class="twork-input">
+    </div>
+
+    <div class="twork-card">
+      <h3 style="font-size: 15px; font-weight: 500; margin-top: 0; margin-bottom: 15px; color: var(--text-heading);">✓ Yapılacaklar</h3>
+      <div style="display:flex; gap:10px; margin-bottom: 15px;">
+        <input type="text" id="tw-todo-input" placeholder="Yeni görev ekle..." class="twork-input">
+        <button type="button" onclick="addTworkTodo()" style="padding: 0 20px; border-radius: 12px; background: var(--card-bg); color: var(--text-heading); border: 1px solid var(--card-border); font-weight: 500; cursor: pointer;">Ekle</button>
+      </div>
+      <div id="tw-todo-list" style="max-height: 180px; overflow-y: auto;"></div>
+    </div>
+
+    <div class="twork-card">
+      <h3 style="font-size: 15px; font-weight: 500; margin-top: 0; margin-bottom: 12px; color: var(--text-heading);">✍ Hızlı Notlar</h3>
+      <textarea id="tw-notes-input" placeholder="Fikirlerini buraya dök, her harf otomatik kaydedilir..." class="twork-input" style="width:100%; height: 110px; resize: none; font-family: inherit; line-height: 1.5;"></textarea>
+    </div>
+
+    <p style="text-align: center; font-size: 10px; color: var(--text-muted); margin-top: 30px; letter-spacing: 0.05em;">TWORK BİR T-HESAP MARKASIDIR. © 2026</p>
+
+  </div>
+</div>
 
 <script>
-// Final Geri Sayım Sayacı Mantığı (11 Haziran 10:00)
-const finalTarihi = new Date("June 11, 2026 10:00:00").getTime();
-const karsilaSifir = (num) => num < 10 ? '0' + num : num;
-
-const sayacGuncelle = setInterval(() => {
-  const simdi = new Date().getTime();
-  const mesafe = finalTarihi - simdi;
-
-  if (mesafe < 0) {
-    clearInterval(sayacGuncelle);
-    document.getElementById("countdownContainer").innerHTML = "<div style='font-size:18px; font-weight:500; color:#30d158; width:100%; text-align:center; letter-spacing:0.05em;'>🚀 SINAV BAŞLADI, BAŞARILAR!</div>";
-    return;
+// --- TEMA YÖNETİMİ SCRIPTİ ---
+function changeTheme(themeName) {
+  document.documentElement.setAttribute('data-theme', themeName);
+  localStorage.setItem('site_theme', themeName);
+  
+  // İki dropdown listesini de senkronize et
+  const mainSelect = document.getElementById('mainThemeSelect');
+  const tworkSelect = document.getElementById('tworkThemeSelect');
+  if(mainSelect) mainSelect.value = themeName;
+  if(tworkSelect) tworkSelect.value = themeName;
+  
+  // Status bar rengini güncelle
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+  if(metaThemeColor) {
+    if(themeName === 'light') metaThemeColor.setAttribute('content', '#f5f5f7');
+    else if(themeName === 'cyberpunk') metaThemeColor.setAttribute('content', '#0b0813');
+    else metaThemeColor.setAttribute('content', '#0a0a0a');
   }
+}
 
-  const gun = Math.floor(mesafe / (1000 * 60 * 60 * 24));
-  const saat = Math.floor((mesafe % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const dakika = Math.floor((mesafe % (1000 * 60 * 60)) / (1000 * 60));
-  const saniye = Math.floor((mesafe % (1000 * 60)) / 1000);
-
-  document.getElementById("days").innerText = karsilaSifir(gun);
-  document.getElementById("hours").innerText = karsilaSifir(saat);
-  document.getElementById("minutes").innerText = karsilaSifir(dakika);
-  document.getElementById("seconds").innerText = karsilaSifir(saniye);
-}, 1000);
+// Sayfa yüklendiğinde temayı hafızadan yükle
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('site_theme') || 'dark';
+  changeTheme(savedTheme);
+});
 
 // Splash kontrolü
 document.addEventListener('DOMContentLoaded',()=>{
@@ -387,23 +537,27 @@ if('serviceWorker' in navigator){
 
 function kapatPopup(){
   const popup=document.getElementById("popupContent");
-  popup.classList.add("closing");
-  setTimeout(()=>{
-    document.getElementById("popupOverlay").style.display="none";
-    popup.classList.remove("closing");
-    document.getElementById("installOverlay").style.display="flex";
-  },300);
+  if(popup) {
+    popup.classList.add("closing");
+    setTimeout(()=>{
+      document.getElementById("popupOverlay").style.display="none";
+      popup.classList.remove("closing");
+      document.getElementById("installOverlay").style.display="flex";
+    },300);
+  }
 }
 
 function kapatInstall(){
   const popup=document.getElementById("installContent");
   const video=document.getElementById("installVideo");
   if(video) video.pause();
-  popup.classList.add("closing");
-  setTimeout(()=>{
-    document.getElementById("installOverlay").style.display="none";
-    popup.classList.remove("closing");
-  },300);
+  if(popup) {
+    popup.classList.add("closing");
+    setTimeout(()=>{
+      document.getElementById("installOverlay").style.display="none";
+      popup.classList.remove("closing");
+    },300);
+  }
 }
 
 function donemSec(donem){
@@ -423,59 +577,47 @@ function donemSec(donem){
 
 function hesapla(){
   const notInputlar = [
-    document.getElementById("k1"),
-    document.getElementById("k2"),
-    document.getElementById("k3"),
-    document.getElementById("k4"),
-    document.getElementById("k5")
+    document.getElementById("k1"), document.getElementById("k2"), document.getElementById("k3"), document.getElementById("k4"), document.getElementById("k5")
   ];
   const katsayiInputlar = [
-    document.getElementById("c1"),
-    document.getElementById("c2"),
-    document.getElementById("c3"),
-    document.getElementById("c4"),
-    document.getElementById("c5")
+    document.getElementById("c1"), document.getElementById("c2"), document.getElementById("c3"), document.getElementById("c4"), document.getElementById("c5")
   ];
   const sonuc = document.getElementById("sonuc");
 
-  let agirlikliToplam = 0;
-  let toplamKatsayi = 0;
-  let girilenKurulSayisi = 0;
+  let agirlikliToplam = 0; let toplamKatsayi = 0; let girilenKurulSayisi = 0;
 
   for(let i=0; i<notInputlar.length; i++){
-    let not = parseFloat(notInputlar[i].value);
-    let katsayi = parseFloat(katsayiInputlar[i].value);
-
-    if(!isNaN(not)){
-      agirlikliToplam += not * katsayi;
-      toplamKatsayi += katsayi;
-      girilenKurulSayisi++;
+    if(notInputlar[i] && katsayiInputlar[i]) {
+      let not = parseFloat(notInputlar[i].value);
+      let katsayi = parseFloat(katsayiInputlar[i].value);
+      if(!isNaN(not)){
+        agirlikliToplam += not * katsayi;
+        toplamKatsayi += katsayi;
+        girilenKurulSayisi++;
+      }
     }
   }
 
-  // Eğer hiçbir not girilmediyse ve hedef girildiyse başlangıç uyarısı verelim
   const hedef = parseFloat(document.getElementById("hedefNot").value);
   
   if(girilenKurulSayisi === 0){
     sonuc.className = "result";
     if(!isNaN(hedef) && hedef > 0) {
-      sonuc.innerHTML = `🎯 Ortalama hedefin: <b>${hedef}</b><br><span style='font-size:12px; color:#8e8e93;'>Hesaplama yapabilmek için lütfen en az bir kurul notu girin.</span>`;
+      sonuc.innerHTML = `🎯 Ortalama hedefin: <b>${hedef}</b><br><span style='font-size:12px; color:var(--text-muted);'>Hesaplama yapabilmek için lütfen en az bir kurul notu girin.</span>`;
     } else {
       sonuc.innerHTML = "✏️ Not girmeye başla, ortalaman burada görünecek...";
     }
     return;
   }
 
-  // Toplam katsayı emniyeti
   let tumKatsayi = 0;
   for(let i=0; i<katsayiInputlar.length; i++) {
-    tumKatsayi += parseFloat(katsayiInputlar[i].value) || 0;
+    if(katsayiInputlar[i]) tumKatsayi += parseFloat(katsayiInputlar[i].value) || 0;
   }
 
   const kurulOrt = agirlikliToplam / toplamKatsayi;
   let mesaj = `📊 Güncel kurul ortalaman: <b>${kurulOrt.toFixed(2)}</b><br><br>`;
 
-  // Klasik Durum Analizleri (Barajlar)
   if(kurulOrt < 33){
     sonuc.className = "result low";
     mesaj += "<b>Kurul ortalaması 33 altı → Otomatik BÜT</b>";
@@ -501,27 +643,22 @@ function hesapla(){
     mesaj += "Finale giriyorsun (Barajsız 80 soru)<br>";
   }
 
-  // --- 🎯 SMART HEDEF NOT SİMÜLASYONU MANTIĞI ---
   if(!isNaN(hedef) && hedef > 0 && hedef <= 100) {
-    mesaj += "<div style='height:1px; background:rgba(255,255,255,0.1); margin:15px 0;'></div>";
+    mesaj += "<div style='height:1px; background:var(--card-border); margin:15px 0;'></div>";
     
-    // Durum A: Henüz tüm kurullar tamamlanmadı (Gelecek kurullardan kaçar almalı?)
     if(girilenKurulSayisi < 5) {
       const gerekenToplamPuan = hedef * tumKatsayi;
       const kalanGerekenPuan = gerekenToplamPuan - agirlikliToplam;
-      
-      let kalanKatsayi = 0;
-      let bosKurullar = [];
+      let kalanKatsayi = 0; let bosKurullar = [];
       
       for(let i=0; i<notInputlar.length; i++) {
-        if(isNaN(parseFloat(notInputlar[i].value))) {
+        if(notInputlar[i] && isNaN(parseFloat(notInputlar[i].value))) {
           let katsayi = parseFloat(katsayiInputlar[i].value) || 0;
           kalanKatsayi += katsayi;
           bosKurullar.push({ index: (i + 1), katsayi: katsayi });
         }
       }
       
-      // Temel ham not ihtiyacı
       const hamGereken = kalanGerekenPuan / kalanKatsayi;
       
       if(hamGereken > 100) {
@@ -529,30 +666,21 @@ function hesapla(){
       } else if(hamGereken <= 0) {
         mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması kalan kurallere girmesen bile zaten garanti!`;
       } else {
-        // Doğal ve mantıklı dağılım simülasyonu:
-        // Katsayısı büyük olan sınava minik bir pozitif ağırlık vererek gerçek hayattaki not dağılımını taklit eder
         mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalamasına ulaşmak için kalan kurullardan alabileceğin örnek dağılım:<br><br>`;
-        
-        bosKurullar.forEach((kurul, idx) => {
-          // Katsayı büyüklüğüne göre notları ufak esnetelim (büyük kuruldan bir tık fazla, küçükten az alınabilir gibi)
-          // Eğer tek kurul boşsa direkt hamGereken'i basar, çoklu kurulda mantıklı varyasyon üretir.
+        bosKurullar.forEach((kurul) => {
           let esnekNot = hamGereken;
           if(bosKurullar.length > 1) {
              const sapma = (kurul.katsayi / (kalanKatsayi / bosKurullar.length)) - 1;
-             esnekNot = hamGereken + (sapma * 4); // Maksimum 4 puanlık gerçekçi dağılım esnekliği
+             esnekNot = hamGereken + (sapma * 4);
              if(esnekNot > 100) esnekNot = 100;
              if(esnekNot < 0) esnekNot = 0;
           }
-          
           mesaj += `▫️ <b>Kurul ${kurul.index}:</b> en az <span style='color:#ffd60a;'><b>${esnekNot.toFixed(1)}</b></span><br>`;
         });
       }
     } 
-    // Durum B: 5 kurulun tamamı da girilmiş (Sadece final sınavı kalmış)
     else {
-      // Formül: (Kurul Ort * 0.6) + (Final * 0.4) = Yıl Sonu Notu
       const gerekenFinal = (hedef - (kurulOrt * 0.6)) / 0.4;
-      
       if(gerekenFinal > 100) {
         mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden <b>${gerekenFinal.toFixed(1)}</b> alman lazım. <span style='color:#ff453a;'>(Matematiksel olarak imkansız)</span>`;
       } else if(gerekenFinal <= 0) {
@@ -562,54 +690,125 @@ function hesapla(){
       }
     }
   }
-
   sonuc.innerHTML = mesaj;
 }
 
-// Tüm girdileri dinamik dinleme grubu
 document.addEventListener("input", (e) => {
-  if (e.target && e.target.tagName === "INPUT") {
-    hesapla();
-  }
+  if (e.target && e.target.tagName === "INPUT") hesapla();
 });
 
-// Video sonu dinleyicisi
 document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("installVideo");
-  if(video){
-    video.addEventListener("ended", () => {
-      kapatInstall();
-    });
-  }
+  if(video){ video.addEventListener("ended", () => { kapatInstall(); }); }
 });
-</script>
 
-<script>
-// Swiper Progress kontrolü (Boş şablon hatasızlığı için korundu)
-const progressBar = document.querySelector(".autoplay-progress-bar");
-if(progressBar) {
-  const swiper = new Swiper(".mySwiper", {
-    loop: true,
-    autoplay: { delay: 3000, disableOnInteraction: false },
-    on: {
-      slideChangeTransitionStart: function () {
-        progressBar.style.transition = "none";
-        progressBar.style.width = "0%";
-      },
-      slideChangeTransitionEnd: function () {
-        progressBar.style.transition = "width 3s linear";
-        progressBar.style.width = "100%";
-      }
-    }
-  });
-  setTimeout(()=>{ progressBar.style.width = "100%"; },100);
+// ⏱️ --- TWORK CORE SCRIPT MANTIĞI ---
+let twState = {
+  name: localStorage.getItem('twork_name') || '',
+  focus: localStorage.getItem('twork_focus') || '',
+  todos: JSON.parse(localStorage.getItem('twork_todos')) || [],
+  notes: localStorage.getItem('twork_notes') || '',
+  workSeconds: parseInt(localStorage.getItem('twork_total_seconds')) || 0
+};
+
+let twInterval = null;
+
+function openTwork() {
+  const overlay = document.getElementById('tworkOverlay');
+  overlay.classList.add('active');
+  if (!twState.name) {
+    document.getElementById('tw-name-box').style.display = 'block';
+  } else {
+    document.getElementById('tw-name-box').style.display = 'none';
+    document.getElementById('tw-user-name').innerText = twState.name;
+  }
+  document.getElementById('tw-focus-input').value = twState.focus;
+  document.getElementById('tw-notes-input').value = twState.notes;
+  renderTworkTodos();
+  updateTworkDisplay();
 }
 
-let deferredPrompt;
-window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+function closeTwork() { document.getElementById('tworkOverlay').classList.remove('active'); }
+
+function saveTworkName() {
+  const inp = document.getElementById('tw-name-input').value.trim();
+  if(inp) {
+    twState.name = inp;
+    localStorage.setItem('twork_name', inp);
+    document.getElementById('tw-user-name').innerText = inp;
+    document.getElementById('tw-name-box').style.display = 'none';
+  }
+}
+
+document.getElementById('tw-user-name').addEventListener('click', () => {
+  const newName = prompt("İsmini değiştir:", twState.name);
+  if(newName && newName.trim() !== "") {
+    twState.name = newName.trim();
+    localStorage.setItem('twork_name', twState.name);
+    document.getElementById('tw-user-name').innerText = twState.name;
+  }
 });
+
+document.getElementById('tw-focus-input').addEventListener('input', (e) => localStorage.setItem('twork_focus', e.target.value));
+document.getElementById('tw-notes-input').addEventListener('input', (e) => localStorage.setItem('twork_notes', e.target.value));
+
+function updateTworkDisplay() {
+  const hrs = Math.floor(twState.workSeconds / 3600).toString().padStart(2, '0');
+  const mins = Math.floor((twState.workSeconds % 3600) / 60).toString().padStart(2, '0');
+  const secs = (twState.workSeconds % 60).toString().padStart(2, '0');
+  document.getElementById('tw-timer-display').innerText = `${hrs}:${mins}:${secs}`;
+  localStorage.setItem('twork_total_seconds', twState.workSeconds);
+}
+
+function toggleTworkTimer() {
+  const btn = document.getElementById('tw-btn-toggle');
+  const avatar = document.getElementById('tw-avatar');
+  if (twInterval) {
+    clearInterval(twInterval); twInterval = null;
+    btn.innerText = 'Çalışmaya Devam Et'; btn.classList.remove('running'); avatar.classList.remove('pulse');
+  } else {
+    btn.innerText = 'Çalışmayı Durdur'; btn.classList.add('running'); avatar.classList.add('pulse');
+    twInterval = setInterval(() => { twState.workSeconds++; updateTworkDisplay(); }, 1000);
+  }
+}
+
+function resetTworkTimer() {
+  if (confirm("Bugünkü çalışma süreni sıfırlamak istiyor musun?")) {
+    if(twInterval) { clearInterval(twInterval); twInterval = null; }
+    twState.workSeconds = 0;
+    const btn = document.getElementById('tw-btn-toggle');
+    btn.innerText = 'Çalışmaya Başla'; btn.classList.remove('running');
+    document.getElementById('tw-avatar').classList.remove('pulse');
+    updateTworkDisplay();
+  }
+}
+
+function renderTworkTodos() {
+  const container = document.getElementById('tw-todo-list');
+  container.innerHTML = '';
+  twState.todos.forEach(todo => {
+    const div = document.createElement('div');
+    div.className = 'twork-todo-item';
+    div.innerHTML = `
+      <div style="display:flex; align-items: center; gap:10px; cursor:pointer;" onclick="toggleTworkTodo(${todo.id})">
+        <span style="color: ${todo.completed ? 'var(--accent)' : '#444'}">${todo.completed ? '✓' : '○'}</span>
+        <span style="font-size:13px; text-decoration: ${todo.completed ? 'line-through' : 'none'}; color: var(--text-main); opacity: ${todo.completed ? '0.5' : '1'}">${todo.text}</span>
+      </div>
+      <span onclick="deleteTworkTodo(${todo.id})" style="color:var(--text-muted); cursor:pointer; font-size:11px;">Sil</span>
+    `;
+    container.appendChild(div);
+  });
+  localStorage.setItem('twork_todos', JSON.stringify(twState.todos));
+}
+
+function addTworkTodo() {
+  const inp = document.getElementById('tw-todo-input');
+  const text = inp.value.trim();
+  if(text) { twState.todos.push({ id: Date.now(), text: text, completed: false }); inp.value = ''; renderTworkTodos(); }
+}
+
+window.toggleTworkTodo = (id) => { twState.todos = twState.todos.map(t => t.id === id ? {...t, completed: !t.completed} : t); renderTworkTodos(); };
+window.deleteTworkTodo = (id) => { twState.todos = twState.todos.filter(t => t.id !== id); renderTworkTodos(); };
 </script>
 </body>
 </html>
