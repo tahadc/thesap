@@ -10,10 +10,15 @@
   <title>Thesap</title>
   <link rel="manifest" href="manifest.json">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
   <style>
   /* --- DİNAMİK TEMA DEĞİŞKENLERİ --- */
   :root {
     /* 1. Premium Apple Dark (Varsayılan) */
+    --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --bg-main: #0a0a0a;
     --bg-splash: #000000;
     --bg-splash-radial: #111111;
@@ -34,10 +39,12 @@
     --popup-bg: #1c1c1e;
     --img-filter: invert(1);
     --accent: #30d158;
+    --body-filter: none;
   }
 
   [data-theme="light"] {
     /* 2. Nordic Light Mode */
+    --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --bg-main: #f5f5f7;
     --bg-splash: #ffffff;
     --bg-splash-radial: #e5e5ea;
@@ -58,10 +65,12 @@
     --popup-bg: #ffffff;
     --img-filter: invert(0);
     --accent: #34c759;
+    --body-filter: none;
   }
 
   [data-theme="cyberpunk"] {
     /* 3. Cyberpunk Zen Mode */
+    --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
     --bg-main: #0b0813;
     --bg-splash: #05030a;
     --bg-splash-radial: #1a0f30;
@@ -82,13 +91,118 @@
     --popup-bg: #140f26;
     --img-filter: hue-rotate(260deg) brightness(1.2);
     --accent: #00ff66;
+    --body-filter: none;
   }
 
-  /* --- Premium Apple Tasarım Dili --- */
+  [data-theme="minecraft"] {
+    /* 4. Pixel Craft Mode (Minecraft) */
+    --font-family: 'Press Start 2P', monospace;
+    --bg-main: #2c1b12;
+    --bg-splash: #140d09;
+    --bg-splash-radial: #4a3121;
+    --text-main: #e0e0e0;
+    --text-muted: #707070;
+    --text-heading: #55ff55;
+    --glow-1: rgba(85, 255, 85, 0.05);
+    --glow-2: rgba(255, 170, 0, 0.03);
+    --card-bg: #4a3121;
+    --card-border: #140d09;
+    --card-hover-bg: #5c3e29;
+    --card-hover-border: #55ff55;
+    --input-bg: #140d09;
+    --input-border: #707070;
+    --btn-grad-start: #9e9e9e;
+    --btn-grad-end: #616161;
+    --btn-text: #ffffff;
+    --popup-bg: #2c1b12;
+    --img-filter: sepia(1) hue-rotate(60deg) saturate(2);
+    --accent: #55ff55;
+    --body-filter: contrast(1.1);
+  }
+
+  [data-theme="space"] {
+    /* 5. Deep Space Mode */
+    --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    --bg-main: #050510;
+    --bg-splash: #010105;
+    --bg-splash-radial: #0d1b2a;
+    --text-main: #e0e1dd;
+    --text-muted: #606c88;
+    --text-heading: #4cc9f0;
+    --glow-1: rgba(76, 201, 240, 0.1);
+    --glow-2: rgba(114, 9, 183, 0.08);
+    --card-bg: rgba(13, 27, 42, 0.6);
+    --card-border: rgba(76, 201, 240, 0.2);
+    --card-hover-bg: rgba(27, 38, 59, 0.8);
+    --card-hover-border: #4cc9f0;
+    --input-bg: #010105;
+    --input-border: rgba(76, 201, 240, 0.3);
+    --btn-grad-start: #7209b7;
+    --btn-grad-end: #3f37c9;
+    --btn-text: #ffffff;
+    --popup-bg: #0d1b2a;
+    --img-filter: hue-rotate(190deg);
+    --accent: #4cc9f0;
+    --body-filter: none;
+  }
+
+  [data-theme="chocomint"] {
+    /* 6. Choco Mint Mode */
+    --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    --bg-main: #2b1e16;
+    --bg-splash: #1c120c;
+    --bg-splash-radial: #3d2b1f;
+    --text-main: #f5ebe0;
+    --text-muted: #9c8470;
+    --text-heading: #a3b18a;
+    --glow-1: rgba(163, 177, 138, 0.08);
+    --glow-2: rgba(61, 43, 31, 0.05);
+    --card-bg: rgba(61, 43, 31, 0.7);
+    --card-border: rgba(163, 177, 138, 0.15);
+    --card-hover-bg: rgba(79, 56, 40, 0.9);
+    --card-hover-border: #a3b18a;
+    --input-bg: #1c120c;
+    --input-border: rgba(163, 177, 138, 0.3);
+    --btn-grad-start: #a3b18a;
+    --btn-grad-end: #588157;
+    --btn-text: #2b1e16;
+    --popup-bg: #3d2b1f;
+    --img-filter: sepia(0.5) hue-rotate(40deg);
+    --accent: #a3b18a;
+    --body-filter: none;
+  }
+
+  [data-theme="crimson"] {
+    /* 7. Crimson Velvet (Medikal Kırmızı) */
+    --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    --bg-main: #120303;
+    --bg-splash: #050000;
+    --bg-splash-radial: #260707;
+    --text-main: #fbe8e8;
+    --text-muted: #946f6f;
+    --text-heading: #ff3b30;
+    --glow-1: rgba(255, 59, 48, 0.08);
+    --glow-2: rgba(255, 59, 48, 0.03);
+    --card-bg: rgba(38, 7, 7, 0.5);
+    --card-border: rgba(255, 59, 48, 0.15);
+    --card-hover-bg: rgba(54, 10, 10, 0.7);
+    --card-hover-border: #ff3b30;
+    --input-bg: #050000;
+    --input-border: rgba(255, 59, 48, 0.3);
+    --btn-grad-start: #ff3b30;
+    --btn-grad-end: #990000;
+    --btn-text: #ffffff;
+    --popup-bg: #260707;
+    --img-filter: hue-rotate(350deg) saturate(3);
+    --accent: #ff3b30;
+    --body-filter: none;
+  }
+
+  /* --- Premium Tasarım Dili --- */
   *{ box-sizing: border-box; letter-spacing: -0.015em; }
   body{ 
     margin: 0; 
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif; 
+    font-family: var(--font-family); 
     background: var(--bg-main); 
     color: var(--text-main);
     overscroll-behavior: none;
@@ -96,10 +210,19 @@
     -webkit-touch-callout: none;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
-    transition: background 0.5s ease, color 0.5s ease;
+    filter: var(--body-filter);
+    transition: background 0.5s ease, color 0.5s ease, filter 0.5s ease;
   }
 
-  /* Arka Plana Derinlik Veren Premium Işık Süzmeleri */
+  /* Minecraft Temasında Yazı Boyutlarını Optimize Etme */
+  [data-theme="minecraft"] body { font-size: 11px; }
+  [data-theme="minecraft"] th { font-size: 8px !important; }
+  [data-theme="minecraft"] td { font-size: 10px !important; }
+  [data-theme="minecraft"] h2 { font-size: 14px !important; }
+  [data-theme="minecraft"] .subtitle { font-size: 8px !important; }
+  [data-theme="minecraft"] .result { font-size: 11px !important; line-height: 1.8; }
+  [data-theme="minecraft"] .disclaimer { font-size: 8px !important; }
+
   body::before {
     content: ""; position: fixed; width: 600px; height: 600px;
     background: radial-gradient(circle, var(--glow-1), transparent 70%);
@@ -130,17 +253,85 @@
     100% { opacity: 1; transform: scale(1); filter: blur(0); }
   }
   .cinema-logo { width: 120px; filter: var(--img-filter); opacity: 0.9; }
-  
   .cinema-text {
     margin-top: 24px; font-size: 32px; color: var(--text-heading);
     letter-spacing: 0.25em; font-weight: 200; text-transform: uppercase;
   }
 
   /* --- Ana Site Düzeni --- */
-  #mainSite { display: none; min-height: 100vh; padding: 40px 15px; }
+  #mainSite { display: none; min-height: 100vh; padding: 20px 15px 40px 15px; }
   body.main-loaded { background: var(--bg-main); }
 
-  /* Cam Efektli Premium Kart Yapısı (Glassmorphism) */
+  /* ⚡️ MOBİL UYUMLU LUXURY TEMA SEÇİCİ MENÜSÜ */
+  .custom-dropdown {
+    position: relative;
+    width: 200px;
+    user-select: none;
+    z-index: 1000;
+  }
+  .dropdown-trigger {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .dropdown-trigger:active { transform: scale(0.97); }
+  .dropdown-trigger::after {
+    content: '▼';
+    font-size: 9px;
+    margin-left: 8px;
+    transition: transform 0.3s ease;
+    color: var(--text-muted);
+  }
+  .custom-dropdown.open .dropdown-trigger::after { transform: rotate(180deg); }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 220px;
+    background: var(--popup-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    padding: 8px;
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .custom-dropdown.open .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .dropdown-item {
+    padding: 12px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .dropdown-item:hover { background: var(--card-hover-bg); }
+  .dropdown-item.active { background: var(--card-border); color: var(--text-heading); font-weight: 600; }
+
+  /* Cam Efektli Premium Kart Yapısı */
   .box {
     max-width: 600px; margin: 0 auto 30px auto; padding: 40px 35px;
     background: var(--card-bg); 
@@ -159,14 +350,13 @@
   }
 
   .logo { display: block; margin: 0 auto 20px auto; max-width: 130px; filter: var(--img-filter); opacity: 0.95; }
-  
   .subtitle {
     text-align: center; font-size: 12px; font-weight: 500;
     color: var(--text-muted); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 0.12em;
   }
   h2 { font-size: 21px; font-weight: 500; color: var(--text-heading); margin-top: 0; margin-bottom: 24px; letter-spacing: -0.02em; }
 
-  /* Modern Çizgili Tablo Tasarımı */
+  /* Modern Tablo Tasarımı */
   table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
   th { color: var(--text-muted); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 12px; border-bottom: 1px solid var(--card-border); }
   td { padding: 16px 12px; border-bottom: 1px solid var(--card-border); color: var(--text-main); text-align: center; font-size: 15px; }
@@ -177,6 +367,7 @@
     border: 1px solid var(--input-border); background: var(--input-bg);
     color: var(--text-heading); font-size: 16px; font-weight: 500;
     transition: all 0.2s ease; text-align: center;
+    font-family: inherit;
   }
   input:focus {
     border-color: var(--text-heading); background: var(--input-bg); box-shadow: 0 0 0 1px var(--text-heading); outline: none;
@@ -190,21 +381,11 @@
   }
   .hedef-title { font-size: 13px; font-weight: 500; color: var(--text-muted); }
 
-  /* Metalik Koyu Premium Link Butonları */
-  .slide-btn {
-    width: 100%; padding: 18px; border: 1px solid var(--card-border); border-radius: 12px;
-    font-size: 14px; font-weight: 500; cursor: pointer;
-    background: linear-gradient(180deg, var(--btn-grad-start), var(--btn-grad-end)); color: var(--btn-text); margin-top: 15px;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    text-align: center; display: block; text-decoration: none; 
-    text-transform: uppercase; letter-spacing: 0.05em;
-  }
-  
   /* Popup İçi Buton Özelleştirmesi */
   .popupContent button {
     width: 100%; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer;
     background: var(--card-bg); color: var(--text-heading); border: 1px solid var(--card-border); margin-bottom: 10px;
-    text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s;
+    text-transform: uppercase; letter-spacing: 0.05em; transition: all 0.2s; font-family: inherit;
   }
   .popupContent button:hover { background: var(--text-heading); color: var(--bg-main); border-color: var(--text-heading); }
 
@@ -217,6 +398,17 @@
   .low { background: rgba(255, 69, 58, 0.15); color: #ff453a; border-color: rgba(255, 69, 58, 0.3); }
   .mid { background: rgba(255, 214, 10, 0.12); color: #ffd60a; border-color: rgba(255, 214, 10, 0.3); }
   .high { background: rgba(48, 209, 88, 0.15); color: #30d158; border-color: rgba(48, 209, 88, 0.4); }
+
+  /* Şık Küçük Dipnot Yazısı */
+  .disclaimer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 14px;
+    opacity: 0.7;
+    font-style: italic;
+    line-height: 1.4;
+  }
 
   /* Overlays & Popups */
   #popupOverlay, #installOverlay, #donemOverlay {
@@ -242,73 +434,6 @@
 
   @keyframes popupEnter { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
   @keyframes popupExit { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.95); } }
-
-  /* Premium Tema Seçici Dropdown Stili */
-  .theme-selector {
-    background: var(--input-bg);
-    border: 1px solid var(--input-border);
-    color: var(--text-main);
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 500;
-    outline: none;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-
-  /* ⚡️ TWORK PREMIUM FULLSCREEN MODAL STYLES */
-  #tworkOverlay {
-    position: fixed; inset: 0; background: var(--bg-main);
-    backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
-    z-index: 999999; display: flex; flex-direction: column;
-    overflow-y: auto; padding: 40px 20px;
-    opacity: 0; pointer-events: none; transform: scale(1.03);
-    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  #tworkOverlay.active {
-    opacity: 1; pointer-events: auto; transform: scale(1);
-  }
-  .twork-container {
-    max-width: 600px; width: 100%; margin: auto; position: relative;
-  }
-  .twork-card {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: 20px; padding: 25px; margin-bottom: 20px;
-    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-  }
-  .twork-input {
-    width: 100%; max-width: 100%; background: var(--input-bg);
-    border: 1px solid var(--input-border); border-radius: 12px;
-    padding: 12px 16px; color: var(--text-heading); text-align: left; font-size: 14px;
-  }
-  .twork-input:focus {
-    border-color: var(--text-heading); box-shadow: none; outline: none;
-  }
-  .twork-btn-toggle {
-    flex: 1; padding: 14px; border-radius: 12px; font-size: 13px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.2s;
-    background: var(--text-heading); color: var(--bg-main); border: none;
-  }
-  .twork-btn-toggle.running {
-    background: rgba(255, 69, 58, 0.2); color: #ff453a; border: 1px solid rgba(255, 69, 58, 0.4);
-  }
-  .twork-todo-item {
-    display: flex; align-items: center; justify-content: space-between;
-    background: var(--input-bg); padding: 12px 16px; border-radius: 12px;
-    border: 1px solid var(--card-border); margin-top: 8px;
-  }
-  .twork-avatar {
-    width: 38px; height: 38px; border-radius: 100%; background: var(--card-bg);
-    border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center;
-    transition: all 0.3s ease;
-  }
-  .twork-avatar.pulse {
-    box-shadow: 0 0 15px var(--accent); border-color: var(--accent);
-    animation: twPulse 2s infinite ease-in-out;
-  }
-  @keyframes twPulse { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
   </style>
 </head>
 
@@ -325,11 +450,18 @@
 <div id="mainSite">
 
   <div style="max-width:600px; margin: 0 auto 15px auto; display:flex; justify-content:flex-end; padding:0 5px;">
-    <select class="theme-selector" onchange="changeTheme(this.value)" id="mainThemeSelect">
-      <option value="dark">🌙 Premium Dark</option>
-      <option value="light">☀️ Nordic Light</option>
-      <option value="cyberpunk">⚡️ Cyberpunk Zen</option>
-    </select>
+    <div class="custom-dropdown" id="themeDropdown">
+      <div class="dropdown-trigger" id="dropdownTrigger">🌙 Premium Dark</div>
+      <div class="dropdown-menu">
+        <div class="dropdown-item active" data-value="dark">🌙 Premium Dark</div>
+        <div class="dropdown-item" data-value="light">☀️ Nordic Light</div>
+        <div class="dropdown-item" data-value="cyberpunk">⚡️ Cyberpunk Zen</div>
+        <div class="dropdown-item" data-value="minecraft">👾 Pixel Craft</div>
+        <div class="dropdown-item" data-value="space">🪐 Deep Space</div>
+        <div class="dropdown-item" data-value="chocomint">🍫 Choco Mint</div>
+        <div class="dropdown-item" data-value="crimson">🩸 Crimson Velvet</div>
+      </div>
+    </div>
   </div>
 
   <div id="donemOverlay" style="display:none;">
@@ -345,7 +477,7 @@
         <button type="button" onclick="donemSec('3')">Dönem 3</button>
         <div class="popupDivider"></div>
         <p style="font-size:11px; color:var(--text-muted); margin-top:10px;">
-          *Şu anda yalnızca Dönem 1 ve Dönem 2 katsayıları aktiftir.
+          *Dönem 1, Dönem 2 ve Dönem 3 entegrasyonu tamamen aktiftir.
         </p>
       </div>
     </div>
@@ -360,9 +492,9 @@
         <span style="font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Güncelleme Raporu</span>
         <div class="popupDivider"></div>
         <ul class="popupList">
+          <li>Dönem 3 Modülü ve Kurul 6 Seçeneği Entegre Edildi ✓</li>
           <li>Luxury Dark Minimalist Tasarım Düzeni Aktif Edildi ○</li>
           <li>🎯 Smart "Hedef Not" Dağılım Modülü Entegre Edildi</li>
-          <li>Otomatik Anlık Hesaplama Modülü Optimizasyonu</li>
           <li>thesap.vercel.app</li>
         </ul>
       </div>
@@ -384,7 +516,6 @@
     </div>
   </div>
 
-
   <div class="box">
     <img src="logo.png" class="logo">
     <div class="subtitle">Tıp Sınav Ortalama Hesaplayıcı</div>
@@ -398,6 +529,7 @@
         <tr><td>Kurul 3</td><td><input id="k3" type="number" step="0.01"></td><td><input id="c3" type="number" value="1"></td></tr>
         <tr><td>Kurul 4</td><td><input id="k4" type="number" step="0.01"></td><td><input id="c4" type="number" value="1"></td></tr>
         <tr><td>Kurul 5</td><td><input id="k5" type="number" step="0.01"></td><td><input id="c5" type="number" value="1"></td></tr>
+        <tr id="kurul6Row"><td>Kurul 6</td><td><input id="k6" type="number" step="0.01"></td><td><input id="c6" type="number" value="1"></td></tr>
       </tbody>
     </table>
 
@@ -407,105 +539,63 @@
     </div>
 
     <div class="result" id="sonuc">✏️ Not girmeye başla, ortalaman burada görünecek...</div>
-  </div>
-
-  <div class="box" style="text-align: center; padding: 30px 35px;">
-    <h2 style="font-size: 14px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.1em; margin-bottom: 12px; margin-top:0;">Twork Odaklanma Alanı</h2>
-    <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.4;">Çalışma sürelerini kaydetmek, bugünün hedeflerini belirlemek và odağını artırmak için kontrol panelini başlat.</p>
-    <button type="button" onclick="openTwork()" class="slide-btn" style="background: linear-gradient(180deg, var(--text-heading), var(--e5e5ea, #e5e5ea)); color: var(--bg-main); font-weight: 600; margin-top: 0; border: none;">
-      ⏱️ TWORK ZEN PANELİNİ AÇ
-    </button>
-  </div>
-
-</div>
-
-
-<div id="tworkOverlay">
-  <div class="twork-container">
     
-    <span class="closeBtn" onclick="closeTwork()" style="top: -10px; right: 5px; font-size: 28px;">×</span>
-    
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; padding: 0 5px;">
-      <div>
-        <h1 style="font-size: 24px; font-weight: 300; letter-spacing: 0.15em; margin: 0; color: var(--text-heading);">TWORK</h1>
-        <p style="font-size: 12px; color: var(--text-muted); margin: 4px 0 0 0;">Selam, <span id="tw-user-name" style="color: var(--text-heading); border-bottom: 1px dashed var(--text-muted); cursor:pointer;">...</span></p>
-      </div>
-      
-      <div style="display:flex; align-items:center; gap:10px;">
-        <select class="theme-selector" onchange="changeTheme(this.value)" id="tworkThemeSelect">
-          <option value="dark">🌙 Premium Dark</option>
-          <option value="light">☀️ Nordic Light</option>
-          <option value="cyberpunk">⚡️ Cyberpunk Zen</option>
-        </select>
-        <div id="tw-avatar" class="twork-avatar" style="color:var(--text-heading)">👤</div>
-      </div>
-    </div>
-
-    <div id="tw-name-box" style="display:none;" class="twork-card">
-      <h3 style="font-size: 15px; font-weight: 500; margin-top: 0; margin-bottom: 12px;">Zen Panel Girişi</h3>
-      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Kişiselleştirilmiş deneyiminiz için adınızı yazın.</p>
-      <div style="display:flex; gap: 10px;">
-        <input type="text" id="tw-name-input" placeholder="İsminiz..." class="twork-input" style="text-align: left; max-width: 100%;">
-        <button type="button" onclick="saveTworkName()" style="padding: 0 20px; border-radius: 12px; background: var(--text-heading); color: var(--bg-main); font-weight: 600; font-size: 13px; cursor: pointer; border:none;">Kaydet</button>
-      </div>
-    </div>
-
-    <div class="twork-card" style="text-align: center; padding: 35px 20px;">
-      <span style="font-size: 10px; letter-spacing: 0.08em; color: var(--text-muted); display: block; margin-bottom: 10px; text-transform: uppercase;">Bugünkü Toplam Çalışma Süren</span>
-      <div id="tw-timer-display" style="font-size: 42px; font-weight: 200; font-variant-numeric: tabular-nums; color: var(--text-heading); letter-spacing: 0.02em; margin-bottom: 25px;">00:00:00</div>
-      
-      <div style="display: flex; gap: 10px; max-width: 320px; margin: 0 auto;">
-        <button id="tw-btn-toggle" type="button" onclick="toggleTworkTimer()" class="twork-btn-toggle">Çalışmaya Başla</button>
-        <button type="button" onclick="resetTworkTimer()" style="padding: 12px 18px; border-radius: 12px; font-size: 12px; background: var(--card-bg); color: var(--text-muted); border: 1px solid var(--card-border); cursor: pointer; text-transform: uppercase;">Sıfırla</button>
-      </div>
-    </div>
-
-    <div class="twork-card" style="padding: 20px;">
-      <span style="font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; display:block; margin-bottom: 8px;">Günün Ana Odağı</span>
-      <input type="text" id="tw-focus-input" placeholder="Neye odaklanacaksınız?" class="twork-input">
-    </div>
-
-    <div class="twork-card">
-      <h3 style="font-size: 15px; font-weight: 500; margin-top: 0; margin-bottom: 15px; color: var(--text-heading);">✓ Yapılacaklar</h3>
-      <div style="display:flex; gap:10px; margin-bottom: 15px;">
-        <input type="text" id="tw-todo-input" placeholder="Yeni görev ekle..." class="twork-input">
-        <button type="button" onclick="addTworkTodo()" style="padding: 0 20px; border-radius: 12px; background: var(--card-bg); color: var(--text-heading); border: 1px solid var(--card-border); font-weight: 500; cursor: pointer;">Ekle</button>
-      </div>
-      <div id="tw-todo-list" style="max-height: 180px; overflow-y: auto;"></div>
-    </div>
-
-    <div class="twork-card">
-      <h3 style="font-size: 15px; font-weight: 500; margin-top: 0; margin-bottom: 12px; color: var(--text-heading);">✍ Hızlı Notlar</h3>
-      <textarea id="tw-notes-input" placeholder="Fikirlerini buraya dök, her harf otomatik kaydedilir..." class="twork-input" style="width:100%; height: 110px; resize: none; font-family: inherit; line-height: 1.5;"></textarea>
-    </div>
-
-    <p style="text-align: center; font-size: 10px; color: var(--text-muted); margin-top: 30px; letter-spacing: 0.05em;">TWORK BİR T-HESAP MARKASIDIR. © 2026</p>
-
+    <div class="disclaimer">* Ufak sapmalardan dolayı çözmeniz gereken soru sayısı +/- 1 değişebilir.</div>
   </div>
+
 </div>
 
 <script>
-// --- TEMA YÖNETİMİ SCRIPTİ ---
+// --- TEMA DROPDOWN SCRIPTİ ---
+const dropdown = document.getElementById('themeDropdown');
+const trigger = document.getElementById('dropdownTrigger');
+const menuItems = document.querySelectorAll('.dropdown-item');
+
+trigger.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdown.classList.toggle('open');
+});
+
+menuItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const value = item.getAttribute('data-value');
+    trigger.innerText = item.innerText;
+    
+    menuItems.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    
+    changeTheme(value);
+    dropdown.classList.remove('open');
+  });
+});
+
+document.addEventListener('click', () => {
+  dropdown.classList.remove('open');
+});
+
 function changeTheme(themeName) {
   document.documentElement.setAttribute('data-theme', themeName);
   localStorage.setItem('site_theme', themeName);
   
-  // İki dropdown listesini de senkronize et
-  const mainSelect = document.getElementById('mainThemeSelect');
-  const tworkSelect = document.getElementById('tworkThemeSelect');
-  if(mainSelect) mainSelect.value = themeName;
-  if(tworkSelect) tworkSelect.value = themeName;
+  const targetItem = document.querySelector(`.dropdown-item[data-value="${themeName}"]`);
+  if(targetItem && trigger) {
+    trigger.innerText = targetItem.innerText;
+    menuItems.forEach(i => i.classList.remove('active'));
+    targetItem.classList.add('active');
+  }
   
-  // Status bar rengini güncelle
   const metaThemeColor = document.querySelector('meta[name="theme-color"]');
   if(metaThemeColor) {
     if(themeName === 'light') metaThemeColor.setAttribute('content', '#f5f5f7');
     else if(themeName === 'cyberpunk') metaThemeColor.setAttribute('content', '#0b0813');
+    else if(themeName === 'minecraft') metaThemeColor.setAttribute('content', '#2c1b12');
+    else if(themeName === 'space') metaThemeColor.setAttribute('content', '#050510');
+    else if(themeName === 'chocomint') metaThemeColor.setAttribute('content', '#2b1e16');
+    else if(themeName === 'crimson') metaThemeColor.setAttribute('content', '#120303');
     else metaThemeColor.setAttribute('content', '#0a0a0a');
   }
 }
 
-// Sayfa yüklendiğinde temayı hafızadan yükle
 document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('site_theme') || 'dark';
   changeTheme(savedTheme);
@@ -561,14 +651,22 @@ function kapatInstall(){
 }
 
 function donemSec(donem){
+  const k6Row = document.getElementById("kurul6Row");
+  
   if(donem==="1"){
     document.getElementById("c1").value=19.5; document.getElementById("c2").value=20.07; document.getElementById("c3").value=19.88; document.getElementById("c4").value=22.7; document.getElementById("c5").value=17.82;
+    document.getElementById("c6").value=0;
+    if(k6Row) k6Row.style.display = "none"; // Dönem 1'de Kurul 6'yı gizle
   }
   if(donem==="2"){
     document.getElementById("c1").value=26; document.getElementById("c2").value=17; document.getElementById("c3").value=22; document.getElementById("c4").value=26; document.getElementById("c5").value=9;
+    document.getElementById("c6").value=0;
+    if(k6Row) k6Row.style.display = "none"; // Dönem 2'de Kurul 6'yı gizle
   }
   if(donem==="3"){
-    document.getElementById("c1").value=1; document.getElementById("c2").value=1; document.getElementById("c3").value=1; document.getElementById("c4").value=1; document.getElementById("c5").value=1;
+    // Dönem 3 için Kurul 6 dahil varsayılan katsayılar (İstediğin gibi güncelleyebilirsin)
+    document.getElementById("c1").value=1; document.getElementById("c2").value=1; document.getElementById("c3").value=1; document.getElementById("c4").value=1; document.getElementById("c5").value=1; document.getElementById("c6").value=1;
+    if(k6Row) k6Row.style.display = "table-row"; // Dönem 3'te Kurul 6'yı göster
   }
   document.getElementById("donemOverlay").style.display="none";
   document.getElementById("popupOverlay").style.display="flex";
@@ -577,10 +675,10 @@ function donemSec(donem){
 
 function hesapla(){
   const notInputlar = [
-    document.getElementById("k1"), document.getElementById("k2"), document.getElementById("k3"), document.getElementById("k4"), document.getElementById("k5")
+    document.getElementById("k1"), document.getElementById("k2"), document.getElementById("k3"), document.getElementById("k4"), document.getElementById("k5"), document.getElementById("k6")
   ];
   const katsayiInputlar = [
-    document.getElementById("c1"), document.getElementById("c2"), document.getElementById("c3"), document.getElementById("c4"), document.getElementById("c5")
+    document.getElementById("c1"), document.getElementById("c2"), document.getElementById("c3"), document.getElementById("c4"), document.getElementById("c5"), document.getElementById("c6")
   ];
   const sonuc = document.getElementById("sonuc");
 
@@ -588,8 +686,11 @@ function hesapla(){
 
   for(let i=0; i<notInputlar.length; i++){
     if(notInputlar[i] && katsayiInputlar[i]) {
+      let katsayi = parseFloat(katsayiInputlar[i].value) || 0;
+      // Katsayısı 0 olan kurul hesaba katılmaz (örn: Dönem 1-2'deki Kurul 6)
+      if(katsayi === 0) continue; 
+      
       let not = parseFloat(notInputlar[i].value);
-      let katsayi = parseFloat(katsayiInputlar[i].value);
       if(!isNaN(not)){
         agirlikliToplam += not * katsayi;
         toplamKatsayi += katsayi;
@@ -610,9 +711,17 @@ function hesapla(){
     return;
   }
 
+  // Sadece aktif olan (katsayısı 0 olmayan) kurulların toplam katsayısını bul
   let tumKatsayi = 0;
+  let toplamAktifKurulSayisi = 0;
   for(let i=0; i<katsayiInputlar.length; i++) {
-    if(katsayiInputlar[i]) tumKatsayi += parseFloat(katsayiInputlar[i].value) || 0;
+    if(katsayiInputlar[i]) {
+      let k = parseFloat(katsayiInputlar[i].value) || 0;
+      if(k > 0) {
+        tumKatsayi += k;
+        toplamAktifKurulSayisi++;
+      }
+    }
   }
 
   const kurulOrt = agirlikliToplam / toplamKatsayi;
@@ -646,14 +755,14 @@ function hesapla(){
   if(!isNaN(hedef) && hedef > 0 && hedef <= 100) {
     mesaj += "<div style='height:1px; background:var(--card-border); margin:15px 0;'></div>";
     
-    if(girilenKurulSayisi < 5) {
+    if(girilenKurulSayisi < toplamAktifKurulSayisi) {
       const gerekenToplamPuan = hedef * tumKatsayi;
       const kalanGerekenPuan = gerekenToplamPuan - agirlikliToplam;
       let kalanKatsayi = 0; let bosKurullar = [];
       
       for(let i=0; i<notInputlar.length; i++) {
-        if(notInputlar[i] && isNaN(parseFloat(notInputlar[i].value))) {
-          let katsayi = parseFloat(katsayiInputlar[i].value) || 0;
+        let katsayi = (katsayiInputlar[i]) ? parseFloat(katsayiInputlar[i].value) || 0 : 0;
+        if(katsayi > 0 && notInputlar[i] && isNaN(parseFloat(notInputlar[i].value))) {
           kalanKatsayi += katsayi;
           bosKurullar.push({ index: (i + 1), katsayi: katsayi });
         }
@@ -701,114 +810,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const video = document.getElementById("installVideo");
   if(video){ video.addEventListener("ended", () => { kapatInstall(); }); }
 });
-
-// ⏱️ --- TWORK CORE SCRIPT MANTIĞI ---
-let twState = {
-  name: localStorage.getItem('twork_name') || '',
-  focus: localStorage.getItem('twork_focus') || '',
-  todos: JSON.parse(localStorage.getItem('twork_todos')) || [],
-  notes: localStorage.getItem('twork_notes') || '',
-  workSeconds: parseInt(localStorage.getItem('twork_total_seconds')) || 0
-};
-
-let twInterval = null;
-
-function openTwork() {
-  const overlay = document.getElementById('tworkOverlay');
-  overlay.classList.add('active');
-  if (!twState.name) {
-    document.getElementById('tw-name-box').style.display = 'block';
-  } else {
-    document.getElementById('tw-name-box').style.display = 'none';
-    document.getElementById('tw-user-name').innerText = twState.name;
-  }
-  document.getElementById('tw-focus-input').value = twState.focus;
-  document.getElementById('tw-notes-input').value = twState.notes;
-  renderTworkTodos();
-  updateTworkDisplay();
-}
-
-function closeTwork() { document.getElementById('tworkOverlay').classList.remove('active'); }
-
-function saveTworkName() {
-  const inp = document.getElementById('tw-name-input').value.trim();
-  if(inp) {
-    twState.name = inp;
-    localStorage.setItem('twork_name', inp);
-    document.getElementById('tw-user-name').innerText = inp;
-    document.getElementById('tw-name-box').style.display = 'none';
-  }
-}
-
-document.getElementById('tw-user-name').addEventListener('click', () => {
-  const newName = prompt("İsmini değiştir:", twState.name);
-  if(newName && newName.trim() !== "") {
-    twState.name = newName.trim();
-    localStorage.setItem('twork_name', twState.name);
-    document.getElementById('tw-user-name').innerText = twState.name;
-  }
-});
-
-document.getElementById('tw-focus-input').addEventListener('input', (e) => localStorage.setItem('twork_focus', e.target.value));
-document.getElementById('tw-notes-input').addEventListener('input', (e) => localStorage.setItem('twork_notes', e.target.value));
-
-function updateTworkDisplay() {
-  const hrs = Math.floor(twState.workSeconds / 3600).toString().padStart(2, '0');
-  const mins = Math.floor((twState.workSeconds % 3600) / 60).toString().padStart(2, '0');
-  const secs = (twState.workSeconds % 60).toString().padStart(2, '0');
-  document.getElementById('tw-timer-display').innerText = `${hrs}:${mins}:${secs}`;
-  localStorage.setItem('twork_total_seconds', twState.workSeconds);
-}
-
-function toggleTworkTimer() {
-  const btn = document.getElementById('tw-btn-toggle');
-  const avatar = document.getElementById('tw-avatar');
-  if (twInterval) {
-    clearInterval(twInterval); twInterval = null;
-    btn.innerText = 'Çalışmaya Devam Et'; btn.classList.remove('running'); avatar.classList.remove('pulse');
-  } else {
-    btn.innerText = 'Çalışmayı Durdur'; btn.classList.add('running'); avatar.classList.add('pulse');
-    twInterval = setInterval(() => { twState.workSeconds++; updateTworkDisplay(); }, 1000);
-  }
-}
-
-function resetTworkTimer() {
-  if (confirm("Bugünkü çalışma süreni sıfırlamak istiyor musun?")) {
-    if(twInterval) { clearInterval(twInterval); twInterval = null; }
-    twState.workSeconds = 0;
-    const btn = document.getElementById('tw-btn-toggle');
-    btn.innerText = 'Çalışmaya Başla'; btn.classList.remove('running');
-    document.getElementById('tw-avatar').classList.remove('pulse');
-    updateTworkDisplay();
-  }
-}
-
-function renderTworkTodos() {
-  const container = document.getElementById('tw-todo-list');
-  container.innerHTML = '';
-  twState.todos.forEach(todo => {
-    const div = document.createElement('div');
-    div.className = 'twork-todo-item';
-    div.innerHTML = `
-      <div style="display:flex; align-items: center; gap:10px; cursor:pointer;" onclick="toggleTworkTodo(${todo.id})">
-        <span style="color: ${todo.completed ? 'var(--accent)' : '#444'}">${todo.completed ? '✓' : '○'}</span>
-        <span style="font-size:13px; text-decoration: ${todo.completed ? 'line-through' : 'none'}; color: var(--text-main); opacity: ${todo.completed ? '0.5' : '1'}">${todo.text}</span>
-      </div>
-      <span onclick="deleteTworkTodo(${todo.id})" style="color:var(--text-muted); cursor:pointer; font-size:11px;">Sil</span>
-    `;
-    container.appendChild(div);
-  });
-  localStorage.setItem('twork_todos', JSON.stringify(twState.todos));
-}
-
-function addTworkTodo() {
-  const inp = document.getElementById('tw-todo-input');
-  const text = inp.value.trim();
-  if(text) { twState.todos.push({ id: Date.now(), text: text, completed: false }); inp.value = ''; renderTworkTodos(); }
-}
-
-window.toggleTworkTodo = (id) => { twState.todos = twState.todos.map(t => t.id === id ? {...t, completed: !t.completed} : t); renderTworkTodos(); };
-window.deleteTworkTodo = (id) => { twState.todos = twState.todos.filter(t => t.id !== id); renderTworkTodos(); };
 </script>
 </body>
 </html>
