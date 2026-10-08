@@ -561,8 +561,6 @@
 </div>
 
 <script>
-let wpMesajText = ""; 
-
 const dropdown = document.getElementById('themeDropdown');
 const trigger = document.getElementById('dropdownTrigger');
 const menuItems = document.querySelectorAll('.dropdown-item');
@@ -705,7 +703,6 @@ function hesapla(){
   const sonuc = document.getElementById("sonuc");
 
   let agirlikliToplam = 0; let toplamKatsayi = 0; let girilenKurulSayisi = 0;
-  wpMesajText = ""; 
 
   for(let i=0; i<notInputlar.length; i++){
     if(notInputlar[i] && katsayiInputlar[i]) {
@@ -739,22 +736,21 @@ function hesapla(){
   const kurulOrt = agirlikliToplam / toplamKatsayi;
   
   let mesaj = `📊 Güncel kurul ortalaman: <b>${kurulOrt.toFixed(2)}</b><br><br>`;
-  wpMesajText = `📊 T-hesap Durum Raporum:\nGüncel kurul ortalamam: ${kurulOrt.toFixed(2)}\n\n`;
 
   let durumClass = "";
 
   if(kurulOrt < 33){
-    durumClass = "low"; mesaj += "<b>Kurul ortalaması 33 altı → Otomatik BÜT</b>"; wpMesajText += "🚨 Ortalamam 33'ün altında, doğrudan büte kalıyorum.";
+    durumClass = "low"; mesaj += "<b>Kurul ortalaması 33 altı → Otomatik BÜT</b>";
   } else if(kurulOrt >= 80){
-    durumClass = "high"; mesaj += "<b>80 ve üzeri → Finalsiz geçtin 🎉</b>"; wpMesajText += "🎉 Ortalama 80 ve üzeri! Finalsiz geçtim!";
+    durumClass = "high"; mesaj += "<b>80 ve üzeri → Finalsiz geçtin 🎉</b>";
   } else {
     durumClass = "mid";
     const bazOrtalama = 66.5, bazSoru = 80, soruArtis = 16 / 6.5;
     if(kurulOrt < bazOrtalama){
       const fark = bazOrtalama - kurulOrt; const soruSayisi = Math.ceil(bazSoru + fark * soruArtis);
-      mesaj += `Finale giriyorsun (Finalde en az <b>${soruSayisi}</b> soru çözmelisin)<br>`; wpMesajText += `📝 Finale girmem gerekiyor. Geçmek için finalde en az *${soruSayisi}* soru çözmeliyim.`;
+      mesaj += `Finale giriyorsun (Finalde en az <b>${soruSayisi}</b> soru çözmelisin)<br>`;
     } else {
-      mesaj += "Finale giriyorsun (Barajsız 80 soru)<br>"; wpMesajText += `📝 Finale giriyorum (Barajsız 80 soru).`;
+      mesaj += "Finale giriyorsun (Barajsız 80 soru)<br>";
     }
   }
 
@@ -774,26 +770,26 @@ function hesapla(){
       const hamGereken = kalanGerekenPuan / kalanKatsayi;
       
       if(hamGereken > 100) {
-        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için kalan sınavlarda 100 tam puan bile yetmiyor. <span style='color:#ff453a;'>(İmkansız)</span>`; wpMesajText += `\n🎯 Hedefim olan ${hedef} ortalama için kalan sınavlarda 100 alsam bile yetmiyor 😭`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için kalan sınavlarda 100 tam puan bile yetmiyor. <span style='color:#ff453a;'>(İmkansız)</span>`;
       } else if(hamGereken <= 0) {
-        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması kalan kurallere girmesen bile zaten garanti!`; wpMesajText += `\n🎯 Hedefim olan ${hedef} ortalama zaten şimdiden garanti! 😎`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması kalan kurallere girmesen bile zaten garanti!`;
       } else {
-        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalamasına ulaşmak için kalan kurullardan alabileceğin örnek dağılım:<br><br>`; wpMesajText += `\n🎯 Hedefim olan ${hedef} ortalamaya ulaşmak için kalan kurullardan T-hesap simülasyonum:\n`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalamasına ulaşmak için kalan kurullardan alabileceğin örnek dağılım:<br><br>`;
         bosKurullar.forEach((kurul) => {
           let esnekNot = hamGereken;
           if(bosKurullar.length > 1) { const sapma = (kurul.katsayi / (kalanKatsayi / bosKurullar.length)) - 1; esnekNot = hamGereken + (sapma * 4); if(esnekNot > 100) esnekNot = 100; if(esnekNot < 0) esnekNot = 0; }
-          mesaj += `▫️ <b>Kurul ${kurul.index}:</b> en az <span style='color:#ffd60a;'><b>${esnekNot.toFixed(1)}</b></span><br>`; wpMesajText += `- Kurul ${kurul.index}: en az *${esnekNot.toFixed(1)}*\n`;
+          mesaj += `▫️ <b>Kurul ${kurul.index}:</b> en az <span style='color:#ffd60a;'><b>${esnekNot.toFixed(1)}</b></span><br>`;
         });
       }
     } 
     else {
       const gerekenFinal = (hedef - (kurulOrt * 0.6)) / 0.4;
       if(gerekenFinal > 100) {
-        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden <b>${gerekenFinal.toFixed(1)}</b> alman lazım. <span style='color:#ff453a;'>(Matematiksel olarak imkansız)</span>`; wpMesajText += `\n🎯 Hedefim olan ${hedef} ortalama için Finalden ${gerekenFinal.toFixed(1)} almam gerekiyor (Matematiksel olarak imkansız) 😭`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden <b>${gerekenFinal.toFixed(1)}</b> alman lazım. <span style='color:#ff453a;'>(Matematiksel olarak imkansız)</span>`;
       } else if(gerekenFinal <= 0) {
-        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden 0 (sıfır) alsan bile yetiyor!`; wpMesajText += `\n🎯 Hedefim olan ${hedef} ortalama için Finalden 0 (sıfır) alsam bile yetiyor! 😎`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden 0 (sıfır) alsan bile yetiyor!`;
       } else {
-        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için <b>Final Sınavından</b> en az <span style='color:#30d158;'><b>${gerekenFinal.toFixed(1)}</b></span> almalısın.`; wpMesajText += `\n🎯 Hedefim olan ${hedef} ortalama için Final Sınavından en az *${gerekenFinal.toFixed(1)}* almalıyım!`;
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için <b>Final Sınavından</b> en az <span style='color:#30d158;'><b>${gerekenFinal.toFixed(1)}</b></span> almalısın.`;
       }
     }
   }
@@ -812,12 +808,7 @@ document.addEventListener("input", (e) => { if (e.target && e.target.tagName ===
 
 function shareWhatsApp() {
   const link = "https://thesap.vercel.app";
-  let tamMesaj = "";
-  if(wpMesajText !== "") {
-    tamMesaj = encodeURIComponent(`${wpMesajText}\n\nSen de kendi hedefini ve ortalamanı kolayca hesaplamak için tıkla: ${link}`);
-  } else {
-    tamMesaj = encodeURIComponent(`T-hesap - Tıp Sınav Ortalama Hesaplayıcı'yı denedin mi?\n\nKendi hedefini ve ortalamanı kolayca hesaplamak için tıkla: ${link}`);
-  }
+  const tamMesaj = encodeURIComponent(`THESAP\n${link}`);
   window.open(`https://api.whatsapp.com/send?text=${tamMesaj}`, '_blank');
 }
 
