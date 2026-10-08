@@ -1,63 +1,821 @@
-const CACHE_NAME = "thesap-cache-v27";
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="THESAP">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Thesap</title>
+  <link rel="manifest" href="manifest.json">
 
-const urlsToCache = [
-  "/",
-  "/index.html",
-  "/logo.png",
-  "/manifest.json",
-  "/video.mp4"
-];
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
-// INSTALL
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
-  );
-  self.skipWaiting();
+  <style>
+  /* --- DİNAMİK TEMA DEĞİŞKENLERİ --- */
+  :root {
+    --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --bg-main: #0a0a0a;
+    --bg-splash: #000000;
+    --bg-splash-radial: #111111;
+    --text-main: #f5f5f7;
+    --text-muted: #8e8e93;
+    --text-heading: #ffffff;
+    --glow-1: rgba(255, 255, 255, 0.04);
+    --glow-2: rgba(255, 255, 255, 0.03);
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-hover-bg: rgba(255, 255, 255, 0.05);
+    --card-hover-border: rgba(255, 255, 255, 0.15);
+    --input-bg: rgba(0, 0, 0, 0.2);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --btn-grad-start: #2c2c2e;
+    --btn-grad-end: #1c1c1e;
+    --btn-text: #ffffff;
+    --popup-bg: #1c1c1e;
+    --img-filter: invert(1);
+    --accent: #30d158;
+    --body-filter: none;
+    --shimmer-color: rgba(255, 255, 255, 0.12);
+  }
+
+  [data-theme="light"] {
+    --bg-main: #f5f5f7;
+    --bg-splash: #ffffff;
+    --bg-splash-radial: #e5e5ea;
+    --text-main: #1d1d1f;
+    --text-muted: #86868b;
+    --text-heading: #000000;
+    --glow-1: rgba(0, 0, 0, 0.02);
+    --glow-2: rgba(0, 0, 0, 0.01);
+    --card-bg: rgba(255, 255, 255, 0.7);
+    --card-border: rgba(0, 0, 0, 0.08);
+    --card-hover-bg: rgba(255, 255, 255, 0.9);
+    --card-hover-border: rgba(0, 0, 0, 0.15);
+    --input-bg: rgba(255, 255, 255, 1);
+    --input-border: rgba(0, 0, 0, 0.15);
+    --btn-grad-start: #e5e5ea;
+    --btn-grad-end: #d1d1d6;
+    --btn-text: #1d1d1f;
+    --popup-bg: #ffffff;
+    --img-filter: invert(0);
+    --accent: #34c759;
+    --shimmer-color: rgba(255, 255, 255, 0.7);
+  }
+
+  [data-theme="cyberpunk"] {
+    --bg-main: #0b0813;
+    --bg-splash: #05030a;
+    --bg-splash-radial: #1a0f30;
+    --text-main: #00ff66;
+    --text-muted: #8a7ebb;
+    --text-heading: #9d4edd;
+    --glow-1: rgba(157, 78, 221, 0.1);
+    --glow-2: rgba(0, 255, 102, 0.05);
+    --card-bg: rgba(20, 15, 38, 0.6);
+    --card-border: rgba(157, 78, 221, 0.2);
+    --card-hover-bg: rgba(30, 22, 56, 0.8);
+    --card-hover-border: rgba(0, 255, 102, 0.4);
+    --input-bg: #05030a;
+    --input-border: rgba(157, 78, 221, 0.4);
+    --btn-grad-start: #7b2cbf;
+    --btn-grad-end: #3c096c;
+    --btn-text: #00ff66;
+    --popup-bg: #140f26;
+    --img-filter: hue-rotate(260deg) brightness(1.2);
+    --accent: #00ff66;
+    --shimmer-color: rgba(157, 78, 221, 0.25);
+  }
+
+  [data-theme="minecraft"] {
+    --font-family: 'Press Start 2P', monospace;
+    --bg-main: #2c1b12;
+    --bg-splash: #140d09;
+    --bg-splash-radial: #4a3121;
+    --text-main: #e0e0e0;
+    --text-muted: #707070;
+    --text-heading: #55ff55;
+    --glow-1: rgba(85, 255, 85, 0.05);
+    --glow-2: rgba(255, 170, 0, 0.03);
+    --card-bg: #4a3121;
+    --card-border: #140d09;
+    --card-hover-bg: #5c3e29;
+    --card-hover-border: #55ff55;
+    --input-bg: #140d09;
+    --input-border: #707070;
+    --btn-grad-start: #9e9e9e;
+    --btn-grad-end: #616161;
+    --btn-text: #ffffff;
+    --popup-bg: #2c1b12;
+    --img-filter: sepia(1) hue-rotate(60deg) saturate(2);
+    --accent: #55ff55;
+    --body-filter: contrast(1.1);
+  }
+
+  [data-theme="space"] {
+    --bg-main: #050510;
+    --bg-splash: #010105;
+    --bg-splash-radial: #0d1b2a;
+    --text-main: #e0e1dd;
+    --text-muted: #606c88;
+    --text-heading: #4cc9f0;
+    --glow-1: rgba(76, 201, 240, 0.1);
+    --glow-2: rgba(114, 9, 183, 0.08);
+    --card-bg: rgba(13, 27, 42, 0.6);
+    --card-border: rgba(76, 201, 240, 0.2);
+    --card-hover-bg: rgba(27, 38, 59, 0.8);
+    --card-hover-border: #4cc9f0;
+    --input-bg: #010105;
+    --input-border: rgba(76, 201, 240, 0.3);
+    --btn-grad-start: #7209b7;
+    --btn-grad-end: #3f37c9;
+    --btn-text: #ffffff;
+    --popup-bg: #0d1b2a;
+    --img-filter: hue-rotate(190deg);
+    --accent: #4cc9f0;
+  }
+
+  [data-theme="chocomint"] {
+    --bg-main: #2b1e16;
+    --bg-splash: #1c120c;
+    --bg-splash-radial: #3d2b1f;
+    --text-main: #f5ebe0;
+    --text-muted: #9c8470;
+    --text-heading: #a3b18a;
+    --glow-1: rgba(163, 177, 138, 0.08);
+    --glow-2: rgba(61, 43, 31, 0.05);
+    --card-bg: rgba(61, 43, 31, 0.7);
+    --card-border: rgba(163, 177, 138, 0.15);
+    --card-hover-bg: rgba(79, 56, 40, 0.9);
+    --card-hover-border: #a3b18a;
+    --input-bg: #1c120c;
+    --input-border: rgba(163, 177, 138, 0.3);
+    --btn-grad-start: #a3b18a;
+    --btn-grad-end: #588157;
+    --btn-text: #2b1e16;
+    --popup-bg: #3d2b1f;
+    --img-filter: sepia(0.5) hue-rotate(40deg);
+    --accent: #a3b18a;
+  }
+
+  [data-theme="crimson"] {
+    --bg-main: #120303;
+    --bg-splash: #050000;
+    --bg-splash-radial: #260707;
+    --text-main: #fbe8e8;
+    --text-muted: #946f6f;
+    --text-heading: #ff3b30;
+    --glow-1: rgba(255, 59, 48, 0.08);
+    --glow-2: rgba(255, 59, 48, 0.03);
+    --card-bg: rgba(38, 7, 7, 0.5);
+    --card-border: rgba(255, 59, 48, 0.15);
+    --card-hover-bg: rgba(54, 10, 10, 0.7);
+    --card-hover-border: #ff3b30;
+    --input-bg: #050000;
+    --input-border: rgba(255, 59, 48, 0.3);
+    --btn-grad-start: #ff3b30;
+    --btn-grad-end: #990000;
+    --btn-text: #ffffff;
+    --popup-bg: #260707;
+    --img-filter: hue-rotate(350deg) saturate(3);
+    --accent: #ff3b30;
+  }
+
+  /* --- Premium Tasarım Dili --- */
+  *{ box-sizing: border-box; letter-spacing: -0.015em; }
+  body{ 
+    margin: 0; font-family: var(--font-family); background: var(--bg-main); color: var(--text-main);
+    overscroll-behavior: none; user-select: none; -webkit-touch-callout: none;
+    min-height: 100vh; -webkit-font-smoothing: antialiased;
+    filter: var(--body-filter); transition: background 0.5s ease, color 0.5s ease, filter 0.5s ease;
+  }
+
+  [data-theme="minecraft"] body { font-size: 11px; }
+  [data-theme="minecraft"] th { font-size: 8px !important; }
+  [data-theme="minecraft"] td { font-size: 10px !important; }
+  [data-theme="minecraft"] h2 { font-size: 14px !important; }
+  [data-theme="minecraft"] .subtitle { font-size: 8px !important; }
+  [data-theme="minecraft"] .result { font-size: 11px !important; line-height: 1.8; }
+  [data-theme="minecraft"] .disclaimer { font-size: 8px !important; }
+
+  /* 3. Nefes Alan Arka Plan (Breathing Glow) */
+  body::before, body::after {
+    content: ""; position: fixed; width: 600px; height: 600px; z-index: -2;
+  }
+  body::before { 
+    background: radial-gradient(circle, var(--glow-1), transparent 70%); top: -150px; left: -150px; filter: blur(100px); 
+    animation: floatGlow1 12s ease-in-out infinite alternate;
+  }
+  body::after { 
+    background: radial-gradient(circle, var(--glow-2), transparent 70%); bottom: -200px; right: -150px; filter: blur(120px); 
+    animation: floatGlow2 15s ease-in-out infinite alternate;
+  }
+  
+  @keyframes floatGlow1 { 0% { transform: translate(0, 0) scale(1); opacity: 0.8; } 100% { transform: translate(40px, 50px) scale(1.15); opacity: 1; } }
+  @keyframes floatGlow2 { 0% { transform: translate(0, 0) scale(1); opacity: 0.8; } 100% { transform: translate(-50px, -40px) scale(1.2); opacity: 1; } }
+
+  /* --- YENİ EFSANE SPLASH (GİRİŞ İNTROSU) EKRANI --- */
+  #splash { position: fixed; inset: 0; background: var(--bg-splash); display: flex; justify-content: center; align-items: center; z-index: 99999; overflow: hidden; }
+  
+  .splash-glow {
+    position: absolute; width: 50vw; height: 50vw; border-radius: 50%;
+    background: radial-gradient(circle, var(--text-heading) 0%, transparent 70%);
+    opacity: 0.05; filter: blur(60px);
+    animation: pulseGlow 4s ease-in-out infinite alternate;
+  }
+  @keyframes pulseGlow { 0% { transform: scale(0.8); opacity: 0.03; } 100% { transform: scale(1.2); opacity: 0.08; } }
+
+  .cinema-content { display: flex; flex-direction: column; align-items: center; z-index: 2; }
+  .logo-container { position: relative; margin-bottom: 25px; display: flex; justify-content: center; align-items: center; }
+  
+  .cinema-logo { 
+    width: 120px; filter: var(--img-filter); opacity: 0; z-index: 2;
+    animation: logoEnter 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  }
+  @keyframes logoEnter { 0% { opacity: 0; transform: scale(0.5) translateY(30px); filter: blur(10px); } 100% { opacity: 0.95; transform: scale(1) translateY(0); filter: blur(0); } }
+
+  .pulse-ring {
+    position: absolute; width: 100%; height: 100%; border-radius: 50%;
+    border: 2px solid var(--text-heading); opacity: 0; pointer-events: none;
+    animation: ripple 2.5s cubic-bezier(0.21, 0.53, 0.56, 0.8) infinite;
+  }
+  .pulse-ring.delay { animation-delay: 1.25s; }
+  @keyframes ripple { 0% { width: 100px; height: 100px; opacity: 0.4; border-width: 2px; } 100% { width: 350px; height: 350px; opacity: 0; border-width: 0; } }
+
+  .cinema-text-wrapper { overflow: hidden; padding-bottom: 5px; }
+  .cinema-text {
+    font-size: 38px; color: var(--text-heading); letter-spacing: 0.35em; font-weight: 300; 
+    text-transform: uppercase; transform: translateY(100%); opacity: 0; position: relative;
+    animation: textSlideUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+  }
+  @keyframes textSlideUp { 0% { transform: translateY(100%); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+  .cinema-text::after {
+    content: attr(data-text); position: absolute; left: 0; top: 0; color: transparent;
+    background: linear-gradient(120deg, transparent 0%, transparent 40%, rgba(255,255,255,0.8) 50%, transparent 60%, transparent 100%);
+    background-size: 200% auto; background-clip: text; -webkit-background-clip: text;
+    animation: shine 2s linear 1.5s forwards;
+  }
+  @keyframes shine { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+
+  .splash-subtitle {
+    margin-top: 20px; font-size: 11px; color: var(--text-muted); 
+    letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500; opacity: 0;
+    animation: fadeInSub 1s ease 1.6s forwards;
+  }
+  @keyframes fadeInSub { from { opacity: 0; transform: translateY(10px); } to { opacity: 0.7; transform: translateY(0); } }
+
+  .splash-exit { animation: splashOut 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards !important; }
+  @keyframes splashOut { 0% { opacity: 1; transform: scale(1); filter: blur(0); } 100% { opacity: 0; transform: scale(1.15); filter: blur(15px); } }
+
+  #mainSite { display: none; min-height: 100vh; padding: 20px 15px 40px 15px; position: relative; z-index: 10; }
+
+  /* --- YENİ: TEMA UYUMLU AKVARYUM ARKA PLANI --- */
+  .aquarium-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1; overflow: hidden;
+  }
+  .bubble {
+    position: absolute; bottom: -50px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatUp ease-in infinite;
+  }
+  [data-theme="minecraft"] .bubble { border-radius: 0; }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    10% { opacity: 0.15; }
+    50% { opacity: 0.2; transform: translateY(-50vh) scale(1.2) translateX(20px); }
+    90% { opacity: 0; }
+    100% { transform: translateY(-120vh) scale(1.5) translateX(-20px); opacity: 0; }
+  }
+
+  /* 1. Staggered Reveal (Kademeli Açılış Efekti) Sınıfları */
+  .stagger { opacity: 0; transform: translateY(20px); }
+  body.main-loaded .stagger { animation: fadeUpAnim 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  
+  body.main-loaded .d-1 { animation-delay: 0.1s; }
+  body.main-loaded .d-2 { animation-delay: 0.2s; }
+  body.main-loaded .d-3 { animation-delay: 0.3s; }
+  body.main-loaded .d-4 { animation-delay: 0.4s; }
+  body.main-loaded .d-5 { animation-delay: 0.5s; }
+  body.main-loaded .d-6 { animation-delay: 0.6s; }
+  body.main-loaded .d-7 { animation-delay: 0.7s; }
+
+  @keyframes fadeUpAnim { to { opacity: 1; transform: translateY(0); } }
+
+  /* --- ÜST BAR Z-INDEX DÜZELTMESİ (Menü arkada kalmasın diye) --- */
+  .top-bar { 
+    max-width: 600px; margin: 0 auto 15px auto; display: flex; 
+    justify-content: space-between; align-items: center; padding: 0 5px; 
+    position: relative; z-index: 999; /* DÜZELTME BURADA */
+  }
+  
+  .change-term-btn {
+    display: flex; align-items: center; gap: 6px; background: var(--card-bg); border: 1px solid var(--card-border);
+    color: var(--text-main); padding: 12px 16px; border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; backdrop-filter: blur(20px); transition: all 0.3s;
+  }
+  .change-term-btn:hover { background: var(--card-hover-bg); transform: scale(0.97); }
+
+  .custom-dropdown { position: relative; width: 170px; user-select: none; z-index: 1000; }
+  .dropdown-trigger {
+    background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); padding: 12px 16px;
+    border-radius: 14px; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); transition: all 0.3s;
+  }
+  .dropdown-trigger:active { transform: scale(0.97); }
+  .dropdown-trigger::after { content: '▼'; font-size: 9px; margin-left: 8px; transition: transform 0.3s ease; color: var(--text-muted); }
+  .custom-dropdown.open .dropdown-trigger::after { transform: rotate(180deg); }
+  
+  .dropdown-menu {
+    position: absolute; top: calc(100% + 8px); right: 0; width: 220px; background: var(--popup-bg); border: 1px solid var(--card-border);
+    border-radius: 18px; box-shadow: 0 15px 30px rgba(0,0,0,0.3); padding: 8px; opacity: 0; transform: translateY(-10px) scale(0.95); pointer-events: none; transition: all 0.3s;
+  }
+  .custom-dropdown.open .dropdown-menu { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+  .dropdown-item { padding: 12px 14px; font-size: 13px; font-weight: 500; border-radius: 10px; cursor: pointer; color: var(--text-main); transition: background 0.2s; display: flex; align-items: center; }
+  .dropdown-item:hover { background: var(--card-hover-bg); }
+  .dropdown-item.active { background: var(--card-border); color: var(--text-heading); font-weight: 600; }
+
+  /* Kart & Tablo */
+  .box {
+    position: relative; overflow: hidden; /* Shimmer dışarı taşmasın diye */
+    max-width: 600px; margin: 0 auto; padding: 40px 35px; background: var(--card-bg); 
+    border-radius: 24px; border: 1px solid var(--card-border); backdrop-filter: blur(20px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); transition: all 0.4s; z-index: 10;
+  }
+  .box:hover { transform: translateY(-4px); border-color: var(--card-hover-border); background: var(--card-hover-bg); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25); }
+  
+  /* 2. Kart Üzeri SÜREKLİ KAYAN Shimmer (Işık Hüzmesi) Efekti */
+  .box::before {
+    content: ""; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(to right, transparent, var(--shimmer-color), transparent);
+    transform: skewX(-25deg); z-index: 10; pointer-events: none;
+  }
+  body.main-loaded .box::before {
+    /* 6 saniyelik döngüyle sürekli çalışır (2 sn kayar, 4 sn bekler) */
+    animation: boxShimmerLoop 6s infinite 1s;
+  }
+  @keyframes boxShimmerLoop {
+    0%, 15% { left: -100%; opacity: 0; }
+    20% { opacity: 1; }
+    40% { left: 200%; opacity: 1; }
+    45%, 100% { left: 200%; opacity: 0; }
+  }
+
+  .logo { display: block; margin: 0 auto 20px auto; max-width: 130px; filter: var(--img-filter); opacity: 0.95; }
+  .subtitle { text-align: center; font-size: 12px; font-weight: 500; color: var(--text-muted); margin-bottom: 40px; text-transform: uppercase; letter-spacing: 0.12em; }
+  h2 { font-size: 21px; font-weight: 500; color: var(--text-heading); margin-top: 0; margin-bottom: 24px; letter-spacing: -0.02em; }
+  
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th { color: var(--text-muted); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; padding: 12px; border-bottom: 1px solid var(--card-border); }
+  td { padding: 16px 12px; border-bottom: 1px solid var(--card-border); color: var(--text-main); text-align: center; font-size: 15px; }
+  
+  input {
+    width: 100%; max-width: 120px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg);
+    color: var(--text-heading); font-size: 16px; font-weight: 500; transition: all 0.2s ease; text-align: center; font-family: inherit;
+  }
+  input:focus { border-color: var(--text-heading); background: var(--input-bg); box-shadow: 0 0 0 1px var(--text-heading); outline: none; }
+
+  .hedef-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; margin-top: 20px; }
+  .hedef-title { font-size: 13px; font-weight: 500; color: var(--text-muted); }
+
+  .result { margin-top: 15px; padding: 22px; border-radius: 14px; font-size: 15px; font-weight: 500; background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-main); line-height: 1.6; text-align: center; }
+  .low { background: rgba(255, 69, 58, 0.15); color: #ff453a; border-color: rgba(255, 69, 58, 0.3); }
+  .mid { background: rgba(255, 214, 10, 0.12); color: #ffd60a; border-color: rgba(255, 214, 10, 0.3); }
+  .high { background: rgba(48, 209, 88, 0.15); color: #30d158; border-color: rgba(48, 209, 88, 0.4); }
+
+  /* 4. Dinamik Sonuç Kutusu (Pop/Pulse) Efekti */
+  .pulse-anim { animation: resultPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  @keyframes resultPop { 0% { transform: scale(1); } 50% { transform: scale(1.03); } 100% { transform: scale(1); } }
+
+  .disclaimer { text-align: center; font-size: 11px; color: var(--text-muted); margin-top: 14px; margin-bottom: 25px; opacity: 0.7; font-style: italic; line-height: 1.4; }
+
+  .wp-btn {
+    width: 100%; padding: 16px; border-radius: 14px; font-size: 15px; font-weight: 600; cursor: pointer;
+    background: #25D366; color: #ffffff; border: none; display: flex; align-items: center; justify-content: center; gap: 12px;
+    transition: all 0.2s; font-family: inherit; box-shadow: 0 8px 16px rgba(37, 211, 102, 0.2); margin-top: 10px;
+  }
+  .wp-btn:hover { background: #128C7E; transform: translateY(-2px); box-shadow: 0 12px 20px rgba(37, 211, 102, 0.3); }
+
+  /* Popuplar */
+  #popupOverlay, #installOverlay, #donemOverlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(25px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
+  .popupBox { max-width: 440px; width: 90%; z-index: 10000; }
+  .popupContent { background: var(--popup-bg); border-radius: 24px; padding: 40px; text-align: center; animation: popupEnter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; position: relative; border: 1px solid var(--card-border); box-shadow: 0 30px 60px rgba(0,0,0,0.3); }
+  .popupContent h2 { color: var(--text-heading); font-weight: 500; letter-spacing: -0.01em; }
+  .popupContent.closing { animation: popupExit 0.3s ease forwards; }
+  .popupDivider { height: 1px; background: var(--card-border); margin: 24px 0; }
+  .popupContent button { width: 100%; padding: 16px; border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer; background: var(--card-bg); color: var(--text-heading); border: 1px solid var(--card-border); margin-bottom: 10px; text-transform: uppercase; transition: all 0.2s; font-family: inherit; }
+  .popupContent button:hover { background: var(--text-heading); color: var(--bg-main); border-color: var(--text-heading); }
+  .popupList { list-style: none; padding: 0; margin: 0; text-align: left; }
+  .popupList li { padding: 14px 0; border-bottom: 1px solid var(--card-border); font-size: 14px; color: var(--text-main); }
+  .closeBtn { position: absolute; top: 20px; right: 22px; font-size: 22px; cursor: pointer; color: var(--text-muted); transition: color 0.2s; }
+  .closeBtn:hover { color: var(--text-heading); }
+  #installContent video { width: 100%; border-radius: 12px; margin-top: 15px; border: 1px solid var(--card-border); }
+
+  @keyframes popupEnter { 0% { opacity: 0; transform: scale(0.95); } 100% { opacity: 1; transform: scale(1); } }
+  @keyframes popupExit { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.95); } }
+  </style>
+</head>
+
+<body>
+
+<!-- Akvaryum Baloncukları Arka Planı -->
+<div class="aquarium-bg">
+  <div class="bubble" style="left: 10%; width: 20px; height: 20px; animation-duration: 8s; animation-delay: 1s;"></div>
+  <div class="bubble" style="left: 25%; width: 35px; height: 35px; animation-duration: 12s; animation-delay: 3s;"></div>
+  <div class="bubble" style="left: 40%; width: 15px; height: 15px; animation-duration: 6s; animation-delay: 0s;"></div>
+  <div class="bubble" style="left: 55%; width: 40px; height: 40px; animation-duration: 14s; animation-delay: 5s;"></div>
+  <div class="bubble" style="left: 70%; width: 25px; height: 25px; animation-duration: 9s; animation-delay: 2s;"></div>
+  <div class="bubble" style="left: 85%; width: 18px; height: 18px; animation-duration: 7s; animation-delay: 4s;"></div>
+  <div class="bubble" style="left: 15%; width: 30px; height: 30px; animation-duration: 11s; animation-delay: 6s;"></div>
+  <div class="bubble" style="left: 65%; width: 22px; height: 22px; animation-duration: 10s; animation-delay: 1.5s;"></div>
+</div>
+
+<div id="splash">
+  <div class="splash-glow"></div>
+  <div class="cinema-content">
+    <div class="logo-container">
+      <img src="logo.png" class="cinema-logo">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring delay"></div>
+    </div>
+    <div class="cinema-text-wrapper">
+      <div class="cinema-text" data-text="THESAP">THESAP</div>
+    </div>
+    <div class="splash-subtitle">Tıp Sınav Ortalama Hesaplayıcı</div>
+  </div>
+</div>
+
+<div id="mainSite">
+
+  <!-- Z-index sorunu çözüldü, menü her zaman önde -->
+  <div class="top-bar stagger d-1">
+    <div class="change-term-btn" onclick="document.getElementById('donemOverlay').style.display='flex'">
+      <span>🔄</span> Dönem Değiştir
+    </div>
+    <div class="custom-dropdown" id="themeDropdown">
+      <div class="dropdown-trigger" id="dropdownTrigger">🌙 Premium Dark</div>
+      <div class="dropdown-menu">
+        <div class="dropdown-item active" data-value="dark">🌙 Premium Dark</div>
+        <div class="dropdown-item" data-value="light">☀️ Nordic Light</div>
+        <div class="dropdown-item" data-value="cyberpunk">⚡️ Cyberpunk Zen</div>
+        <div class="dropdown-item" data-value="minecraft">👾 Pixel Craft</div>
+        <div class="dropdown-item" data-value="space">🪐 Deep Space</div>
+        <div class="dropdown-item" data-value="chocomint">🍫 Choco Mint</div>
+        <div class="dropdown-item" data-value="crimson">🩸 Crimson Velvet</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="donemOverlay" style="display:none;">
+    <div class="popupBox">
+      <div class="popupContent">
+        <h2>Dönem Seçimi</h2>
+        <p style="margin-top:10px; font-size:13px; color:var(--text-muted); line-height: 1.6;">
+          Seçtiğiniz dönemin katsayıları otomatik olarak sisteme entegre edilecektir.
+        </p>
+        <div class="popupDivider"></div>
+        <button type="button" onclick="donemSec('1')">Dönem 1</button>
+        <button type="button" onclick="donemSec('2')">Dönem 2</button>
+        <button type="button" onclick="donemSec('3')">Dönem 3</button>
+        <div class="popupDivider"></div>
+        <p style="font-size:11px; color:var(--text-muted); margin-top:10px;">
+          *Dönem 1, Dönem 2 ve Dönem 3 entegrasyonu tamamen aktiftir.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="popupOverlay" style="display:none;">
+    <div class="popupBox">
+      <div class="popupContent" id="popupContent">
+        <span class="closeBtn" onclick="kapatPopup()">×</span>
+        <h2 style="letter-spacing: 0.2em; font-weight: 300;">THESAP</h2>
+        <div class="popupDivider"></div>
+        <span style="font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase;">Güncelleme Raporu</span>
+        <div class="popupDivider"></div>
+        <ul class="popupList">
+          <li>Tema Uyumlu Akvaryum Arka Planı Eklendi 🫧</li>
+          <li>Menü Öncelik/Katman (Z-Index) Hatası Çözüldü 🛠️</li>
+          <li>Kart Işık Hüzmesi Sonsuz Döngüye Alındı ✨</li>
+          <li>thesap.vercel.app</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="installOverlay" style="display:none;">
+    <div class="popupBox">
+      <div class="popupContent" id="installContent">
+        <span class="closeBtn" onclick="kapatInstall()">×</span>
+        <h2>Ana Ekrana Ekleme</h2>
+        <p style="font-size:13px; color:var(--text-muted);">Videonun açılması için lütfen oynat butonuna tıklayınız.</p>
+        <div class="popupDivider"></div>
+        <video id="installVideo" controls preload="none">
+          <source src="video.mp4" type="video/mp4">
+          Tarayıcınız video etiketini desteklemiyor.
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <div class="box stagger d-2">
+    <img src="logo.png" class="logo stagger d-3">
+    <div class="subtitle stagger d-4">Tıp Sınav Ortalama Hesaplayıcı</div>
+    
+    <table class="stagger d-5">
+      <thead>
+        <tr><th>Kurul</th><th>Not</th><th>Katsayı</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Kurul 1</td><td><input id="k1" type="number" step="0.01"></td><td><input id="c1" type="number" step="any" value="1"></td></tr>
+        <tr><td>Kurul 2</td><td><input id="k2" type="number" step="0.01"></td><td><input id="c2" type="number" step="any" value="1"></td></tr>
+        <tr><td>Kurul 3</td><td><input id="k3" type="number" step="0.01"></td><td><input id="c3" type="number" step="any" value="1"></td></tr>
+        <tr><td>Kurul 4</td><td><input id="k4" type="number" step="0.01"></td><td><input id="c4" type="number" step="any" value="1"></td></tr>
+        <tr><td>Kurul 5</td><td><input id="k5" type="number" step="0.01"></td><td><input id="c5" type="number" step="any" value="1"></td></tr>
+        <tr id="kurul6Row"><td>Kurul 6</td><td><input id="k6" type="number" step="0.01"></td><td><input id="c6" type="number" step="any" value="1"></td></tr>
+      </tbody>
+    </table>
+
+    <div class="hedef-wrapper stagger d-6">
+      <div class="hedef-title">🎯 İstediğin Yıl Sonu Ortalaması:</div>
+      <input id="hedefNot" type="number" placeholder="Örn: 72" step="1" max="100">
+    </div>
+
+    <!-- Sonuç Kutusu Animasyon Sınıfları İle Başlıyor -->
+    <div class="result stagger d-7" id="sonuc">✏️ Not girmeye başla, ortalaman burada görünecek...</div>
+    
+    <div class="disclaimer stagger d-7">* Ufak sapmalardan dolayı çözmeniz gereken soru sayısı +/- 1 değişebilir.</div>
+
+    <button class="wp-btn stagger d-7" onclick="shareWhatsApp()">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Bizi WhatsApp'ta Paylaş
+    </button>
+  </div>
+
+</div>
+
+<script>
+const dropdown = document.getElementById('themeDropdown');
+const trigger = document.getElementById('dropdownTrigger');
+const menuItems = document.querySelectorAll('.dropdown-item');
+
+trigger.addEventListener('click', (e) => { e.stopPropagation(); dropdown.classList.toggle('open'); });
+document.addEventListener('click', () => { dropdown.classList.remove('open'); });
+
+menuItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const value = item.getAttribute('data-value');
+    trigger.innerText = item.innerText;
+    menuItems.forEach(i => i.classList.remove('active')); item.classList.add('active');
+    changeTheme(value); dropdown.classList.remove('open');
+  });
 });
 
-// FETCH (Güvenli Network First)
-self.addEventListener("fetch", event => {
+function changeTheme(themeName) {
+  document.documentElement.setAttribute('data-theme', themeName);
+  localStorage.setItem('site_theme', themeName);
+  
+  const targetItem = document.querySelector(`.dropdown-item[data-value="${themeName}"]`);
+  if(targetItem && trigger) {
+    trigger.innerText = targetItem.innerText;
+    menuItems.forEach(i => i.classList.remove('active')); targetItem.classList.add('active');
+  }
+  
+  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+  if(metaThemeColor) {
+    if(themeName === 'light') metaThemeColor.setAttribute('content', '#f5f5f7');
+    else if(themeName === 'cyberpunk') metaThemeColor.setAttribute('content', '#0b0813');
+    else if(themeName === 'minecraft') metaThemeColor.setAttribute('content', '#2c1b12');
+    else if(themeName === 'space') metaThemeColor.setAttribute('content', '#050510');
+    else if(themeName === 'chocomint') metaThemeColor.setAttribute('content', '#2b1e16');
+    else if(themeName === 'crimson') metaThemeColor.setAttribute('content', '#120303');
+    else metaThemeColor.setAttribute('content', '#0a0a0a');
+  }
+}
 
-  // SADECE GET isteklerini yakala
-  if (event.request.method !== "GET") return;
+function verileriKaydet() {
+  const kaydedilecekVeriler = {
+    k1: document.getElementById("k1").value,
+    k2: document.getElementById("k2").value,
+    k3: document.getElementById("k3").value,
+    k4: document.getElementById("k4").value,
+    k5: document.getElementById("k5").value,
+    k6: document.getElementById("k6").value,
+    hedefNot: document.getElementById("hedefNot").value,
+    secilenDonem: localStorage.getItem('secilen_donem') || null
+  };
+  localStorage.setItem("thesap_veriler", JSON.stringify(kaydedilecekVeriler));
+}
 
-  // SADECE aynı origin isteklerini cachele
-  if (!event.request.url.startsWith(self.location.origin)) return;
+document.addEventListener('DOMContentLoaded', () => {
+  const savedTheme = localStorage.getItem('site_theme') || 'dark';
+  changeTheme(savedTheme);
 
-  event.respondWith(
-    fetch(event.request)
-      .then(response => {
-        // Sadece başarılı cevapları cachele
-        if (!response || response.status !== 200 || response.type !== "basic") {
-          return response;
+  // INTRO ANIMASYON SÜRESİ
+  setTimeout(()=>{
+    const splash=document.getElementById('splash');
+    if(splash) {
+      splash.classList.add('splash-exit');
+      setTimeout(()=>{
+        splash.remove();
+        document.getElementById('mainSite').style.display='block';
+        document.body.classList.add('main-loaded');
+        
+        document.getElementById("donemOverlay").style.display="flex";
+        
+        const kayitliVeriStr = localStorage.getItem("thesap_veriler");
+        if(kayitliVeriStr) {
+          const veri = JSON.parse(kayitliVeriStr);
+          if(veri.k1) document.getElementById("k1").value = veri.k1;
+          if(veri.k2) document.getElementById("k2").value = veri.k2;
+          if(veri.k3) document.getElementById("k3").value = veri.k3;
+          if(veri.k4) document.getElementById("k4").value = veri.k4;
+          if(veri.k5) document.getElementById("k5").value = veri.k5;
+          if(veri.k6) document.getElementById("k6").value = veri.k6;
+          if(veri.hedefNot) document.getElementById("hedefNot").value = veri.hedefNot;
+        } 
+      }, 800); // 3D Çıkış animasyonu bitişi
+    }
+  }, 4000); // 4 Saniye sonra intro biter
+});
+
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('service-worker.js').catch(err=>console.log("SW hatası:",err));
+}
+
+function kapatPopup(){
+  const popup=document.getElementById("popupContent");
+  if(popup) {
+    popup.classList.add("closing");
+    setTimeout(()=>{
+      document.getElementById("popupOverlay").style.display="none";
+      popup.classList.remove("closing");
+      document.getElementById("installOverlay").style.display="flex";
+    },300);
+  }
+}
+
+function kapatInstall(){
+  const popup=document.getElementById("installContent");
+  const video=document.getElementById("installVideo");
+  if(video) video.pause();
+  if(popup) {
+    popup.classList.add("closing");
+    setTimeout(()=>{
+      document.getElementById("installOverlay").style.display="none";
+      popup.classList.remove("closing");
+    },300);
+  }
+}
+
+function donemSec(donem){
+  const k6Row = document.getElementById("kurul6Row");
+  localStorage.setItem('secilen_donem', donem);
+  
+  if(donem==="1"){
+    document.getElementById("c1").value=19.5; document.getElementById("c2").value=20.07; document.getElementById("c3").value=19.88; document.getElementById("c4").value=22.7; document.getElementById("c5").value=17.82; document.getElementById("c6").value=0;
+    if(k6Row) k6Row.style.display = "none";
+  }
+  if(donem==="2"){
+    document.getElementById("c1").value=26; document.getElementById("c2").value=17; document.getElementById("c3").value=22; document.getElementById("c4").value=26; document.getElementById("c5").value=9; document.getElementById("c6").value=0;
+    if(k6Row) k6Row.style.display = "none";
+  }
+  if(donem==="3"){
+    document.getElementById("c1").value=18.89880952380952; document.getElementById("c2").value=17.55952380952381; document.getElementById("c3").value=16.66666666666667; document.getElementById("c4").value=17.41071428571429; document.getElementById("c5").value=19.19642857142857; document.getElementById("c6").value=10.26785714285714;
+    if(k6Row) k6Row.style.display = "table-row";
+  }
+  
+  document.getElementById("donemOverlay").style.display="none";
+  document.getElementById("popupOverlay").style.display="flex";
+  
+  verileriKaydet(); hesapla();
+}
+
+function hesapla(){
+  const notInputlar = [document.getElementById("k1"), document.getElementById("k2"), document.getElementById("k3"), document.getElementById("k4"), document.getElementById("k5"), document.getElementById("k6")];
+  const katsayiInputlar = [document.getElementById("c1"), document.getElementById("c2"), document.getElementById("c3"), document.getElementById("c4"), document.getElementById("c5"), document.getElementById("c6")];
+  const sonuc = document.getElementById("sonuc");
+
+  let agirlikliToplam = 0; let toplamKatsayi = 0; let girilenKurulSayisi = 0;
+
+  for(let i=0; i<notInputlar.length; i++){
+    if(notInputlar[i] && katsayiInputlar[i]) {
+      let katsayi = parseFloat(katsayiInputlar[i].value) || 0;
+      if(katsayi === 0) continue; 
+      
+      let not = parseFloat(notInputlar[i].value);
+      if(!isNaN(not)){
+        agirlikliToplam += not * katsayi; toplamKatsayi += katsayi; girilenKurulSayisi++;
+      }
+    }
+  }
+
+  const hedef = parseFloat(document.getElementById("hedefNot").value);
+  
+  if(girilenKurulSayisi === 0){
+    sonuc.className = "result stagger d-7"; // Stagger sınıflarını korumak için
+    if(!isNaN(hedef) && hedef > 0) sonuc.innerHTML = `🎯 Ortalama hedefin: <b>${hedef}</b><br><span style='font-size:12px; color:var(--text-muted);'>Hesaplama yapabilmek için lütfen en az bir kurul notu girin.</span>`;
+    else sonuc.innerHTML = "✏️ Not girmeye başla, ortalaman burada görünecek...";
+    return;
+  }
+
+  let tumKatsayi = 0; let toplamAktifKurulSayisi = 0;
+  for(let i=0; i<katsayiInputlar.length; i++) {
+    if(katsayiInputlar[i]) {
+      let k = parseFloat(katsayiInputlar[i].value) || 0;
+      if(k > 0) { tumKatsayi += k; toplamAktifKurulSayisi++; }
+    }
+  }
+
+  const kurulOrt = agirlikliToplam / toplamKatsayi;
+  
+  let mesaj = `📊 Güncel kurul ortalaman: <b>${kurulOrt.toFixed(2)}</b><br><br>`;
+
+  let durumClass = "";
+
+  if(kurulOrt < 33){
+    durumClass = "low"; mesaj += "<b>Kurul ortalaması 33 altı → Otomatik BÜT</b>";
+  } else if(kurulOrt >= 80){
+    durumClass = "high"; mesaj += "<b>80 ve üzeri → Finalsiz geçtin 🎉</b>";
+  } else {
+    durumClass = "mid";
+    const bazOrtalama = 66.5, bazSoru = 80, soruArtis = 16 / 6.5;
+    if(kurulOrt < bazOrtalama){
+      const fark = bazOrtalama - kurulOrt; const soruSayisi = Math.ceil(bazSoru + fark * soruArtis);
+      mesaj += `Finale giriyorsun (Finalde en az <b>${soruSayisi}</b> soru çözmelisin)<br>`;
+    } else {
+      mesaj += "Finale giriyorsun (Barajsız 80 soru)<br>";
+    }
+  }
+
+  if(!isNaN(hedef) && hedef > 0 && hedef <= 100 && durumClass !== "low" && durumClass !== "high") {
+    mesaj += "<div style='height:1px; background:var(--card-border); margin:15px 0;'></div>";
+    
+    if(girilenKurulSayisi < toplamAktifKurulSayisi) {
+      const gerekenToplamPuan = hedef * tumKatsayi; const kalanGerekenPuan = gerekenToplamPuan - agirlikliToplam;
+      let kalanKatsayi = 0; let bosKurullar = [];
+      
+      for(let i=0; i<notInputlar.length; i++) {
+        let katsayi = (katsayiInputlar[i]) ? parseFloat(katsayiInputlar[i].value) || 0 : 0;
+        if(katsayi > 0 && notInputlar[i] && isNaN(parseFloat(notInputlar[i].value))) {
+          kalanKatsayi += katsayi; bosKurullar.push({ index: (i + 1), katsayi: katsayi });
         }
-
-        const responseClone = response.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, responseClone);
+      }
+      const hamGereken = kalanGerekenPuan / kalanKatsayi;
+      
+      if(hamGereken > 100) {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için kalan sınavlarda 100 tam puan bile yetmiyor. <span style='color:#ff453a;'>(İmkansız)</span>`;
+      } else if(hamGereken <= 0) {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması kalan kurallere girmesen bile zaten garanti!`;
+      } else {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalamasına ulaşmak için kalan kurullardan alabileceğin örnek dağılım:<br><br>`;
+        bosKurullar.forEach((kurul) => {
+          let esnekNot = hamGereken;
+          if(bosKurullar.length > 1) { const sapma = (kurul.katsayi / (kalanKatsayi / bosKurullar.length)) - 1; esnekNot = hamGereken + (sapma * 4); if(esnekNot > 100) esnekNot = 100; if(esnekNot < 0) esnekNot = 0; }
+          mesaj += `▫️ <b>Kurul ${kurul.index}:</b> en az <span style='color:#ffd60a;'><b>${esnekNot.toFixed(1)}</b></span><br>`;
         });
+      }
+    } 
+    else {
+      const gerekenFinal = (hedef - (kurulOrt * 0.6)) / 0.4;
+      if(gerekenFinal > 100) {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden <b>${gerekenFinal.toFixed(1)}</b> alman lazım. <span style='color:#ff453a;'>(Matematiksel olarak imkansız)</span>`;
+      } else if(gerekenFinal <= 0) {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için Finalden 0 (sıfır) alsan bile yetiyor!`;
+      } else {
+        mesaj += `🎯 Yıl sonu <b>${hedef}</b> ortalaması için <b>Final Sınavından</b> en az <span style='color:#30d158;'><b>${gerekenFinal.toFixed(1)}</b></span> almalısın.`;
+      }
+    }
+  }
+  
+  // DOM Güncellemesi ve Pop Animasyonu Tetikleyicisi
+  sonuc.innerHTML = mesaj;
+  sonuc.className = `result stagger d-7 ${durumClass}`; 
+  
+  // Animasyonu sıfırlayıp tekrar başlatmak için CSS Trick:
+  sonuc.classList.remove("pulse-anim");
+  void sonuc.offsetWidth; 
+  sonuc.classList.add("pulse-anim");
+}
 
-        return response;
-      })
-      .catch(() => caches.match(event.request))
-  );
+document.addEventListener("input", (e) => { if (e.target && e.target.tagName === "INPUT") { hesapla(); verileriKaydet(); }});
+
+function shareWhatsApp() {
+  const link = "https://thesap.vercel.app";
+  const tamMesaj = encodeURIComponent(`THESAP\n${link}`);
+  window.open(`https://api.whatsapp.com/send?text=${tamMesaj}`, '_blank');
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.getElementById("installVideo");
+  if(video){ video.addEventListener("ended", () => { kapatInstall(); }); }
 });
-
-// ACTIVATE
-self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      )
-    )
-  );
-  self.clients.claim();
-});
-
-
-
+</script>
+</body>
+</html>
