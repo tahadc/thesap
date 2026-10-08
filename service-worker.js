@@ -1,4 +1,4 @@
-const CACHE_NAME = "thesap-cache-v24";
+const CACHE_NAME = "thesap-cache-v25";
 
 const urlsToCache = [
   "/",
